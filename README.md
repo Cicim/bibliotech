@@ -38,12 +38,6 @@ Usare Git
     tutti i file che dobbiamo inserire nella commit con il comando add. <br>Se dobbiamo
     aggiungere tutti i file modificati possiamo utilizzare il comando `git add .`
 
- - Per evitare di scrivere `git add .` prima di ogni commit, possiamo aggiungere
-    la flag *-a* al comando commit per eseguire l'aggiunta dei file modificati
-    automaticamente:
-    ```
-    git commit -am "Messaggio"
-    ```
  - Quando siamo pronti ad effettuare una commit, possiamo eseguire il comando:
     ```
     git commit -m "Aggiunto del testo al file di esempio"
@@ -59,6 +53,12 @@ Usare Git
     git config --global user.email "email@provider"
     ```
 
+ - Per evitare di scrivere `git add .` prima di ogni commit, possiamo aggiungere
+    la flag *-a* al comando commit per eseguire l'aggiunta dei file modificati
+    automaticamente:
+    ```
+    git commit -am "Messaggio"
+    ```
 Creare un account GitHub
 ------------------------
 Git può funzionare benissimo da solo, ma per permetterti di collaborare
