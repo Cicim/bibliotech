@@ -1,4 +1,4 @@
-# **Bibliotech** *Progetto biblioteca per l'I.S. Rosselli di Aprilia*
+# **Bibliotech** *Progetto biblioteca per l'I.I.S. Rosselli di Aprilia*
 
 Come iniziare
 -------------
