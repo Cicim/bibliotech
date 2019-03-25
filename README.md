@@ -1,4 +1,4 @@
-# **Bibliotech** *Progetto biblioteca per l'I.I.S. Rosselli di Aprilia*
+﻿# **Bibliotech** *Progetto biblioteca per l'I.I.S. Rosselli di Aprilia*
 
 Come iniziare
 -------------
@@ -37,18 +37,19 @@ Usare Git
     commit, una sorta di checkpoint per il nostro codice. Per farlo, prima aggiungiamo
     tutti i file che dobbiamo inserire nella commit con il comando add. <br>Se dobbiamo
     aggiungere tutti i file modificati possiamo utilizzare il comando `git add .`
- - Quando siamo pronti ad effettuare una commit, possiamo eseguire il comando:
-    ```
-    git commit -m "Aggiunto del testo al file di esempio"
-    ```
-    Per comprendere meglio le modifiche effettuate al codice, è sempre preferibile
-    che alla commit sia affiancato un messaggio.
+
  - Per evitare di scrivere `git add .` prima di ogni commit, possiamo aggiungere
     la flag *-a* al comando commit per eseguire l'aggiunta dei file modificati
     automaticamente:
     ```
     git commit -am "Messaggio"
     ```
+ - Quando siamo pronti ad effettuare una commit, possiamo eseguire il comando:
+    ```
+    git commit -m "Aggiunto del testo al file di esempio"
+    ```
+    Per comprendere meglio le modifiche effettuate al codice, è sempre preferibile
+    che alla commit sia affiancato un messaggio.
 
  + Probabilmente, la prima volta che avete provato ad eseguire una commit, vi avrà
     dato un errore. <br>Per risolverlo dovete identificarvi:
