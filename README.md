@@ -161,5 +161,5 @@ Qualche consiglio:
 - Git si integra perfettamente con VS Code. Non dovete imparare tutti quei comandi,
     perché molto probabilmente VS Code li ripropone in veste grafica nel pannello
     di Source Control (Ctrl+Shift+G)
-- ** Non modificate questo file **
+- **Non modificate questo file**<br>
     Al limite potete spostarlo in un altro posto.
