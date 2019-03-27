@@ -36,6 +36,6 @@
 	else
 	{
 		echo "Identificazione non riuscita: nome utente o password errati <br />";
-		echo "Torna a pagina di <a href = \"login.html\">login</a>";
+		echo "Torna a pagina di <a href = \"login.php\">login</a>";
 	}
 ?>
