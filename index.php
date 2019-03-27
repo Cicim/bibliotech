@@ -22,7 +22,7 @@
         <div class="row">
             <?php
             $val = '
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-3 col-sm-6 book-front">
             
                 <div class="product-grid">
                     <div class="product-image">
@@ -39,6 +39,10 @@
                     </div>
                     <div class="product-content">
                         <h3 class="title"><a href="#">Harry Potter e la pietra qualcosa</a></h3>
+                        <div class="hidden-data">
+                        Titolo<br>
+                        Dato
+                        </div>
                     </div>
                     </div>
                 </div>';
