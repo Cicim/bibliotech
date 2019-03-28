@@ -21,7 +21,7 @@
 <body class="text-center">
     <?php include "header.php" ?>
 
-    <form class="form-signin mt-5" style="max-width: 700px" novalidation="">
+    <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Registrati</h1>
 
@@ -78,18 +78,9 @@
                 <input type="text" class="form-control" id="codFiscale" placeholder="Es. RSSMRO25R12R657K" required="true">
                 <div class="invalid-feedback">Inserisci un codice fiscale valido</div>
             </div>
-
-            <!-- Data di Nascita -->
-            <!--<div class="col-md-6 mb-3">
-                <label for="dataNascita">Data di Nascita</label>
-                <input type="text" class="form-control" id="dataNascita" placeholder="GG/MM/AAAA" required="true">
-                <div class="invalid-feedback">
-                    Inserisci una data valida.
-                </div>-->
-
             <!-- Data di Nascita -->
             <div class="container col-md-6 mb-3">
-                <label for="dataNascita">Data di Nascita </label>
+                <label for="datetimepicker">Data di Nascita </label>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" />
