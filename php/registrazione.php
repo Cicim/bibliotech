@@ -135,15 +135,14 @@
 
         <script type="text/javascript">
             var controllo_password = function() {
-            if (document.getElementById('password').value ==
-                document.getElementById('confermaPassword').value) {
-                document.getElementById('message').style.color = 'green';
-            } else {
+                if (document.getElementById('password').value ==
+                    document.getElementById('confermaPassword').value) {
+                    document.getElementById('message').style.color = 'green';
+                } else {
                     document.getElementById('confermaPassword').style.color = 'red';
                     document.getElementById('message').innerHTML = 'Le due password non combaciano.';
-                    
+                }
             }
-        }
         </script>
 
         <div class="row">
