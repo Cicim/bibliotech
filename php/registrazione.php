@@ -29,19 +29,19 @@
             <!-- Nome -->
             <div class="col-md-5 mb-3">
                 <label for="nome">Nome</label>
-                <input type="text" class="form-control" id="nome" placeholder="Es. Mario" value="" required="true">
+                <input type="text" class="form-control" name="nome" placeholder="Es. Mario" value="" required="true">
                 <div class="invalid-feedback">Inserisci un nome valido</div>
             </div>
             <!-- Cognome -->
             <div class="col-md-5 mb-3">
                 <label for="cognome">Cognome</label>
-                <input type="text" class="form-control" id="cognome" placeholder="Es. Rossi" value="" required="true">
+                <input type="text" class="form-control" name="cognome" placeholder="Es. Rossi" value="" required="true">
                 <div class="invalid-feedback">Inserisci un cognome valido.</div>
             </div>
             <!-- Selezione Sesso -->
             <div class="col-md-2 mb-3">
                 <label for="sesso">Sesso</label>
-                <select type="text" class="form-control" id="sesso" value="" required="true">
+                <select type="text" class="form-control" name="sesso" value="" required="true">
                     <option>M</option>
                     <option>F</option>
                     <option>Altro</option>
@@ -53,21 +53,21 @@
             <!-- Via / Piazza-->
             <div class="col-md-6 mb-3">
                 <label for="viaPzz">Via / Piazza</label>
-                <input class="form-control w-100" id="viaPzz" placeholder="Es. Via Garibaldi / Piazza Verdi" required="true">
+                <input class="form-control w-100" name="viaPzz" placeholder="Es. Via Garibaldi / Piazza Verdi" required="true">
                 <div class="invalid-feedback">Inserisci una via valida</div>
             </div>
 
             <!-- Città -->
             <div class="col-md-4 mb-3">
                 <label for="citta">Città</label>
-                <input class="form-control w-100" id="citta" placeholder="Es. Torino" required="true">
+                <input class="form-control w-100" name="citta" placeholder="Es. Torino" required="true">
                 <div class="invalid-feedback">Inserisci una città valida.</div>
             </div>
 
             <!-- Numero Civico -->
             <div class="col-md-2 mb-3">
                 <label for="numeroCivico"># Civico</label>
-                <input type="text" class="form-control" id="numeroCivico" placeholder="Es. 20">
+                <input type="text" class="form-control" name="numeroCivico" placeholder="Es. 20">
             </div>
         </div>
 
@@ -75,7 +75,7 @@
             <!-- Codice Fiscale -->
             <div class="col-md-6 mb-3">
                 <label for="codFiscale">Codice Fiscale</label>
-                <input type="text" class="form-control" id="codFiscale" placeholder="Es. RSSMRO25R12R657K" required="true">
+                <input type="text" class="form-control" name="codFiscale" placeholder="Es. RSSMRO25R12R657K" required="true">
                 <div class="invalid-feedback">Inserisci un codice fiscale valido</div>
             </div>
             <!-- Data di Nascita -->
@@ -83,7 +83,7 @@
                 <label for="datetimepicker">Data di Nascita </label>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker" />
+                        <input type="text" class="form-control datetimepicker-input" name="dataNascita" data-target="#datetimepicker" />
                         <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
                             <div class="input-group-text">
                                 <i class="fa fa-calendar" style="font-size:24px"></i>
@@ -107,98 +107,113 @@
             <!-- Telefono Cellulare -->
             <div class="col-md-6 mb-3">
                 <label for="telCellulare">Telefono Cellulare</label>
-                <input type="text" class="form-control" id="telCellulare" placeholder="Cellulare" required="true">
+                <input type="text" class="form-control" name="telCellulare" placeholder="Cellulare" required="true">
                 <div class="invalid-feedback">Inserisci il numero di telefono.</div>
             </div>
             <!-- Telefono Fisso -->
             <div class="col-md-6 mb-3">
                 <label for="telFisso">Telefono Fisso</label>
-                <input type="text" class="form-control" id="telFisso" placeholder="Fisso">
+                <input type="text" class="form-control" name="telFisso" placeholder="Fisso">
             </div>
         </div>
 
         <!-- Indirizzo Email -->
         <div class="mb-3">
             <label for="email">Indirizzo Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Es. mario.rossi@gmail.com" required="true">
+            <input type="email" class="form-control" name="email" placeholder="Es. mario.rossi@gmail.com" required="true">
             <div class="invalid-feedback">Inserisci un'email valida.</div>
         </div>
 
-        <script type="text/javascript">
-            var controllo_password = function() {
-                if (document.getElementById('password').value ==
-                    document.getElementById('confermaPassword').value) {
-                    document.getElementById('message').style.color = 'green';
-                } else {
-                    document.getElementById('confermaPassword').style.color = 'red';
-                    document.getElementById('message').innerHTML = 'Le due password non combaciano.';
-                }
-            }
-        </script>
+
 
         <div class="row">
             <!-- Password -->
             <div class="col-md-6 mb-3">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="" required="true">
+                <input type="password" class="form-control" name="password" required="true" onchange='passwordUguali()' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <span> Minimo 8 caratteri con una maiuscola, una minuscola ed un numero. </span>
                 <div class="invalid-feedback">Inserisci una password valida.</div>
             </div>
 
             <!-- Conferma Password -->
             <div class="col-md-6 mb-3">
                 <label for="confermaPassword">Conferma Password</label>
-                <input type="password" class="form-control" id="confermaPassword" placeholder="" required="true">
+                <input type="password" class="form-control" name="confermaPassword" required="true" onchange='passwordUguali()' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 <div class="invalid-feedback">Inserisci una password valida.</div>
             </div>
         </div>
 
+        <script type="text/javascript">
+            // Controllo per combaciamento password
+            function passwordUguali() {
+                if (document.getElementById('password').value ==
+                    document.getElementById('confermaPassword').value) {
+                    document.getElementById('confermaPassword').style.color = 'green';
+                } else {
+                    document.getElementById('confermaPassword').style.color = 'red';
+                }
+            }
+            
+            
+        </script>
 
         <button class="btn btn-primary btn-lg btn-info w-100 mt-5" type="submit">Registrati</button>
-        <p class="mt-5 mb-3 text-muted">
+        <p class="mt-3 mb-3 text-muted">
             Sei già registrato? Torna al <a href="/bib2/login.php">login</a>
         </p>
 
         <p class="mt-5 mb-3 text-muted">&copy; Bibliotech, 2019 </p>
     </form>
 
-    <!--Script php per la memorizzazione dei dati sul database-->
+    <!--Script php per l'invio dei dati al database-->
     <?php
         //recupero dati inseriti nel form
-        if(!isset($_POST["nome"]))
-            echo "Inserisci i dati prima";
-        else {
-            $nome = $_POST["nome"];
-            $cognome = $_POST["cognome"];
-            $sesso = $_POST["sesso"];
-            $viaPzz = $_POST["viaPzz"];
-            $citta = $_POST["citta"];
-            $numeroCivico = $_POST["numeroCivico"];
-            $codFiscale = $_POST["codFiscale"];
-            $dataNascita = $_POST["datetimepicker"];
-            $telCellulare = $_POST["telCellulare"];
-            $telFisso = $_POST["telFisso"];
-            $email = $_POST["email"];
-            $password = $_POST["password"];
-    
-            //variabili per la connessione al DB
-            $host = "localhost";
-            $user = "root";
-            $db = "Biblioteca";
-    
-            //connetto al DB
-            $conn = mysqli_connect($host, $user, "") or die("Impossibile raggiungere il DBMS");
-    
-            //connetto al database
-            $seldb = mysqli_select_db($conn, $db) or die("Impossibile connettersi al database");
-    
-            //definisco la query di inserimento
-            $qry = "INSERT INTO Utenti 
-                (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico, TelefonoCellulare, TelefonoFisso, Validato, Sesso, Password, Città, DataNascita, Permessi) VALUES
-                (\"$codFiscale\", \"$nome\", \"$cognome\", \"$viaPzz\", \"$numeroCivico\", \"$telCellulare\", \"$telFisso\", 0, \"$sesso\", \"$password\", \"$citta\", \"$dataNascita\", 3)";
-    
-            //stampo gli indirizzi delle stazioni
-            $query_res = mysqli_query($conn, $qry) or die("Impossibile eseguire la query");
-        }
+    if (!isset($_POST["nome"])) { } else {
+        $nome = $_POST["nome"];
+        $cognome = $_POST["cognome"];
+        $sesso = $_POST["sesso"];
+        $viaPzz = $_POST["viaPzz"];
+        $citta = $_POST["citta"];
+        $numeroCivico = $_POST["numeroCivico"];
+        $codFiscale = $_POST["codFiscale"];
+        $dataNascita = $_POST["dataNascita"];
+        $telCellulare = $_POST["telCellulare"];
+        $telFisso = $_POST["telFisso"];
+        $email = $_POST["email"];
+        $password = $_POST["password"]; 
+
+        echo '<script>alert("Ciao")';
+
+        //variabili per la connessione al DB
+        $host = "localhost";
+        $user = "root";
+        $db = "biblioteca";
+
+        //connetto al DB
+        $conn = mysqli_connect($host, $user, "") or die("Impossibile raggiungere il DBMS");
+
+        //connetto al database
+        $seldb = mysqli_select_db($conn, $db) or die("Impossibile connettersi al database");
+
+        //definisco la query di inserimento
+        /*$qry = "INSERT INTO utenti 
+                (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico, TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, Sesso, Password, Città, DataNascita, Permessi) VALUES
+                ('$codFiscale', '$nome', '$cognome', '$viaPzz', '$numeroCivico', '$telCellulare', '$telFisso', 1, '$sesso', 12, '$citta', '$dataNascita', 3)";
+        */
+        $qry = "INSERT INTO utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
+            TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
+            Sesso, Password, Città, DataNascita, Permessi) VALUES
+            ('$codFiscale', '$nome', '$cognome', '$email',
+             '$viaPzz', $numeroCivico, '$telCellulare', '$telFisso', 1, NULL, '2019-03-12',
+             '$sesso', 1341, 279, '$dataNascita', 3)";            
+
+
+        //stampo gli indirizzi delle stazioni
+        $query_res = mysqli_query($conn, $qry) or die("Impossibile eseguire la query");
+        var_dump($query_res);
+        if ($query_res == false)
+            echo "<br>Query non funzionante";
+    }
     ?>
 
 </body>

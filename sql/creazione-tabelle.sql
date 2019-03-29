@@ -293,7 +293,7 @@ CREATE TABLE Utenti (
   ViaPzz VARCHAR(45) NOT NULL,
   NumeroCivico SMALLINT NOT NULL,
   TelefonoCellulare VARCHAR(15) NULL,
-  TelefonoCasa VARCHAR(15) NULL,
+  TelefonoFisso VARCHAR(15) NULL,
   Validato TINYINT NOT NULL,
   CodiceValidazione VARCHAR(45) NULL,
   DataValidazione DATE NULL,

@@ -25,7 +25,7 @@
                     <div class="product-grid">
                         <div class="product-image">
                             <a href="#">
-                                <img class="pic-1" src="https://imgc.allpostersimages.com/img/print/u-g-F8PQ9I0.jpg?w=550&h=550&p=0">
+                                <img src="http://covers.openlibrary.org/b/isbn/9780385533225-S.jpg" />
                             </a>    
                             <ul class="social">
                                 <li>
