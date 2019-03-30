@@ -7,20 +7,26 @@
 
     <title>Bibliotech - Registrazione</title>
 
-    <!-- Bootstrap core CSS -->
+    <!-- Importa tutte le librerie comuni -->
     <?php include "../php/imports.php" ?>
 
-    <!-- Custom styles for this template -->
+    <!-- Importa lo stile per il login -->
     <link href="../css/login.css" rel="stylesheet">
 
+    <!-- Carica le librerie per il datetimepicker nella registrazione -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
-
 </head>
 
+<!-- Tutta la pagina è centrata -->
 <body class="text-center">
+    <!-- Includi l'header -->
     <?php include "header.php" ?>
 
+    <!-- Il form per la registrazione -->
     <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Registrati</h1>
@@ -186,12 +192,12 @@
         $password = $_POST["password"];
 
         //Se il telefono fisso non è stato inserito, allora settalo a NULL
-        if($telFisso == "") $fisso = "NULL";
-        else $fisso = "'$telFisso'";    
-        
+        if ($telFisso == "") $fisso = "NULL";
+        else $fisso = "'$telFisso'";
+
         //Genero l'hash della password
         $pwd = md5($password);
-        
+
         //Query di inserimento campi nel database
         $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
             TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
@@ -201,8 +207,8 @@
              '$sesso', '$pwd', 279, '$dataNascita', 3)";
 
         // Mostra l'errore
-        if(!$query_res = mysqli_query($conn, $qry)) {
-            echo ("ERROR: ".mysqli_error($conn));
+        if (!$query_res = mysqli_query($conn, $qry)) {
+            echo ("ERROR: " . mysqli_error($conn));
         }
 
         //Chiudo la connessione
