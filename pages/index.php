@@ -45,7 +45,7 @@
                             </ul>
                         </div>
                         <div class="product-content">
-                            <h3 class="title">Harry Potter e la pietra qualcosa</h3>
+                            <h3 class="title p-2">The Particular Sadness Of Lemon Cake</h3>
                             <span class="hidden-data">
                             Autori<br>
                             Dati
