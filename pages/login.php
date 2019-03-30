@@ -7,28 +7,32 @@
 
     <title>Bibliotech - Login</title>
 
-    <!-- Bootstrap core CSS -->
-    <?php include "php/imports.php" ?>
+    <!-- Importa tutte le librerie comuni -->
+    <?php include "../php/imports.php" ?>
 
-    <!-- Custom styles for this template -->
-    <link href="css/login.css" rel="stylesheet">
+    <!-- Importa lo stile per il login -->
+    <link href="../css/login.css" rel="stylesheet">
 </head>
 
+<!-- Tutta la pagina è centrata -->
 <body class="text-center">
-
-    <?php include "php/header.php" ?>
+    <!-- Importa l'header -->
+    <?php include "../views/header.php" ?>
 
     <form class="form-signin">
         <!-- Icona di Bibliotech -->
         <h1> Bibliotech </h1>
         <h1 class="h3 mb-3 font-weight-normal">Schermata di accesso</h1> <br>
 
+        <!-- Casella per l'e-mail -->
         <label for="inputEmail" class="sr-only">Indirizzo mail</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Indirizzo mail" required autofocus>
 
+        <!-- Casella per la password -->
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
+        <!-- Checkbox per essere ricordato -->
         <div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> Ricordami
@@ -36,8 +40,12 @@
         </div>
         <button class="btn btn-lg btn-primary btn-info btn-block" type="submit">Accedi</button> <br>
 
-        <a href="/bib2/php/recupero.php" class="text-info"> Recupero password </a> <br>
-        <a href="/bib2/php/registrazione.php" class="text-info"> Registrati </a>
+        <!-- Collegamento alla pagina per recuperare la password -->
+        <a href="recupero.php" class="text-info">Recupero password </a> <br>
+        <!-- Collegamento alla pagina per la registrazione -->
+        <a href="registrazione.php" class="text-info"> Registrati </a>
+
+        <!-- Footer -->
         <p class="mt-5 mb-3 text-muted">&copy; Bibliotech, 2019 </p>
     </form>
 </body>

@@ -20,7 +20,6 @@
 </head>
 
 <!-- Tutta la pagina è centrata -->
-
 <body class="text-center">
     <!-- Includi l'header -->
     <?php include "../views/header.php" ?>
@@ -170,9 +169,10 @@
         <button class="btn btn-primary btn-lg btn-info w-100 mt-5" type="submit">Registrati</button>
         <!-- Link per tornare al login -->
         <p class="mt-3 mb-3 text-muted">
-            Sei già registrato? Torna al <a href="/bib2/login.php">login</a>
+            Sei già registrato? Torna al <a href="login.php">login</a>
         </p>
 
+        <!-- Footer -->
         <p class="mt-5 mb-3 text-muted">&copy; Bibliotech, 2019 </p>
     </form>
 
