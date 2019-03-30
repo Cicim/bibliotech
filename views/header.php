@@ -1,6 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
-        <a class="navbar-brand" href="/bib2/index.php">Bibliotech</a>
+        <a class="navbar-brand" href="../index.php">Bibliotech</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
         </button>
