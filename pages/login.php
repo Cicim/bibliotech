@@ -21,7 +21,7 @@
 
     <form class="form-signin">
         <!-- Icona di Bibliotech -->
-        <h1> Bibliotech </h1>
+        <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Schermata di accesso</h1> <br>
 
         <!-- Casella per l'e-mail -->
