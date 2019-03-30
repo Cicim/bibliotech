@@ -234,9 +234,9 @@ CREATE TABLE Sezioni (
 CREATE TABLE Armadi (
   idArmadio INT NOT NULL AUTO_INCREMENT,
   Descrizione VARCHAR(45) NOT NULL,
-  idScaffale INT NOT NULL,
+  idSezione INT NOT NULL,
   PRIMARY KEY (idArmadio),
-  FOREIGN KEY (idScaffale) REFERENCES Sezioni(idSezione)
+  FOREIGN KEY (idSezione) REFERENCES Sezioni(idSezione)
 );
 
 
