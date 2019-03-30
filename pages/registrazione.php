@@ -13,24 +13,24 @@
     <!-- Importa lo stile per il login -->
     <link href="../css/login.css" rel="stylesheet">
 
-    <!-- Carica le librerie per il datetimepicker nella registrazione -->
+    <!-- Carica le librerie per il datetimepicker -->
     <script src="https://momentjs.com/downloads/moment.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
 </head>
 
 <!-- Tutta la pagina è centrata -->
+
 <body class="text-center">
     <!-- Includi l'header -->
-    <?php include "header.php" ?>
+    <?php include "../views/header.php" ?>
 
     <!-- Il form per la registrazione -->
     <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Registrati</h1>
 
+        <!-- Prima riga (3 caselle) -->
         <div class="row">
             <!-- Nome -->
             <div class="col-md-5 mb-3">
@@ -55,6 +55,7 @@
             </div>
         </div>
 
+        <!-- Seconda riga (3 caselle) -->
         <div class="row">
             <!-- Via / Piazza-->
             <div class="col-md-6 mb-3">
@@ -77,6 +78,7 @@
             </div>
         </div>
 
+        <!-- Terza riga (2 caselle, datetimepicker) -->
         <div class="row">
             <!-- Codice Fiscale -->
             <div class="col-md-6 mb-3">
@@ -100,15 +102,17 @@
             </div>
         </div>
 
+        <!-- Codice per il datetimepicker -->
         <script type="text/javascript">
             $(function() {
                 $('#datetimepicker').datetimepicker({
-                    format: 'DD/MM/YYYY',
+                    format: 'YYYY-MM-DD',
                     locale: 'it',
                 });
             });
         </script>
 
+        <!-- Quarta riga (2 caselle) -->
         <div class="row">
             <!-- Telefono Cellulare -->
             <div class="col-md-6 mb-3">
@@ -123,6 +127,7 @@
             </div>
         </div>
 
+        <!-- Quinta riga (1 casella) -->
         <!-- Indirizzo Email -->
         <div class="mb-3">
             <label for="email">Indirizzo Email</label>
@@ -130,8 +135,7 @@
             <div class="invalid-feedback">Inserisci un'email valida.</div>
         </div>
 
-
-
+        <!-- Sesta riga (2 caselle) -->
         <div class="row">
             <!-- Password -->
             <div class="col-md-6 mb-3">
@@ -149,6 +153,7 @@
             </div>
         </div>
 
+        <!-- Javascript per il controllo delle password -->
         <script type="text/javascript">
             // Controllo per combaciamento password
             function passwordUguali() {
@@ -161,7 +166,9 @@
             }
         </script>
 
-        <button class="btn btn-primary btn-lg btn-info w-100 mt-5" type="submit" name="conferma">Registrati</button>
+        <!-- Pulsante per inviare -->
+        <button class="btn btn-primary btn-lg btn-info w-100 mt-5" type="submit">Registrati</button>
+        <!-- Link per tornare al login -->
         <p class="mt-3 mb-3 text-muted">
             Sei già registrato? Torna al <a href="/bib2/login.php">login</a>
         </p>
