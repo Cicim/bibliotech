@@ -4,26 +4,30 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Homepage - Bibliotech</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <?php include "php/imports.php"; ?>
-    <link rel="stylesheet" type="text/css" href="css/catalogo.css">
+    <title>Homepage - Bibliotech</title>
+
+    <!-- Include le librerie comuni -->
+    <?php include "../php/imports.php"; ?>
+
+    <!-- Carica il css per il catalogo -->
+    <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
 </head>
 
 <body>
     <!-- Pagina dell'header importata -->
-    <?php include "php/header.php"; ?>
+    <?php include "../views/header.php"; ?>
     
-    <!-- Jumbotron -->
+    <!-- Rettangolo grigio per il titolo della sezione -->
     <div class="jumbotron" style="padding: 2rem 2rem">
         <h1 class="display-4 text-center">Vetrina</h1>
     </div>
+
     <!-- Homepage - Vetrina -->
     <div class="container books">
-        <!-- <h3 class="h3 mb-3">Libri in Evidenza</h3> -->
         <div class="row">
+            <!-- TODO Script da eliminare -->
             <?php
             $val = '<div class="col-md-3 col-sm-6 book-front">
             
@@ -56,6 +60,6 @@
     </div>
 
     <!-- Pagina del footer importata -->
-    <?php include "php/footer.php"; ?>
+    <?php include "../views/footer.php"; ?>
 
 </body> 
