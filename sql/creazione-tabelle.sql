@@ -81,23 +81,23 @@ CREATE TABLE Libri (
 
 
 -- -----------------------------------------------------
--- Table Nazionalità
+-- Table Nazionalita
 -- -----------------------------------------------------
-CREATE TABLE Nazionalità (
-  idNazionalità INT NOT NULL,
+CREATE TABLE Nazionalita (
+  idNazionalita INT NOT NULL,
   Descrizione VARCHAR(45) NOT NULL,
-  PRIMARY KEY (idNazionalità)
+  PRIMARY KEY (idNazionalita)
 );
 
 
 -- -----------------------------------------------------
--- Table Città
+-- Table Citta
 -- -----------------------------------------------------
-CREATE TABLE Città (
-  idCittà INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE Citta (
+  idCitta INT NOT NULL AUTO_INCREMENT,
   Nome VARCHAR(45) NOT NULL,
   Provincia CHAR(2) NOT NULL,
-  PRIMARY KEY (idCittà)
+  PRIMARY KEY (idCitta)
 );
 
 
@@ -112,13 +112,13 @@ CREATE TABLE Autori (
   DataMorte DATE NULL,
   Descrizione VARCHAR(200) NULL,
   NomeArte VARCHAR(45) NULL,
-  idNazionalità INT NOT NULL,
-  idCittàNascita INT NOT NULL,
-  idCittàMorte INT NULL,
+  idNazionalita INT NOT NULL,
+  idCittaNascita INT NOT NULL,
+  idCittaMorte INT NULL,
   PRIMARY KEY (idAutore),
-  FOREIGN KEY (idNazionalità) REFERENCES Nazionalità(idNazionalità),
-  FOREIGN KEY (idCittàNascita) REFERENCES Città(idCittà),
-  FOREIGN KEY (idCittàMorte) REFERENCES Città(idCittà)
+  FOREIGN KEY (idNazionalita) REFERENCES Nazionalita(idNazionalita),
+  FOREIGN KEY (idCittaNascita) REFERENCES Citta(idCitta),
+  FOREIGN KEY (idCittaMorte) REFERENCES Citta(idCitta)
 );
 
 
@@ -182,13 +182,13 @@ CREATE TABLE Biblioteche (
   Principale TINYINT NOT NULL,
   ViaPzz VARCHAR(45) NOT NULL,
   NumeroCivico SMALLINT NULL,
-  Città INT NOT NULL,
+  Citta INT NOT NULL,
   SitoWeb VARCHAR(45) NULL,
   NomeBiblioteca VARCHAR(45) NOT NULL,
   EnteAppartenente INT NOT NULL,
   PRIMARY KEY (idBiblioteca),
   FOREIGN KEY (EnteAppartenente) REFERENCES Enti(idEnte),
-  FOREIGN KEY (Città) REFERENCES Città(idCittà)
+  FOREIGN KEY (Citta) REFERENCES Citta(idCitta)
 );
 
 
@@ -274,11 +274,11 @@ CREATE TABLE Copie (
   Prestato TINYINT NOT NULL,
   ISBN CHAR(13) NOT NULL,
   idRipiano INT NOT NULL,
-  ProprietàDi INT NULL,
+  ProprietaDi INT NULL,
   PRIMARY KEY (idCopia),
   FOREIGN KEY (ISBN) REFERENCES Libri(ISBN),
   FOREIGN KEY (idRipiano) REFERENCES Ripiani(idRipiano),
-  FOREIGN KEY (ProprietàDi) REFERENCES Concessioni(idConcessioni)
+  FOREIGN KEY (ProprietaDi) REFERENCES Concessioni(idConcessioni)
 );
 
 
@@ -298,12 +298,12 @@ CREATE TABLE Utenti (
   CodiceValidazione VARCHAR(45) NULL,
   DataValidazione DATE NULL,
   Sesso CHAR(1) NOT NULL,
-  Password INT NOT NULL,
-  Città INT NOT NULL,
+  Password CHAR(32) NOT NULL,
+  Citta INT NOT NULL,
   DataNascita DATE NOT NULL,
   Permessi TINYINT NOT NULL DEFAULT 3,
   PRIMARY KEY (CodFiscale),
-  FOREIGN KEY (Città) REFERENCES Città(idCittà)
+  FOREIGN KEY (Citta) REFERENCES Citta(idCitta)
 );
 
 

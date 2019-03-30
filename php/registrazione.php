@@ -113,7 +113,7 @@
             <!-- Telefono Fisso -->
             <div class="col-md-6 mb-3">
                 <label for="telFisso">Telefono Fisso</label>
-                <input type="text" class="form-control" name="telFisso" placeholder="Fisso">
+                <input type="text" class="form-control" name="telFisso" placeholder="Fisso (opzionale)">
             </div>
         </div>
 
@@ -153,11 +153,9 @@
                     document.getElementById('confermaPassword').style.color = 'red';
                 }
             }
-            
-            
         </script>
 
-        <button class="btn btn-primary btn-lg btn-info w-100 mt-5" type="submit">Registrati</button>
+        <button class="btn btn-primary btn-lg btn-info w-100 mt-5" type="submit" name="conferma">Registrati</button>
         <p class="mt-3 mb-3 text-muted">
             Sei già registrato? Torna al <a href="/bib2/login.php">login</a>
         </p>
@@ -167,8 +165,13 @@
 
     <!--Script php per l'invio dei dati al database-->
     <?php
-        //recupero dati inseriti nel form
-    if (!isset($_POST["nome"])) { } else {
+    //recupero dati inseriti nel form
+    if (isset($_POST["nome"])) {
+        //Connetto al DB
+        include "connessione.php";
+        $conn = connettitiAlDb();
+
+        //Recupero i dati dal form
         $nome = $_POST["nome"];
         $cognome = $_POST["cognome"];
         $sesso = $_POST["sesso"];
@@ -176,43 +179,34 @@
         $citta = $_POST["citta"];
         $numeroCivico = $_POST["numeroCivico"];
         $codFiscale = $_POST["codFiscale"];
-        $dataNascita = $_POST["dataNascita"];
+        $dataNascita = date('Y-m-d', strtotime(str_replace('/', '-', $_POST["dataNascita"])));
         $telCellulare = $_POST["telCellulare"];
         $telFisso = $_POST["telFisso"];
         $email = $_POST["email"];
-        $password = $_POST["password"]; 
+        $password = $_POST["password"];
 
-        echo '<script>alert("Ciao")';
-
-        //variabili per la connessione al DB
-        $host = "localhost";
-        $user = "root";
-        $db = "biblioteca";
-
-        //connetto al DB
-        $conn = mysqli_connect($host, $user, "") or die("Impossibile raggiungere il DBMS");
-
-        //connetto al database
-        $seldb = mysqli_select_db($conn, $db) or die("Impossibile connettersi al database");
-
-        //definisco la query di inserimento
-        /*$qry = "INSERT INTO utenti 
-                (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico, TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, Sesso, Password, Città, DataNascita, Permessi) VALUES
-                ('$codFiscale', '$nome', '$cognome', '$viaPzz', '$numeroCivico', '$telCellulare', '$telFisso', 1, '$sesso', 12, '$citta', '$dataNascita', 3)";
-        */
-        $qry = "INSERT INTO utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
+        //Se il telefono fisso non è stato inserito, allora settalo a NULL
+        if($telFisso == "") $fisso = "NULL";
+        else $fisso = "'$telFisso'";    
+        
+        //Genero l'hash della password
+        $pwd = md5($password);
+        
+        //Query di inserimento campi nel database
+        $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
             TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
-            Sesso, Password, Città, DataNascita, Permessi) VALUES
+            Sesso, Password, Citta, DataNascita, Permessi) VALUES
             ('$codFiscale', '$nome', '$cognome', '$email',
-             '$viaPzz', $numeroCivico, '$telCellulare', '$telFisso', 1, NULL, '2019-03-12',
-             '$sesso', 1341, 279, '$dataNascita', 3)";            
+             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 1, NULL, '2019-03-12',
+             '$sesso', '$pwd', 279, '$dataNascita', 3)";
 
+        // Mostra l'errore
+        if(!$query_res = mysqli_query($conn, $qry)) {
+            echo ("ERROR: ".mysqli_error($conn));
+        }
 
-        //stampo gli indirizzi delle stazioni
-        $query_res = mysqli_query($conn, $qry) or die("Impossibile eseguire la query");
-        var_dump($query_res);
-        if ($query_res == false)
-            echo "<br>Query non funzionante";
+        //Chiudo la connessione
+        mysqli_close($conn);
     }
     ?>
 
