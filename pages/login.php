@@ -15,22 +15,23 @@
 </head>
 
 <!-- Tutta la pagina è centrata -->
+
 <body class="text-center">
     <!-- Importa l'header -->
     <?php include "../views/header.php" ?>
 
-    <form class="form-signin">
+    <form class="form-signin" method="post" action="">
         <!-- Icona di Bibliotech -->
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Schermata di accesso</h1> <br>
 
         <!-- Casella per l'e-mail -->
-        <label for="inputEmail" class="sr-only">Indirizzo mail</label>
-        <input type="email" name="inputEmail" class="form-control" placeholder="Indirizzo mail" required autofocus>
+        <label for="email" class="sr-only">Indirizzo mail</label>
+        <input type="email" name="email" class="form-control" placeholder="Indirizzo mail" required autofocus>
 
         <!-- Casella per la password -->
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
 
         <!-- Checkbox per essere ricordato -->
         <div class="checkbox mb-3">
@@ -48,6 +49,58 @@
         <!-- Footer -->
         <p class="mt-5 mb-3 text-muted">&copy; Bibliotech, 2019 </p>
     </form>
+
+    <!--Script PHP-->
+    <?php
+    //includo la funzione per la connessione al DB
+    include "../php/connessione.php";
+
+    if(isset($_POST["email"]))
+    {
+        //recupero le informazioni inserite nei form
+        $email = $_POST["email"];
+        $pw = $_POST["password"];
+
+        //connetto al DB
+        $conn = connettitiAlDb();
+
+        //query per vedere se le informazioni sono corrette
+        $qry = "SELECT Email, Password FROM Utenti WHERE Email = '$email'";
+        $qry_res = mysqli_query($conn, $qry) or die("Impossibile eseguire query<br>" . mysqli_error($conn));
+
+        //se la mail è presente nel database
+        if($qry_res == 0)
+            echo "Email non presente<br>";
+        else 
+        {
+            $r = mysqli_fetch_row($qry_res);
+            //estraggo i risultati
+            $md5 = $r[1];
+
+            //controlla se la password è giusta
+            if(md5($pw) == $md5)
+            {
+                echo "Password corretta<br>";
+            }
+            else
+            {
+                echo "Password errata<br>";
+            }
+
+            echo "md5: ".$md5."---pw: ".$pw."---PSW: ".$password."<br>";
+        }
+
+
+
+
+
+
+
+    }
+
+
+
+    ?>
 </body>
 
 </html> 
