@@ -4,6 +4,8 @@ function paginazione($query)
 {
     // Connettiti al db
     $conn = connettitiAlDb();
+    // Ottieni i dati in utf-8
+    mysqli_query($conn, "set names 'utf8'");
     // Esegui la query
     $res = mysqli_query($conn, $query);
     // Pagina corrente
@@ -25,10 +27,10 @@ function paginazione($query)
         $pagina = 0;
     }
     // Controlla che la pagina ottenuta sia un numero intero
-    
+
     if (is_numeric($pagina)) {
         // Controlla che la pagina esista
-        if($pagina < 0) $pagina = 0;
+        if ($pagina < 0) $pagina = 0;
         else if ($pagina > $totPagine - 1) $pagina = $totPagine - 1;
     } else $pagina = 0;
 
@@ -44,6 +46,12 @@ function paginazione($query)
         le pagine che utilizzano questa funzione
     */
 
+    //
+    // Stampa i pulsanti per spostarsi tra le pagine
+    //
+
+    // Centra tutto
+    echo '<div class="dividerPagine" style="margin:auto">';
     // Mostra i pulsanti per andare avanti e indietro di pagina
     echo '<nav aria-label="Page navigation example">';
     // Lista dei pulsanti
@@ -82,24 +90,76 @@ function paginazione($query)
         // Stampa i collegamenti
         for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
             // Pulsanti per andare alle pagine vicine
-            echo '<li class="page-item '.($i == $pagina ? "active" : "").'">';
-            echo '<a class="page-link" href="?page='.$i.'">'.$i.'</a>';
+            echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
+            echo '<a class="page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
             echo '</li>';
         }
     }
 
     // Pulsante per andare alla pagina dopo
-    echo '<li class="page-item'.($pagina == $totPagine-1 ? " disabled" : "").'">';
+    echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
     echo '</li>';
     // Pulsante per andare all'ultima pagina
-    echo '<li class="page-item'.($pagina == $totPagine-1 ? " disabled" : "").'">';
-    echo '<a class="page-link" href="?page='.($totPagine-1).'">Ultima</a>';
+    echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<a class="page-link" href="?page=' . ($totPagine - 1) . '">Ultima</a>';
     echo '</li>';
     echo '</ul>';
     echo '</nav>';
+    echo '</div>';
+    echo '</div>';
 
+    //
+    // Stampa i risultati della ricerca
+    //
+    // Stampa una lista dei libri
+    echo '<ul class="list-group">';
+    // Titolo sezioni
+    echo '<li class="list-group-item d-flex list-group-item-info justify-content-between align-items-center">';
+    echo '<div class="col-sm">Titolo</div>';
+    echo '<div class="col-sm">Editore</div>';
+    echo '<div class="col-sm">Autori</div>';
+    echo '</li>';
+    while ($row = mysqli_fetch_assoc($res2)) {
+        // Salva il valore dell'ISBN
+        $isbn = $row["ISBN"];
 
+        // Ottieni gli autori
+        $qryAutori = "SELECT CONCAT(Autori.NomeAutore, ' ', Autori.CognomeAutore) AS Autore, Autori.idAutore
+            FROM Autori, Autori_Libri, Libri
+            WHERE Autori.idAutore = Autori_Libri.idAutore
+            AND Autori_Libri.ISBNLibro = Libri.ISBN
+            AND Libri.ISBN = '$isbn'";
+        // Esegui la query
+        $res3 = mysqli_query($conn, $qryAutori);
+
+        // Componi il li
+        echo '<li class="list-group-item d-flex justify-content-between align-items-center">';
+        echo '<a href="libro.php?ISBN='.$isbn.'">';
+        // Dividi il tutto in colonne
+        echo '<div class="col-sm">';
+        echo $row["Titolo"];
+        echo '</a>';
+        echo '</div>';
+        echo '<div class="col-sm">';
+        echo $row["NomeEditore"];
+        echo '</div>';
+        // Ottieni i nomi degli autori
+        $i = 0;
+        while ($row2 = mysqli_fetch_row($res3)) {
+            if ($i != 0) echo ", ";
+            // Aggiungi il nome a un array
+            echo !$row2[0] ? "<i>Nessun autore</i>" : $row2[0];
+            $i++;
+        }
+        echo '<div class="col-sm">';
+
+        echo '</div>';
+
+        // Chiudi il li
+        echo '</li>';
+    }
+    echo '</ul>';
     // Chiudi la connessione
     mysqli_close($conn);
     return 1;
