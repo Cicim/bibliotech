@@ -85,6 +85,7 @@
             else
             {
                 echo "Password errata<br>";
+                
             }
 
             echo "md5: ".$md5."---pw: ".$pw."---PSW: ".$password."<br>";
