@@ -246,7 +246,7 @@ CREATE TABLE Armadi (
 CREATE TABLE Ripiani (
   idRipiano INT NOT NULL AUTO_INCREMENT,
   idArmadio INT NOT NULL,
-  NumeroRipiano INT NOT NULL,
+  NumeroRipiano VARCHAR(4) NOT NULL,
   PRIMARY KEY (idRipiano),
   FOREIGN KEY (idArmadio) REFERENCES Armadi(idArmadio)
 );
