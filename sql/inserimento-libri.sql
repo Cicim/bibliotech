@@ -730,7 +730,7 @@ INSERT INTO Libri (ISBN, Titolo, Descrizione, AnnoPubblicazione, DataAggiunta, i
 	('N348806123130', "Anatomia dell'amore", NULL, 1992, '2019-2-30', 4, 0, 32, 0, 1),
 	('N000000000062', "Le vestali della classe media", NULL, 1969, '2019-2-30', 4, 0, 62, 0, 1),
 	('N000000000063', "Attività e tecniche educative nel tempo pieno", NULL, 1978, '2019-2-30', 4, 2, 63, 42, 1),
-	('97888087171864', "Il corpo delle donne", NULL, 2010, '2019-2-30', 4, 0, 3, 0, 1),
+	('9788808717186', "Il corpo delle donne", NULL, 2010, '2019-2-30', 4, 0, 3, 0, 1),
 	('N358808099164', "Itenerari pedagogici", NULL, 1993, '2019-2-30', 4, 0, 55, 0, 1),
 	('N000000000064', "Le nozioni di movimento e velocità nel bambino", NULL, 1975, '2019-2-30', 4, 2, 64, 0, 1),
 	('N000000000065', "Logica e psicologia", NULL, 1969, '2019-2-30', 4, 2, 65, 43, 1),
