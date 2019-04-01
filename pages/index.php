@@ -29,32 +29,26 @@
         <div class="row">
             <!-- TODO Script da eliminare -->
             <?php
-            $val = '<div class="col-md-3 col-sm-6 book-front">
-            
-                    <div class="product-grid">
-                        <div class="product-image">
-                            <a href="#">
-                                <img src="http://covers.openlibrary.org/b/isbn/9780385533225-L.jpg" />
-                            </a>    
-                            <ul class="social">
-                                <li>
-                                    <a href="#" data-tip="Aggiungi">
-                                        <i class="fa fa-plus" style="font-size:36px;"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="product-content">
-                            <h3 class="title p-2">The Particular Sadness Of Lemon Cake</h3>
-                            <span class="hidden-data">
-                            Autori<br>
-                            Dati
-                            </span>
-                        </div>
-                    </div>
-                </div>';
+            // Includi il codice per la paginazione
+            include "../php/paginazione.php";
+            // Includi il codice per la connessione al database
+            include '../php/connessione.php';
 
-            for ($i = 0; $i < 12; $i++) echo $val;
+            // Connettiti al db
+            $conn = connettitiAlDb();
+
+            // Crea la query per ottenere tutti i libri
+            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore,
+                            Editori.Nome AS "NomeEditore", Generi.Descrizione AS "Genere",
+                            Tipologie.Descrizione AS "Tipologia"
+                        FROM Libri, Generi, Editori, Tipologie
+                        WHERE Libri.idGenere = Generi.idGenere
+                          AND Libri.idEditore = Editori.idEditore
+                          AND Libri.idTipo = Tipologie.idTipologia
+                        ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
+
+            // Stampa tutti i libri con quella query
+            paginazione($conn, $query);
             ?>
         </div>
     </div>

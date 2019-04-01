@@ -26,11 +26,11 @@
 
         <!-- Casella per l'e-mail -->
         <label for="inputEmail" class="sr-only">Indirizzo mail</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Indirizzo mail" required autofocus>
+        <input type="email" name="inputEmail" class="form-control" placeholder="Indirizzo mail" required autofocus>
 
         <!-- Casella per la password -->
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="inputPassword" class="form-control" placeholder="Password" required>
 
         <!-- Checkbox per essere ricordato -->
         <div class="checkbox mb-3">
