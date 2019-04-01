@@ -181,7 +181,7 @@
     //recupero dati inseriti nel form
     if (isset($_POST["nome"])) {
         //Connetto al DB
-        include "connessione.php";
+        include "../php/connessione.php";
         $conn = connettitiAlDb();
 
         //Recupero i dati dal form
