@@ -14,9 +14,15 @@
     // Ottieni i dati in utf-8
     mysqli_query($conn, "set names 'utf8'");
 
-    // Ottieni l'isbn del libro da visualizzare
-    $isbn = $_GET["ISBN"];
-    // $isbn = "N000000000142";
+    // ISBN libro
+    $isbn = false;
+
+    // Ottieni l'ISBN del libro da visualizzare
+    if(isset($_GET["ISBN"])) {
+        // Se l'ISBN esiste mettilo nella variabile
+        $isbn = $_GET["ISBN"];
+    }
+    // $isbn = "N000000000128";
 
     // Ottieni i dati sul libro
     $q1 = "SELECT ISBN, Titolo, Descrizione, AnnoPubblicazione From Libri WHERE Libri.ISBN = '$isbn'";
@@ -64,21 +70,38 @@
 
     <!--                    TITOLO                  -->
     <!--                  di $autore                -->
-    <div class=<?php if($isbn) echo '"jumbotron"'; else echo '"jumbotron text-danger bg-warning"' ?> style="padding: 2rem 2rem">
+    <div class=<?php
+                if ($titolo) {
+                    if ($isbn) echo '"jumbotron"';
+                    else echo '"jumbotron text-danger bg-warning"';
+                } else
+                    echo '"jumbotron text-danger bg-warning"';
+                ?> style="padding: 2rem 2rem">
         <h1 class="display-4 text-center">
             <?php
-            if ($isbn)
+            if ($titolo) {
+                // Se l'ISBN è valido e i dati non sono stati recuperati
                 echo $titolo;
-            else echo "Errore nel caricamento del libro";
+            } else if (!$titolo && $isbn) {
+                // Se l'ISBN non è valido e non è stato possibile recuperare i dati
+                echo "Errore nel caricamento del libro";
+            }
+            // Se non è stato possibile recuperare l'ISBN
+            else
+                echo "Errore nel caricamento del codice ISBN";
             ?>
         </h1>
         <h5 class="display-5 text-center">
             <?php 
-            // Impagina gli autori di modo che compaiano
-            // in una lista referenziabile
-            // Se la lista degli autori è vuota
-            if ($isbn) {
+
+            // Controlla se l'isbn è stato reperito
+            // per mostrare il messaggio di errore nel caso
+            // in cui non lo sia stato
+            if ($titolo) {
+                // Controlla se la lista degli autori è vuota
                 if (sizeof($autori) > 0) {
+                    // Impagina gli autori di modo che compaiano
+                    // in una lista referenziabile
                     echo "di ";
                     for ($i = 0; $i < sizeof($autori); $i++) {
                         echo "<a style='text-style: italic' href='autore.php?idAutore=";
@@ -88,6 +111,8 @@
                         if ($i < sizeof($autori) - 1) echo ", ";
                     }
                 } else echo "Autore non pervenuto";
+            } else if (!$titolo && $isbn) {
+                echo "Non è stato possibile recuperare i dati per questo ISBN!<br>Controlla se il codice è esistente nel database e riprova!";
             } else {
                 echo "Non è stato possibile recuperare il codice ISBN dall'URL!<br>Verificare che l'accesso alla pagina sia stato effettuato in modo corretto!";
             }
@@ -125,7 +150,7 @@
         </tbody>
     </table>
 
-    <?php include "../views/footer.php" ?>
+    <?php include "../views/footer.php "  ?>
 </body>
 
 </html> 
