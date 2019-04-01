@@ -1,4 +1,5 @@
 INSERT INTO Citta (Nome, Provincia) VALUES
+	("N/D", "--"),
     ("Abano Terme", "PD"),
     ("Abbadia Cerreto", "LO"),
     ("Abbadia Lariana", "LC"),
