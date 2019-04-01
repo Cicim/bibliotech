@@ -8,19 +8,15 @@
 <body>
     <?php include "../php/imports.php" ?>
     <?php include "../php/connessione.php" ?>
-    <!-- Jumbotron -->
-    <!--<div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center">Vetrina</h1>
-    </div>-->
     <?php
-        // Connessione al Database
+    // Connessione al Database
     $conn = connettitiAlDb();
     // Ottieni i dati in utf-8
     mysqli_query($conn, "set names 'utf8'");
 
-    // Ottieni il valore della pagina
-    //$isbn = $_GET["ISBN"];                                                        
-    $isbn = "9788889672501";
+    // Ottieni l'isbn del libro da visualizzare
+    $isbn = $_GET["ISBN"];
+    // $isbn = "N000000000142";
 
     // Ottieni i dati sul libro
     $q1 = "SELECT ISBN, Titolo, Descrizione, AnnoPubblicazione From Libri WHERE Libri.ISBN = '$isbn'";
@@ -64,28 +60,37 @@
     $editore = $row2[2];
     $lingua = $row2[3];
     $collana = $row2[4];
-
     ?>
 
     <!--                    TITOLO                  -->
     <!--                  di $autore                -->
-    <div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center"><?php echo $titolo ?></h1>
+    <div class=<?php if($isbn) echo '"jumbotron"'; else echo '"jumbotron text-danger bg-warning"' ?> style="padding: 2rem 2rem">
+        <h1 class="display-4 text-center">
+            <?php
+            if ($isbn)
+                echo $titolo;
+            else echo "Errore nel caricamento del libro";
+            ?>
+        </h1>
         <h5 class="display-5 text-center">
             <?php 
             // Impagina gli autori di modo che compaiano
             // in una lista referenziabile
             // Se la lista degli autori è vuota
-            if (sizeof($autori) > 0) {
-                echo "di ";
-                for ($i = 0; $i < sizeof($autori); $i++) {
-                    echo "<a style='text-style: italic' href='autore.php?idAutore=";
-                    echo $id_a[$i];
-                    echo "'>" . $autori[$i] . "</a>";
+            if ($isbn) {
+                if (sizeof($autori) > 0) {
+                    echo "di ";
+                    for ($i = 0; $i < sizeof($autori); $i++) {
+                        echo "<a style='text-style: italic' href='autore.php?idAutore=";
+                        echo $id_a[$i];
+                        echo "'>" . $autori[$i] . "</a>";
 
-                    if ($i < sizeof($autori) - 1) echo ", ";
-                }
-            } else echo "Autore non pervenuto";
+                        if ($i < sizeof($autori) - 1) echo ", ";
+                    }
+                } else echo "Autore non pervenuto";
+            } else {
+                echo "Non è stato possibile recuperare il codice ISBN dall'URL!<br>Verificare che l'accesso alla pagina sia stato effettuato in modo corretto!";
+            }
             ?>
         </h5>
     </div>
@@ -114,13 +119,13 @@
                 <td><?php echo $lingua ?></td>
             </tr>
             <tr>
-                <th scope="row">ISBN</th>
+                <th scope="row">ISBN/Codice</th>
                 <td><?php echo $isbn ?></td>
             </tr>
         </tbody>
     </table>
 
     <?php include "../views/footer.php" ?>
-</b ody>
+</body>
 
-</html>
+</html> 
