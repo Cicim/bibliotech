@@ -18,7 +18,7 @@
 <body>
     <!-- Pagina dell'header importata -->
     <?php include "../views/header.php"; ?>
-    
+
     <!-- Rettangolo grigio per il titolo della sezione -->
     <div class="jumbotron" style="padding: 2rem 2rem">
         <h1 class="display-4 text-center">Vetrina</h1>
@@ -34,12 +34,10 @@
             // Includi il codice per la connessione al database
             include '../php/connessione.php';
 
-            // Connettiti al db
-            $conn = connettitiAlDb();
 
             // Crea la query per ottenere tutti i libri
-            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore,
-                            Editori.Nome AS "NomeEditore", Generi.Descrizione AS "Genere",
+            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.Nome AS "NomeEditore",
+                            Generi.Descrizione AS "Genere",
                             Tipologie.Descrizione AS "Tipologia"
                         FROM Libri, Generi, Editori, Tipologie
                         WHERE Libri.idGenere = Generi.idGenere
@@ -47,8 +45,8 @@
                           AND Libri.idTipo = Tipologie.idTipologia
                         ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
 
-            // Stampa tutti i libri con quella query
-            paginazione($conn, $query);
+            // Stampa tutti i libri risultati dalla query
+            paginazione($query);
             ?>
         </div>
     </div>

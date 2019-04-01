@@ -58,14 +58,14 @@
     }
 
     // Salva i dati in variabili
-    $titolo = $row[1];
-    $desc = $row[2]; // Non perviene per alcun libro (inutile)
+    $titolo = htmlspecialchars($row[1]);
+    $desc = htmlspecialchars($row[2]); // Non perviene per alcun libro (inutile)
     $anno = $row[3];
-    $genere = $row2[0];
-    $tipo = $row2[1];
-    $editore = $row2[2];
-    $lingua = $row2[3];
-    $collana = $row2[4];
+    $genere = htmlspecialchars($row2[0]);
+    $tipo = htmlspecialchars($row2[1]);
+    $editore = htmlspecialchars($row2[2]);
+    $lingua = htmlspecialchars($row2[3]);
+    $collana = htmlspecialchars($row2[4]);
     ?>
 
     <!--                    TITOLO                  -->
