@@ -46,7 +46,6 @@
     // Ottieni i dati sul libro
     $row = mysqli_fetch_row($q1_res);
     $row2 = mysqli_fetch_row($q2_res);
-    //$row3 = mysqli_fetch_row($q3_res);
 
     // Ottieni tutti gli autori
     $autori = array();
@@ -66,14 +65,6 @@
     $lingua = $row2[3];
     $collana = $row2[4];
 
-    /*echo "titolo: " . $titolo . "<br>";
-    echo "descrizione: " . $desc . "<br>";
-    echo "anno: " . $anno . "<br>";
-    echo "genere: " . $genere . "<br>";
-    echo "tipo: " . $tipo . "<br>";
-    echo "editore: " . $editore . "<br>";
-    echo "lingua: " . $lingua . "<br>";
-    echo "collana: " . $collana . "<br>";*/
     ?>
 
     <!--                    TITOLO                  -->
@@ -84,14 +75,17 @@
             <?php 
             // Impagina gli autori di modo che compaiano
             // in una lista referenziabile
-            echo "di ";
-            for ($i = 0; $i < sizeof($autori); $i++) {
-                echo "<a href='autore.php?idAutore=";
-                echo $id_a[$i];
-                echo "'>".$autori[$i]."</a>";
+            // Se la lista degli autori è vuota
+            if (sizeof($autori) > 0) {
+                echo "di ";
+                for ($i = 0; $i < sizeof($autori); $i++) {
+                    echo "<a style='text-style: italic' href='autore.php?idAutore=";
+                    echo $id_a[$i];
+                    echo "'>" . $autori[$i] . "</a>";
 
-                if($i < sizeof($autori) - 1) echo ", ";
-            }
+                    if ($i < sizeof($autori) - 1) echo ", ";
+                }
+            } else echo "Autore non pervenuto";
             ?>
         </h5>
     </div>
@@ -127,6 +121,6 @@
     </table>
 
     <?php include "../views/footer.php" ?>
-</body>
+</b ody>
 
-</html> 
+</html>
