@@ -18,7 +18,7 @@
     $isbn = false;
 
     // Ottieni l'ISBN del libro da visualizzare
-    if(isset($_GET["ISBN"])) {
+    if (isset($_GET["ISBN"])) {
         // Se l'ISBN esiste mettilo nella variabile
         $isbn = $_GET["ISBN"];
     }
