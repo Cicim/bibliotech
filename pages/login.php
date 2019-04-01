@@ -69,7 +69,7 @@
         $qry_res = mysqli_query($conn, $qry) or die("Impossibile eseguire query<br>" . mysqli_error($conn));
 
         //se la mail è presente nel database
-        if($qry_res == 0)
+        if(!$qry_res)
             echo "Email non presente<br>";
         else 
         {
@@ -87,7 +87,7 @@
                 echo "Password errata<br>";
                 
             }
-
+            $password = md5($pw);
             echo "md5: ".$md5."---pw: ".$pw."---PSW: ".$password."<br>";
         }
 
