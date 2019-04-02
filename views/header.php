@@ -22,7 +22,23 @@
             </a>
             Non va qua
             -->
-            <a class="btn btn-info ml-2" id="btnAccedi" href="login.php">Accedi</a>
+            <!--<a class="btn btn-info ml-2" id="btnAccedi" href="login.php">Accedi</a>-->
+
+            <?php
+            //include "../php/connessione.php";
+            //$conn = connettitiAlDb();
+            /*if (isset($_GET["msg"]) && $_GET["msg"] == 'Login effettuato') {
+                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='index.php'>OK</a>";
+            }
+            else 
+                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";*/
+            if (isset($_GET["session"])) {
+                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='index.php'>OK</a>";
+            }
+            else 
+                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";
+        
+            ?>
         </div>
     </nav>
 </header> 
