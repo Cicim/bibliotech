@@ -36,7 +36,9 @@
                             <a class='dropdown-item' href='../php/logout.php'>Esci</a>
                         </div>
                     </div>";
-            } else
+            } 
+            // Oppure stampa il pulsante accedi
+            else
                 echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";
 
             ?>
