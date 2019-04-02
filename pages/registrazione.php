@@ -229,17 +229,17 @@
                 <div class="invalid-feedback">Inserisci una via valida</div>
             </div>
 
+            <!-- Numero Civico -->
+            <div class="col-md-2 mb-3">
+                <label for="numeroCivico"># Civico</label>
+                <input type="text" class="form-control" name="numeroCivico" placeholder="Es. 20">
+            </div>
+
             <!-- Città -->
             <div class="col-md-4 mb-3">
                 <label for="citta">Città</label>
                 <input class="form-control w-100" name="citta" placeholder="Es. Torino" required="true">
                 <div class="invalid-feedback">Inserisci una città valida.</div>
-            </div>
-
-            <!-- Numero Civico -->
-            <div class="col-md-2 mb-3">
-                <label for="numeroCivico"># Civico</label>
-                <input type="text" class="form-control" name="numeroCivico" placeholder="Es. 20">
             </div>
         </div>
 
