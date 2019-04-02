@@ -66,6 +66,8 @@ function paginazione($query)
  */
 function stampa_barra($pagina, $totPagine)
 {
+    // Classi comune a tutti gli elementi
+    $classi = "";
     //
     // Stampa i pulsanti per spostarsi tra le pagine
     //
@@ -78,13 +80,13 @@ function stampa_barra($pagina, $totPagine)
     echo '<ul class="pagination justify-content-center">';
     // Pulsante per andare alla prima pagina
     // Disabilitato se si è alla prima pagina
-    echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
+    echo '<li class="'.$classi.' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=0">Prima</a>';
     echo '</li>';
     // Pulsante per andare alla pagina prima
     // Disabilitato se si è alla prima pagina
     echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
+    echo '<a class="'.$classi.' page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
     echo '</li>';
 
     // Mostra le pagine vicine
@@ -111,17 +113,17 @@ function stampa_barra($pagina, $totPagine)
         for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
             // Pulsanti per andare alle pagine vicine
             echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
-            echo '<a class="page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
+            echo '<a class="'.$classi.' page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
             echo '</li>';
         }
     }
 
     // Pulsante per andare alla pagina dopo
-    echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<li class="'.$classi.' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
     echo '</li>';
     // Pulsante per andare all'ultima pagina
-    echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<li class="'.$classi.' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($totPagine - 1) . '">Ultima</a>';
     // Chiudi i tag restanti
     echo '</li></ul></nav></div></div>';
@@ -139,15 +141,27 @@ function stampa_libro($libro, $conn)
 
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
-    echo '<div class="container-fluid bg-light w-100">';
-
+    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="margin-auto row text-left container-fluid bg-light w-100 mb-2 border border-info">';
+    // Colonna delle informazioni sul libro
+    echo "<div class='col'>";
     // Stampa il titolo del libro
-    echo "<b>" . $libro["Titolo"] . "</b>";
+    echo "<b style='font-size:1.2em;'>" . $libro["Titolo"] . "</b>";
     // Inserisci uno span contenente l'autore
     echo "<br><span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "<br><a href=editore.php?idEditore='".$libro["idEditore"]."'><span> ". $libro["nomeEditore"]."</a></span>";
+    echo "<br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> "
+         .$libro["nomeEditore"]."</a></i></span>";
     echo "</div>";
+    // Colonna contenente i pulsanti per la prenotazione
+    echo "<div style='height:100%' class='col text-right align-middle'>";
+
+    echo "<a href='#' style='width:10em' class='btn btn-info btn-sm mt-1 mb-1'>Prenota</a><br>";
+    echo "<a href='#' style='width:10em' class='btn btn-info btn-sm'>Lista</a>";
+    
+    
+
+    echo "</div>";
+    echo "</button>";
 
 
 }
@@ -186,7 +200,7 @@ function crea_lista_autori($isbnLibro, $conn)
                 $la .= ", ";
 
             // Aggiungi un link alla pagina dell'autore
-            $la .= '<a href="autore.php?idAutore='.$row[1].'">'.$row[0].'</a>';
+            $la .= '<a class="text-info" href="autore.php?idAutore='.$row[1].'">'.$row[0].'</a>';
 
             $i++;
         }

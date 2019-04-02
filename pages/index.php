@@ -30,11 +30,7 @@
 
     <!-- Homepage - Vetrina -->
     <div class="container books">
-<<<<<<< HEAD
-        <div class="container">
-=======
         <div class="margin-auto">
->>>>>>> 9837742000fabbfdd25f55356c86c3b698d83fc3
         <?php
             // Crea la query per ottenere tutti i libri
             $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
