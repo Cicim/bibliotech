@@ -47,6 +47,69 @@ function paginazione($query)
     */
 
     //
+    // Stampa i risultati della ricerca
+    //
+    // Stampa una lista dei libri
+    /*
+    echo '<ul class="list-group">';
+    // Titolo sezioni
+    echo '<li class="list-group-item d-flex list-group-item-info justify-content-between align-items-center">';
+    echo '<div class="col-sm">Titolo</div>';
+    echo '<div class="col-sm">Editore</div>';
+    echo '<div class="col-sm">Autori</div>';
+    echo '</li>';
+    while ($row = mysqli_fetch_assoc($res2)) {
+        // Salva il valore dell'ISBN
+        $isbn = $row["ISBN"];
+
+        // Ottieni gli autori
+        $qryAutori = "SELECT CONCAT(Autori.NomeAutore, ' ', Autori.CognomeAutore) AS Autore, Autori.idAutore
+            FROM Autori, Autori_Libri, Libri
+            WHERE Autori.idAutore = Autori_Libri.idAutore
+            AND Autori_Libri.ISBNLibro = Libri.ISBN
+            AND Libri.ISBN = '$isbn'";
+        // Esegui la query
+        $res3 = mysqli_query($conn, $qryAutori);
+
+        // Componi il li
+        echo '<li class="list-group-item d-flex justify-content-between align-items-center">';
+        echo '<a href="libro.php?ISBN=' . $isbn . '">';
+        // Dividi il tutto in colonne
+        echo '<div class="col-sm">';
+        echo $row["Titolo"];
+        echo '</a>';
+        echo '</div>';
+        echo '<div class="col-sm">';
+        echo $row["NomeEditore"];
+        echo '</div>';
+        // Ottieni i nomi degli autori
+        $i = 0;
+        while ($row2 = mysqli_fetch_row($res3)) {
+            if ($i != 0) echo ", ";
+            // Aggiungi il nome a un array
+            echo !$row2[0] ? "<i>Nessun autore</i>" : $row2[0];
+            $i++;
+        }
+        echo '<div class="col-sm">';
+
+        echo '</div>';
+
+        // Chiudi il li
+        echo '</li>';
+    }
+    echo '</ul>';
+    */
+    // Chiudi la connessione
+    mysqli_close($conn);
+    
+    stampa_barra($pagina, $totPagine);
+    return 1;
+}
+
+// Funzione per stampare la barra di navigazione
+function stampa_barra($pagina, $totPagine)
+{
+    //
     // Stampa i pulsanti per spostarsi tra le pagine
     //
 
@@ -108,62 +171,8 @@ function paginazione($query)
     echo '</nav>';
     echo '</div>';
     echo '</div>';
-
-    //
-    // Stampa i risultati della ricerca
-    //
-    // Stampa una lista dei libri
-    echo '<ul class="list-group">';
-    // Titolo sezioni
-    echo '<li class="list-group-item d-flex list-group-item-info justify-content-between align-items-center">';
-    echo '<div class="col-sm">Titolo</div>';
-    echo '<div class="col-sm">Editore</div>';
-    echo '<div class="col-sm">Autori</div>';
-    echo '</li>';
-    while ($row = mysqli_fetch_assoc($res2)) {
-        // Salva il valore dell'ISBN
-        $isbn = $row["ISBN"];
-
-        // Ottieni gli autori
-        $qryAutori = "SELECT CONCAT(Autori.NomeAutore, ' ', Autori.CognomeAutore) AS Autore, Autori.idAutore
-            FROM Autori, Autori_Libri, Libri
-            WHERE Autori.idAutore = Autori_Libri.idAutore
-            AND Autori_Libri.ISBNLibro = Libri.ISBN
-            AND Libri.ISBN = '$isbn'";
-        // Esegui la query
-        $res3 = mysqli_query($conn, $qryAutori);
-
-        // Componi il li
-        echo '<li class="list-group-item d-flex justify-content-between align-items-center">';
-        echo '<a href="libro.php?ISBN='.$isbn.'">';
-        // Dividi il tutto in colonne
-        echo '<div class="col-sm">';
-        echo $row["Titolo"];
-        echo '</a>';
-        echo '</div>';
-        echo '<div class="col-sm">';
-        echo $row["NomeEditore"];
-        echo '</div>';
-        // Ottieni i nomi degli autori
-        $i = 0;
-        while ($row2 = mysqli_fetch_row($res3)) {
-            if ($i != 0) echo ", ";
-            // Aggiungi il nome a un array
-            echo !$row2[0] ? "<i>Nessun autore</i>" : $row2[0];
-            $i++;
-        }
-        echo '<div class="col-sm">';
-
-        echo '</div>';
-
-        // Chiudi il li
-        echo '</li>';
-    }
-    echo '</ul>';
-    // Chiudi la connessione
-    mysqli_close($conn);
-    return 1;
 }
+
 
 // Funzione per stampare un libro, ottenendo la copertina online
 function stampa_libro($queryRes)
