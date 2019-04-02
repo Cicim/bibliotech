@@ -27,6 +27,9 @@
 
     <!--Script php per l'invio dei dati al database-->
     <?php
+    // Importa il codice per l'invio di una mail
+    include "../php/invio.php";
+
     /**
      * Funzione per generare una string a caso
      * @param int $length Lunghezza della stringa
@@ -132,26 +135,29 @@
         $timestampOdierno = md5(time());
         // Ottieni una stringa a caso e uniscila al timestamp calcolato
         $codValidazione = generateRandomString(13) . $timestampOdierno;
+        
+        // Altrimenti, invia una mail all'interessato
+        $inviata = inviaMailDiConferma($email, $codValidazione);
 
-        echo $codValidazione;
+        // Se la mail non è stata inviata
+        if (!$inviata)
+            return "Errore durante l'invio della mail";
+        
 
-        //Query di inserimento campi nel database
-        $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
+        // Query per l'aggiunta dell'account
+        $queryAggiunta = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
             TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
             Sesso, Password, Citta, DataNascita, Permessi) VALUES
             ('$codFiscale', '$nome', '$cognome', '$email',
-             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 0, '$codValidazione', '$dataOdierna',
-             '$sesso', '$hashed', 279, '$dataNascita', 3)";
-
+            '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 0, '$codValidazione', '$dataOdierna',
+            '$sesso', '$hashed', 279, '$dataNascita', 3)";
+    
         // Esegui la query
-        $ris_aggiunta = mysqli_query($conn, $qry);
-
+        $ris_aggiunta = mysqli_query($conn, $queryAggiunta);
+    
         // Se ci sono stati errori
         if (!$ris_aggiunta)
             return mysqli_error($conn);
-        
-        // Altrimenti, invia una mail all'interessato
-        
 
         //Chiudo la connessione
         mysqli_close($conn);
