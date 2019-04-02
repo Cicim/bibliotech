@@ -27,6 +27,24 @@
 
     <!--Script php per l'invio dei dati al database-->
     <?php
+    // Importa il codice per l'invio di una mail
+    include "../php/invio.php";
+
+    /**
+     * Funzione per generare una string a caso
+     * @param int $length Lunghezza della stringa
+     * @return string String a caso;
+     */
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     /**
      * Funzione per effettuare la registrazione.
      * Per poter uscire in qualsiasi momento
@@ -54,9 +72,52 @@
         $password = $_POST["password"];
         $confermaPassword = $_POST["confermaPassword"];
 
+        // Trasforma il codice fiscale in uppercase
+        $codFiscale = strtoupper($codFiscale);
+        // E l'indirizzo e-mail in lowercase
+        $email = strtolower($email);
+
         // Esegui i necessari controlli
-        // 1) Confronta il codice fiscale con quello calcolato
-        echo comparaDatiConCodiceFiscale($nome, $cognome, $dataNascita, $sesso);
+        // Controlla che le due password combacino
+        if ($password != $confermaPassword)
+            return "Le due password non combaciano";
+        // Controlla che l'indirizzo e-mail sia valido
+        if (!preg_match('/^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$/', $email))
+            return "L'indirizzo e-mail non è valido";
+        // Controlla che il codice fiscale sia valido
+        if (!preg_match('/[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]/', strtoupper($codFiscale)))
+            return "Il codice fiscale non è valido"; 
+
+        // Elimina il +39 davanti ai numero di telefono
+        $telCellulare = str_replace("+39", "", $telCellulare);
+        $telFisso = str_replace("+39", "", $telFisso);
+        // Elimina gli spazi vuoti e i trattini nei numeri di telefono
+        $telCellulare = str_replace(" ", "", $telCellulare);
+        $telFisso = str_replace(" ", "", $telFisso);
+        $telCellulare = str_replace("-", "", $telCellulare);
+        $telFisso = str_replace("-", "", $telFisso);
+
+        // Controlla se il numero di telefono cellulare è valido
+        if (!preg_match('/\d{10}/', $telCellulare))
+        return "Il numero di cellulare non è corretto";
+        // O se il fisso è stato fornito ma è sbagliato
+        if ($telFisso and !preg_match('/\d{10}/', $telFisso))
+            return "Il numero del telefono fisso (opzionale) non è corretto";
+
+        // Cerca il nome della città nel database
+        $idCitta = ottieniIdCitta($citta);
+        // In caso di errore, manda un messaggio
+        if ($idCitta == false) 
+            return "La città scritta non si trova in Italia. Risiedi all'estero?";
+
+        // Controlla che non esista nessun account con lo stesso
+        // account e-mail o con lo stesso codice fiscale
+        $ris_account = mysqli_query($conn, "SELECT CodFiscale FROM Utenti 
+                                            WHERE CodFiscale = '$codFiscale'
+                                               OR Email = '$email'");
+        // Se questa query riporta almeno un risultato, c'è un problema
+        if (mysqli_num_rows($ris_account) > 0)
+            return "Indirizzo e-mail o codice fiscale già utilizzati in un altro account.";
 
 
         // Se il telefono fisso non è stato inserito, settalo a NULL
@@ -65,31 +126,51 @@
         else $fisso = "'$telFisso'";
 
         // Genera l'hash della password
-        $pwd = md5($password);
+        $hashed = md5($password);
+        // Genera una data da apporre a dataValidazione
+        $dataOdierna = date("Y-m-d");
 
-        //Query di inserimento campi nel database
-        $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
+        // Genera un codice di validazione
+        // Ottieni il timestamp odierno e hashalo
+        $timestampOdierno = md5(time());
+        // Ottieni una stringa a caso e uniscila al timestamp calcolato
+        $codValidazione = generateRandomString(13) . $timestampOdierno;
+        
+        // Altrimenti, invia una mail all'interessato
+        $inviata = inviaMailDiConferma($email, $codValidazione, $nome, $cognome, $sesso);
+
+        // Se la mail non è stata inviata
+        if (!$inviata)
+            return "Errore durante l'invio della mail";
+        
+
+        // Query per l'aggiunta dell'account
+        $queryAggiunta = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
             TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
             Sesso, Password, Citta, DataNascita, Permessi) VALUES
             ('$codFiscale', '$nome', '$cognome', '$email',
-             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 1, NULL, '2019-03-12',
-             '$sesso', '$pwd', 279, '$dataNascita', 3)";
-
-        // Mostra l'errore
-        // if (!$query_res = mysqli_query($conn, $qry)) {
-        //     echo ("ERROR: " . mysqli_error($conn));
-        // }
+            '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 0, '$codValidazione', '$dataOdierna',
+            '$sesso', '$hashed', 279, '$dataNascita', 3)";
+    
+        // Esegui la query
+        $ris_aggiunta = mysqli_query($conn, $queryAggiunta);
+    
+        // Se ci sono stati errori
+        if (!$ris_aggiunta)
+            return mysqli_error($conn);
 
         //Chiudo la connessione
         mysqli_close($conn);
+
+        // Riporta ok
+        return "ok";
     }
 
+    $stato = "";
     // Se il form è stato compilato
     if (isset($_POST["nome"]))
         // Esegui la funzione per la registrazione
         $stato = registrazione();
-
-
     ?>
 
 
@@ -97,6 +178,22 @@
     <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Registrati</h1>
+
+        <?php
+        // Se c'è qualche problema
+        if ($stato != "ok" and $stato != "") {
+            // Stampa un alert
+            echo '<div class="alert alert-danger" role="alert">';
+            // Con un testo diverso a seconda del problema
+            echo "$stato</div>";
+        }
+        // Se la registrazione è avvenuta con successo
+        else if ($stato == 'ok') {
+            // Stampa un messaggio di successo
+            echo '<div class="alert alert-success" role="alert">La registrazione è avvenuta con successo. ';
+            echo 'Controlla la tua casella di posta elettronica</div>';
+        }
+        ?>
 
         <!-- Prima riga (3 caselle) -->
         <div class="row">
@@ -116,9 +213,9 @@
             <div class="col-md-2 mb-3">
                 <label for="sesso">Sesso</label>
                 <select type="text" class="form-control" name="sesso" value="" required="true">
-                    <option>M</option>
-                    <option>F</option>
-                    <option>Altro</option>
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                    <option value="N">Altro</option>
                 </select>
             </div>
         </div>
