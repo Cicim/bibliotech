@@ -66,6 +66,8 @@ function paginazione($query)
  */
 function stampa_barra($pagina, $totPagine)
 {
+    // Classi comune a tutti gli elementi
+    $classi = "";
     //
     // Stampa i pulsanti per spostarsi tra le pagine
     //
@@ -78,13 +80,13 @@ function stampa_barra($pagina, $totPagine)
     echo '<ul class="pagination justify-content-center">';
     // Pulsante per andare alla prima pagina
     // Disabilitato se si è alla prima pagina
-    echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
+    echo '<li class="'.$classi.' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=0">Prima</a>';
     echo '</li>';
     // Pulsante per andare alla pagina prima
     // Disabilitato se si è alla prima pagina
     echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
+    echo '<a class="'.$classi.' page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
     echo '</li>';
 
     // Mostra le pagine vicine
@@ -111,17 +113,17 @@ function stampa_barra($pagina, $totPagine)
         for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
             // Pulsanti per andare alle pagine vicine
             echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
-            echo '<a class="page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
+            echo '<a class="'.$classi.' page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
             echo '</li>';
         }
     }
 
     // Pulsante per andare alla pagina dopo
-    echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<li class="'.$classi.' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
     echo '</li>';
     // Pulsante per andare all'ultima pagina
-    echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<li class="'.$classi.' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($totPagine - 1) . '">Ultima</a>';
     // Chiudi i tag restanti
     echo '</li></ul></nav></div></div>';
