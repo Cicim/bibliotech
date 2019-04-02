@@ -86,13 +86,17 @@
             if (md5($pw) == $md5) {
                 //echo "Password corretta<br>";
                 //echo "<script language=javascript>document.location.href='index.php'</script>";
+                session_start();
+                $_SESSION["user_id"] = $record["id"];
+                $sess = $_SESSION["user_id"];
                 $messaggio = urlencode('Login effettuato');
-		        header("location: index.php?msg=$messaggio");
+                //header("location: index.php?msg=$messaggio");
+                header("location: index.php?session=$sess");
             } else {
                 //echo "password errata<br>";
                 //echo "<script language=javascript>document.location.href='login.php'</script>";
-                $messaggio = urlencode('Password errato');
-		        header("location: login.php?msg=$messaggio");
+                $messaggio = urlencode('Password errata');
+                header("location: login.php?msg=$messaggio");
             }
             /*$password = md5($pw);
             echo "md5: " . $md5 . "---pw: " . $pw . "---PSW: " . $password . "<br>";*/
