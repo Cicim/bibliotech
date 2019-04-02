@@ -55,8 +55,37 @@
         $confermaPassword = $_POST["confermaPassword"];
 
         // Esegui i necessari controlli
-        // 1) Confronta il codice fiscale con quello calcolato
-        echo comparaDatiConCodiceFiscale($nome, $cognome, $dataNascita, $sesso);
+        // Controlla che le due password combacino
+        if ($password != $confermaPassword)
+            return "Le due password non combaciano";
+        // Controlla che l'indirizzo e-mail sia valido
+        if (!preg_match('/^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$/', $email))
+            return "L'indirizzo e-mail non è valido";
+        // Controlla che il codice fiscale sia valido
+        if (!preg_match('/[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]/', strtoupper($codFiscale)))
+            return "Il codice fiscale non è valido"; 
+
+        // Elimina il +39 davanti ai numero di telefono
+        $telCellulare = str_replace("+39", "", $telCellulare);
+        $telFisso = str_replace("+39", "", $telFisso);
+        // Elimina gli spazi vuoti e i trattini nei numeri di telefono
+        $telCellulare = str_replace(" ", "", $telCellulare);
+        $telFisso = str_replace(" ", "", $telFisso);
+        $telCellulare = str_replace("-", "", $telCellulare);
+        $telFisso = str_replace("-", "", $telFisso);
+
+        // Controlla se il numero di telefono cellulare è valido
+        if (!preg_match('/\d{10}/', $telCellulare))
+        return "Il numero di cellulare non è corretto";
+        // O se il fisso è stato fornito ma è sbagliato
+        if ($telFisso and !preg_match('/\d{10}/', $telFisso))
+            return "Il numero del telefono fisso (opzionale) non è corretto";
+
+        // Cerca il nome della città nel database
+
+        // Controlla che non esista nessun account con lo stesso
+        // account e-mail o con lo stesso codice fiscale
+
 
 
         // Se il telefono fisso non è stato inserito, settalo a NULL
@@ -84,6 +113,7 @@
         mysqli_close($conn);
     }
 
+    $stato = "";
     // Se il form è stato compilato
     if (isset($_POST["nome"]))
         // Esegui la funzione per la registrazione
@@ -97,6 +127,22 @@
     <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Registrati</h1>
+
+        <?php
+        // Se c'è qualche problema
+        if ($stato != "ok" and $stato != "") {
+            // Stampa un alert
+            echo '<div class="alert alert-danger" role="alert">';
+            // Con un testo diverso a seconda del problema
+            echo "$stato</div>";
+        }
+        // Se la registrazione è avvenuta con successo
+        else {
+            // Stampa un messaggio di successo
+            echo '<div class="alert alert-success" role="alert">La registrazione è avvenuta con successo.';
+            echo 'Controlla la tua casella di posta elettronica</div>';
+        }
+        ?>
 
         <!-- Prima riga (3 caselle) -->
         <div class="row">
@@ -116,9 +162,9 @@
             <div class="col-md-2 mb-3">
                 <label for="sesso">Sesso</label>
                 <select type="text" class="form-control" name="sesso" value="" required="true">
-                    <option>M</option>
-                    <option>F</option>
-                    <option>Altro</option>
+                    <option value="M">M</option>
+                    <option value="F">F</option>
+                    <option value="N">Altro</option>
                 </select>
             </div>
         </div>
