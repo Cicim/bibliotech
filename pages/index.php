@@ -25,12 +25,16 @@
 
     <!-- Rettangolo grigio per il titolo della sezione -->
     <div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center">Vetrina</h1>
+        <h1 class="display-4 text-center">Libri in Vetrina</h1>
     </div>
 
     <!-- Homepage - Vetrina -->
     <div class="container books">
+<<<<<<< HEAD
         <div class="container">
+=======
+        <div class="margin-auto">
+>>>>>>> 9837742000fabbfdd25f55356c86c3b698d83fc3
         <?php
             // Crea la query per ottenere tutti i libri
             $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
