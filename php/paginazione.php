@@ -146,7 +146,7 @@ function stampa_libro($libro, $conn)
     // Inserisci uno span contenente l'autore
     echo "<br><span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "<br><a href=editore.php?idEditore='".get_editore($isbn, $conn)."'<span> ". $libro["nomeEditore"]."</span">;
+    echo "<br><a href=editore.php?idEditore='".$libro["idEditore"]."'><span> ". $libro["nomeEditore"]."</a></span>";
     echo "</div>";
 
 
@@ -193,17 +193,3 @@ function crea_lista_autori($isbnLibro, $conn)
     }
     return $la;
 }
-
-/**
- * Esegue una query per riportare il nome dell'editore
- * @param $isbn int Codice del libro
- * @param $conn connessione al database
- * @return $editore string nome dell'editore
- */
-function get_editore($isbn, $conn) {
-    // Ottieni i dati in utf-8
-    mysqli_query($conn, "set names 'utf8'");
-    
-}
-
-?> 

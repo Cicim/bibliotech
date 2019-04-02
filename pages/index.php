@@ -33,7 +33,7 @@
         <div class="row">
         <?php
             // Crea la query per ottenere tutti i libri
-            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.Nome AS "NomeEditore",
+            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
             Generi.Descrizione AS "Genere",
             Tipologie.Descrizione AS "Tipologia"
             FROM Libri, Generi, Editori, Tipologie
