@@ -82,6 +82,10 @@
             return "Il numero del telefono fisso (opzionale) non è corretto";
 
         // Cerca il nome della città nel database
+        $idCitta = ottieniIdCitta($citta);
+        // In caso di errore, manda un messaggio
+        if ($idCitta == false) 
+            return "La città scritta non si trova in Italia. Risiedi all'estero?";
 
         // Controlla che non esista nessun account con lo stesso
         // account e-mail o con lo stesso codice fiscale
