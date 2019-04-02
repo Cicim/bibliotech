@@ -155,8 +155,8 @@ function stampa_libro($libro, $conn)
     // Colonna contenente i pulsanti per la prenotazione
     echo "<div style='height:100%' class='col text-right align-middle'>";
 
-    echo "<a href='#' style='width:30%' class='btn btn-info btn-sm mt-1 mb-1'>Prenota</a><br>";
-    echo "<a href='#' style='width:30%' class='btn btn-info btn-sm'>Lista</a>";
+    echo "<a href='#' style='width:10em' class='btn btn-info btn-sm mt-1 mb-1'>Prenota</a><br>";
+    echo "<a href='#' style='width:10em' class='btn btn-info btn-sm'>Lista</a>";
     
     
 
