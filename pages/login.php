@@ -20,7 +20,7 @@
     <!-- Importa l'header -->
     <?php include "../views/header.php" ?>
 
-    <form class="form-signin" method="post" action="">
+    <form class="form-signin" name="log" method="post" action="">
         <!-- Icona di Bibliotech -->
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Schermata di accesso</h1> <br>
@@ -39,7 +39,7 @@
                 <input type="checkbox" value="remember-me"> Ricordami
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-info btn-block" type="submit">Accedi</button> <br>
+        <button class="btn btn-lg btn-primary btn-info btn-block" type="submit" name="accedi">Accedi</button> <br>
 
         <!-- Collegamento alla pagina per recuperare la password -->
         <a href="recupero.php" class="text-info">Recupero password </a> <br>
@@ -55,8 +55,7 @@
     //includo la funzione per la connessione al DB
     include "../php/connessione.php";
 
-    if(isset($_POST["email"]))
-    {
+    if (isset($_POST["email"])) {
         //recupero le informazioni inserite nei form
         $email = $_POST["email"];
         $pw = $_POST["password"];
@@ -69,39 +68,48 @@
         $qry_res = mysqli_query($conn, $qry) or die("Impossibile eseguire query<br>" . mysqli_error($conn));
 
         //se la mail è presente nel database
-        if(!$qry_res)
-            echo "Email non presente<br>";
-        else 
-        {
-            $r = mysqli_fetch_row($qry_res);
+        $r = mysqli_fetch_row($qry_res);
+        if ($r == "") {
+            echo "<script language=javascript>
+                    document.getElementByName('log').style.color = 'red';
+                    </script>";
+                    
+            $messaggio = urlencode('Email errata');
+            header("location: login.php?msg=$messaggio");
+        } 
+        else {
+            //$r = mysqli_fetch_row($qry_res);
             //estraggo i risultati
             $md5 = $r[1];
 
             //controlla se la password è giusta
-            if(md5($pw) == $md5)
-            {
-                echo "Password corretta<br>";
+            if (md5($pw) == $md5) {
+                //echo "Password corretta<br>";
+                //echo "<script language=javascript>document.location.href='index.php'</script>";
+                $messaggio = urlencode('Login effettuato');
+		        header("location: index.php?msg=$messaggio");
+            } else {
+                //echo "password errata<br>";
+                //echo "<script language=javascript>document.location.href='login.php'</script>";
+                $messaggio = urlencode('Password errato');
+		        header("location: login.php?msg=$messaggio");
             }
-            else
-            {
-                echo "Password errata<br>";
-                
-            }
-            $password = md5($pw);
-            echo "md5: ".$md5."---pw: ".$pw."---PSW: ".$password."<br>";
+            /*$password = md5($pw);
+            echo "md5: " . $md5 . "---pw: " . $pw . "---PSW: " . $password . "<br>";*/
         }
-
-
-
-
-
-
-
     }
-
-
-
     ?>
+
+    <!-- Javascript per evidenziare le caselle dei form 
+    <script type="text/javascript">
+        // Controllo per combaciamento password
+        function coloraCasella(var cs, var bl) {
+            if(bl == true)
+                document.getElementByName(cs).style.color = 'green';
+            else
+                document.getElementByName(cs).style.color = 'red';
+        }
+    </script>-->
 </body>
 
 </html> 
