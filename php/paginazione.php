@@ -139,15 +139,15 @@ function stampa_libro($libro, $conn)
 
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
-    echo '<div class="container-fluid bg-light w-100">';
+    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="text-left container-fluid bg-light w-100 mb-2 border border-info">';
 
     // Stampa il titolo del libro
-    echo "<b>" . $libro["Titolo"] . "</b>";
+    echo "<b style='font-size:1.2em;'>" . $libro["Titolo"] . "</b>";
     // Inserisci uno span contenente l'autore
     echo "<br><span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "<br><a href=editore.php?idEditore='".$libro["idEditore"]."'><span> ". $libro["nomeEditore"]."</a></span>";
-    echo "</div>";
+    echo "<br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> ". $libro["nomeEditore"]."</a></i></span>";
+    echo "</button>";
 
 
 }
@@ -186,7 +186,7 @@ function crea_lista_autori($isbnLibro, $conn)
                 $la .= ", ";
 
             // Aggiungi un link alla pagina dell'autore
-            $la .= '<a href="autore.php?idAutore='.$row[1].'">'.$row[0].'</a>';
+            $la .= '<a class="text-info" href="autore.php?idAutore='.$row[1].'">'.$row[0].'</a>';
 
             $i++;
         }
