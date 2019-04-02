@@ -305,7 +305,7 @@
             <!-- Password -->
             <div class="col-md-6 mb-3">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" required="true" onchange='passwordUguali()' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="password" class="form-control" id="password" name="password" required="true" onchange='passwordUguali()' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 <span> Minimo 8 caratteri con una maiuscola, una minuscola ed un numero. </span>
                 <div class="invalid-feedback">Inserisci una password valida.</div>
             </div>
@@ -313,7 +313,7 @@
             <!-- Conferma Password -->
             <div class="col-md-6 mb-3">
                 <label for="confermaPassword">Conferma Password</label>
-                <input type="password" class="form-control" name="confermaPassword" required="true" onchange='passwordUguali()' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="password" class="form-control" id="confermaPassword" name="confermaPassword" required="true" onchange='passwordUguali()' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 <div class="invalid-feedback">Inserisci una password valida.</div>
             </div>
         </div>
