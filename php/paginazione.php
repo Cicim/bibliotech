@@ -1,5 +1,10 @@
 <!-- Codice per la stampa di un libro e per la paginazione -->
 <?php
+/**
+ * Funzione per creare una lista numerata di libri
+ * @param Query per decidere quali libri andare ad impaginare
+ * @return
+ */
 function paginazione($query)
 {
     // Connettiti al db
@@ -36,77 +41,29 @@ function paginazione($query)
 
     // Nuova query per ottenere i dati della pagina corrente
     $qryPagina = $query . " LIMIT " . $maxLibri . " OFFSET " . ($maxLibri * $pagina);
-
     // Esegui la query
     $res2 = mysqli_query($conn, $qryPagina);
 
-    /* 
-        Questa è la vera e propria impaginazione.
-        Contiene tutta la parte grafica ed è uguale per tutte
-        le pagine che utilizzano questa funzione
-    */
+    // Impaginazione vera e propria
 
-    //
-    // Stampa i risultati della ricerca
-    //
-    // Stampa una lista dei libri
-    /*
-    echo '<ul class="list-group">';
-    // Titolo sezioni
-    echo '<li class="list-group-item d-flex list-group-item-info justify-content-between align-items-center">';
-    echo '<div class="col-sm">Titolo</div>';
-    echo '<div class="col-sm">Editore</div>';
-    echo '<div class="col-sm">Autori</div>';
-    echo '</li>';
-    while ($row = mysqli_fetch_assoc($res2)) {
-        // Salva il valore dell'ISBN
-        $isbn = $row["ISBN"];
-
-        // Ottieni gli autori
-        $qryAutori = "SELECT CONCAT(Autori.NomeAutore, ' ', Autori.CognomeAutore) AS Autore, Autori.idAutore
-            FROM Autori, Autori_Libri, Libri
-            WHERE Autori.idAutore = Autori_Libri.idAutore
-            AND Autori_Libri.ISBNLibro = Libri.ISBN
-            AND Libri.ISBN = '$isbn'";
-        // Esegui la query
-        $res3 = mysqli_query($conn, $qryAutori);
-
-        // Componi il li
-        echo '<li class="list-group-item d-flex justify-content-between align-items-center">';
-        echo '<a href="libro.php?ISBN=' . $isbn . '">';
-        // Dividi il tutto in colonne
-        echo '<div class="col-sm">';
-        echo $row["Titolo"];
-        echo '</a>';
-        echo '</div>';
-        echo '<div class="col-sm">';
-        echo $row["NomeEditore"];
-        echo '</div>';
-        // Ottieni i nomi degli autori
-        $i = 0;
-        while ($row2 = mysqli_fetch_row($res3)) {
-            if ($i != 0) echo ", ";
-            // Aggiungi il nome a un array
-            echo !$row2[0] ? "<i>Nessun autore</i>" : $row2[0];
-            $i++;
-        }
-        echo '<div class="col-sm">';
-
-        echo '</div>';
-
-        // Chiudi il li
-        echo '</li>';
+    // Stampa la lista dei libri
+    while ($libro = mysqli_fetch_assoc($res2)) {
+        // Chiama la funzione stampa_libro
+        stampa_libro($libro, $conn);
     }
-    echo '</ul>';
-    */
-    // Chiudi la connessione
+
     mysqli_close($conn);
-    
+
     stampa_barra($pagina, $totPagine);
     return 1;
 }
 
-// Funzione per stampare la barra di navigazione
+/**
+ * Funzione per stampare la barra di navigazione
+ * @param $pagina La pagina del catalogo corrente
+ * @param $totPagine Il numero totale di pagine del catalogo
+ * @return
+ */
 function stampa_barra($pagina, $totPagine)
 {
     //
@@ -166,50 +123,87 @@ function stampa_barra($pagina, $totPagine)
     // Pulsante per andare all'ultima pagina
     echo '<li class="page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($totPagine - 1) . '">Ultima</a>';
-    echo '</li>';
-    echo '</ul>';
-    echo '</nav>';
-    echo '</div>';
-    echo '</div>';
+    // Chiudi i tag restanti
+    echo '</li></ul></nav></div></div>';
 }
 
 
-// Funzione per stampare un libro, ottenendo la copertina online
-function stampa_libro($queryRes)
+/**
+ * Funzione per stampare un libro
+ * @param $libro (associativo) una riga della query che ottiene i libri
+ * @param sessione di connessione al database
+ * @return
+ */
+function stampa_libro($libro, $conn)
 {
-    // Ottieni il titolo del libro
-    $titolo = htmlspecialchars($queryRes["Titolo"]);
-    // Ottieni l'ISBN del libro
-    $ISBN = $queryRes["ISBN"];
+
+    // Crea il container che conterrà
+    // tutte le informazione del libro importanti
+    echo '<div class="container-fluid bg-light w-100">';
+
+    // Stampa il titolo del libro
+    echo "<b>" . $libro["Titolo"] . "</b>";
+    // Inserisci uno span contenente l'autore
+    echo "<br><span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
+    // Inserisci uno span contenente l'editore
+    echo "<br><a href=editore.php?idEditore='".get_editore($isbn, $conn)."'<span> ". $libro["nomeEditore"]."</span">;
+    echo "</div>";
 
 
+}
 
+/**
+ * Funzione per ottenere una string composta dalla lista
+ * degli autori di un libro separati da virgola
+ * @param $isbnLibro int libro da cui prendere gli autori
+ * @param $conn sessione di connessione al db
+ * @return $lista String lista degli autori
+ */
+function crea_lista_autori($isbnLibro, $conn)
+{
+    // Ottieni i dati in utf-8
+    mysqli_query($conn, "set names 'utf8'");
+    // Lista degli autori
+    $la = "";
+    // Query per eseguire la ricerca
+    $query = "SELECT CONCAT(Autori.NomeAutore, ' ', Autori.CognomeAutore) AS Autore, Autori.idAutore
+              FROM Autori, Autori_Libri, Libri
+              WHERE Autori.idAutore = Autori_Libri.idAutore
+              AND Autori_Libri.ISBNLibro = Libri.ISBN
+              AND Libri.ISBN = '$isbnLibro'";
+    // Esegui la query
+    $res = mysqli_query($conn, $query) or die("Errore nell'esecuzione della query: " . mysqli_error($conn));
+    // Crea la stringa degli autori
 
+    $i = 0;
+    while ($row = mysqli_fetch_row($res)) {
+        // Controlla se la prima riga esiste
+        if (!$row) {
+            return "Nessun autore";
+        } else {
+            // Aggiungi una virgola se non si tratta del primo elemento
+            if ($i != 0)
+                $la .= ", ";
 
-    /*
-    echo "<div class='col-md-3 col-sm-6 book-front'>
-            <div class='product-grid'>
-                <div class='product-image'>
-                    <a href='libri.php?ISBN=$ISBN'></a>
-                    <ul class='social'>
-                        <li>
-                            <a href='#' data-tip='Aggiungi'>
-                                 <i class='fa fa-plus' style='font-size:36px;'></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class='product-content'>
-                    <h3 class='title p-2'>$titolo</h3>
-                    <span class='hidden-data'>
-                    Autori<br>
-                    Dati
-                    </span>
-                </div>
+            // Aggiungi un link alla pagina dell'autore
+            $la .= '<a href="autore.php?idAutore='.$row[1].'">'.$row[0].'</a>';
 
-            </form>
-        </div>
-    </div>";*/
+            $i++;
+        }
+    }
+    return $la;
+}
+
+/**
+ * Esegue una query per riportare il nome dell'editore
+ * @param $isbn int Codice del libro
+ * @param $conn connessione al database
+ * @return $editore string nome dell'editore
+ */
+function get_editore($isbn, $conn) {
+    // Ottieni i dati in utf-8
+    mysqli_query($conn, "set names 'utf8'");
+    
 }
 
 ?> 

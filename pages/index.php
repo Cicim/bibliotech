@@ -9,7 +9,11 @@
     <title>Homepage - Bibliotech</title>
 
     <!-- Include le librerie comuni -->
-    <?php include "../php/imports.php"; ?>
+    <?php include "../php/imports.php";
+    // Includi il codice per la paginazione
+    include "../php/paginazione.php";
+    // Includi il codice per la connessione al database
+    include '../php/connessione.php'; ?>
 
     <!-- Carica il css per il catalogo -->
     <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
@@ -27,27 +31,21 @@
     <!-- Homepage - Vetrina -->
     <div class="container books">
         <div class="row">
-            <!-- TODO Script da eliminare -->
-            <?php
-            // Includi il codice per la paginazione
-            include "../php/paginazione.php";
-            // Includi il codice per la connessione al database
-            include '../php/connessione.php';
-
-
+        <?php
             // Crea la query per ottenere tutti i libri
             $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.Nome AS "NomeEditore",
-                            Generi.Descrizione AS "Genere",
-                            Tipologie.Descrizione AS "Tipologia"
-                        FROM Libri, Generi, Editori, Tipologie
-                        WHERE Libri.idGenere = Generi.idGenere
-                          AND Libri.idEditore = Editori.idEditore
-                          AND Libri.idTipo = Tipologie.idTipologia
-                        ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
+            Generi.Descrizione AS "Genere",
+            Tipologie.Descrizione AS "Tipologia"
+            FROM Libri, Generi, Editori, Tipologie
+            WHERE Libri.idGenere = Generi.idGenere
+            AND Libri.idEditore = Editori.idEditore
+            AND Libri.idTipo = Tipologie.idTipologia
+            ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
 
             // Stampa tutti i libri risultati dalla query
             paginazione($query);
             ?>
+
         </div>
     </div>
 
