@@ -141,14 +141,26 @@ function stampa_libro($libro, $conn)
 
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
-    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="text-left container-fluid bg-light w-100 mb-2 border border-info">';
-
+    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="margin-auto row text-left container-fluid bg-light w-100 mb-2 border border-info">';
+    // Colonna delle informazioni sul libro
+    echo "<div class='col'>";
     // Stampa il titolo del libro
     echo "<b style='font-size:1.2em;'>" . $libro["Titolo"] . "</b>";
     // Inserisci uno span contenente l'autore
     echo "<br><span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "<br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> ". $libro["nomeEditore"]."</a></i></span>";
+    echo "<br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> "
+         .$libro["nomeEditore"]."</a></i></span>";
+    echo "</div>";
+    // Colonna contenente i pulsanti per la prenotazione
+    echo "<div style='height:100%' class='col text-right align-middle'>";
+
+    echo "<a href='#' style='width:30%' class='btn btn-info btn-sm mt-1 mb-1'>Prenota</a><br>";
+    echo "<a href='#' style='width:30%' class='btn btn-info btn-sm'>Lista</a>";
+    
+    
+
+    echo "</div>";
     echo "</button>";
 
 
