@@ -54,6 +54,11 @@
         $password = $_POST["password"];
         $confermaPassword = $_POST["confermaPassword"];
 
+        // Trasforma il codice fiscale in uppercase
+        $codFiscale = strtoupper($codFiscale);
+        // E l'indirizzo e-mail in lowercase
+        $email = strtolower($email);
+
         // Esegui i necessari controlli
         // Controlla che le due password combacino
         if ($password != $confermaPassword)
@@ -89,7 +94,12 @@
 
         // Controlla che non esista nessun account con lo stesso
         // account e-mail o con lo stesso codice fiscale
-
+        $ris_account = mysqli_query($conn, "SELECT CodFiscale FROM Utenti 
+                                            WHERE CodFiscale = '$codFiscale'
+                                               OR Email = '$email'");
+        // Se questa query riporta almeno un risultato, c'è un problema
+        if (mysqli_num_rows($ris_account) > 0)
+            return "Indirizzo e-mail o codice fiscale già utilizzati in un altro account.";
 
 
         // Se il telefono fisso non è stato inserito, settalo a NULL
@@ -143,7 +153,7 @@
         // Se la registrazione è avvenuta con successo
         else {
             // Stampa un messaggio di successo
-            echo '<div class="alert alert-success" role="alert">La registrazione è avvenuta con successo.';
+            echo '<div class="alert alert-success" role="alert">La registrazione è avvenuta con successo. ';
             echo 'Controlla la tua casella di posta elettronica</div>';
         }
         ?>
