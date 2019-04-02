@@ -121,7 +121,7 @@
     </div>
 
     <!-- DISPONIBILITÀ: ~~  -->
-    <table class="table table-striped" style="max-width:60%;margin:auto;">
+    <table class="table table-striped mb-5" style="max-width:60%;margin:auto;">
         <tbody>
             <tr>
                 <th scope="row">Genere</th>
