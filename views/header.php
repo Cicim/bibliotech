@@ -15,25 +15,15 @@
                 </li>
             </ul>
 
-            <!-- Bottone per poter visualizzare numero di libri della Lista Desideri. Al click va nella lista -->
-            <!--
-            <a class="btn btn-info ml-2" id="libriDesiderio" href="">
-                <i class="fa fa-book" style="font-size:24px;color:brown" aria-hidden="true"></i> Libri Desiderati
-            </a>
-            Non va qua
-            -->
-            <!--<a class="btn btn-info ml-2" id="btnAccedi" href="login.php">Accedi</a>-->
-
             <?php
-            //include "../php/connessione.php";
-            //$conn = connettitiAlDb();
-            /*if (isset($_GET["msg"]) && $_GET["msg"] == 'Login effettuato') {
-                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='index.php'>OK</a>";
-            }
-            else 
-                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";*/
-            if (isset($_GET["session"])) {
-                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='index.php'>OK</a>";
+            // Inizializza la sessione
+            session_start();
+
+            if (isset($_SESSION["user_id"])) {
+                // Ottieni nome e cognome dell'utente
+                $nome = $_SESSION["nome"];
+                $cognome = $_SESSION["cognome"];
+                echo "<a class='btn btn-info ml-2' id='btnEsci' href='../php/logout.php'>$nome $cognome</a>";
             }
             else 
                 echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";
