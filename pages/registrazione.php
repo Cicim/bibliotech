@@ -20,9 +20,78 @@
 </head>
 
 <!-- Tutta la pagina è centrata -->
+
 <body class="text-center">
     <!-- Includi l'header -->
     <?php include "../views/header.php" ?>
+
+    <!--Script php per l'invio dei dati al database-->
+    <?php
+    /**
+     * Funzione per effettuare la registrazione.
+     * Per poter uscire in qualsiasi momento
+     * utilizzando la keyword return. 
+     * @return string Lo stato attuale della registrazione
+     */
+    function registrazione()
+    {
+        // Includi il codice per la connessione al database
+        include "../php/connessione.php";
+        $conn = connettitiAlDb();
+
+        // Recupera i dati dal form
+        $nome = $_POST["nome"];
+        $cognome = $_POST["cognome"];
+        $sesso = $_POST["sesso"];
+        $viaPzz = $_POST["viaPzz"];
+        $citta = $_POST["citta"];
+        $numeroCivico = $_POST["numeroCivico"];
+        $codFiscale = $_POST["codFiscale"];
+        $dataNascita = date('Y-m-d', strtotime(str_replace('/', '-', $_POST["dataNascita"])));
+        $telCellulare = $_POST["telCellulare"];
+        $telFisso = $_POST["telFisso"];
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $confermaPassword = $_POST["confermaPassword"];
+
+        // Esegui i necessari controlli
+        // 1) Confronta il codice fiscale con quello calcolato
+        echo comparaDatiConCodiceFiscale($nome, $cognome, $dataNascita, $sesso);
+
+
+        // Se il telefono fisso non è stato inserito, settalo a NULL
+        if ($telFisso == "") $fisso = "NULL";
+        // Altrimenti mettilo tra virgolette
+        else $fisso = "'$telFisso'";
+
+        // Genera l'hash della password
+        $pwd = md5($password);
+
+        //Query di inserimento campi nel database
+        $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
+            TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
+            Sesso, Password, Citta, DataNascita, Permessi) VALUES
+            ('$codFiscale', '$nome', '$cognome', '$email',
+             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 1, NULL, '2019-03-12',
+             '$sesso', '$pwd', 279, '$dataNascita', 3)";
+
+        // Mostra l'errore
+        // if (!$query_res = mysqli_query($conn, $qry)) {
+        //     echo ("ERROR: " . mysqli_error($conn));
+        // }
+
+        //Chiudo la connessione
+        mysqli_close($conn);
+    }
+
+    // Se il form è stato compilato
+    if (isset($_POST["nome"]))
+        // Esegui la funzione per la registrazione
+        $stato = registrazione();
+
+
+    ?>
+
 
     <!-- Il form per la registrazione -->
     <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
@@ -175,53 +244,6 @@
         <!-- Footer -->
         <p class="mt-5 mb-3 text-muted">&copy; Bibliotech, 2019 </p>
     </form>
-
-    <!--Script php per l'invio dei dati al database-->
-    <?php
-    //recupero dati inseriti nel form
-    if (isset($_POST["nome"])) {
-        //Connetto al DB
-        include "connessione.php";
-        $conn = connettitiAlDb();
-
-        //Recupero i dati dal form
-        $nome = $_POST["nome"];
-        $cognome = $_POST["cognome"];
-        $sesso = $_POST["sesso"];
-        $viaPzz = $_POST["viaPzz"];
-        $citta = $_POST["citta"];
-        $numeroCivico = $_POST["numeroCivico"];
-        $codFiscale = $_POST["codFiscale"];
-        $dataNascita = date('Y-m-d', strtotime(str_replace('/', '-', $_POST["dataNascita"])));
-        $telCellulare = $_POST["telCellulare"];
-        $telFisso = $_POST["telFisso"];
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-
-        //Se il telefono fisso non è stato inserito, allora settalo a NULL
-        if ($telFisso == "") $fisso = "NULL";
-        else $fisso = "'$telFisso'";
-
-        //Genero l'hash della password
-        $pwd = md5($password);
-
-        //Query di inserimento campi nel database
-        $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
-            TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
-            Sesso, Password, Citta, DataNascita, Permessi) VALUES
-            ('$codFiscale', '$nome', '$cognome', '$email',
-             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 1, NULL, '2019-03-12',
-             '$sesso', '$pwd', 279, '$dataNascita', 3)";
-
-        // Mostra l'errore
-        if (!$query_res = mysqli_query($conn, $qry)) {
-            echo ("ERROR: " . mysqli_error($conn));
-        }
-
-        //Chiudo la connessione
-        mysqli_close($conn);
-    }
-    ?>
 
 </body>
 
