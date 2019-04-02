@@ -28,6 +28,21 @@
     <!--Script php per l'invio dei dati al database-->
     <?php
     /**
+     * Funzione per generare una string a caso
+     * @param int $length Lunghezza della stringa
+     * @return string String a caso;
+     */
+    function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    /**
      * Funzione per effettuare la registrazione.
      * Per poter uscire in qualsiasi momento
      * utilizzando la keyword return. 
@@ -108,23 +123,41 @@
         else $fisso = "'$telFisso'";
 
         // Genera l'hash della password
-        $pwd = md5($password);
+        $hashed = md5($password);
+        // Genera una data da apporre a dataValidazione
+        $dataOdierna = date("Y-m-d");
+
+        // Genera un codice di validazione
+        // Ottieni il timestamp odierno e hashalo
+        $timestampOdierno = md5(time());
+        // Ottieni una stringa a caso e uniscila al timestamp calcolato
+        $codValidazione = generateRandomString(13) . $timestampOdierno;
+
+        echo $codValidazione;
 
         //Query di inserimento campi nel database
         $qry = "INSERT INTO Utenti (CodFiscale, Nome, Cognome, Email, ViaPzz, NumeroCivico,
             TelefonoCellulare, TelefonoFisso, Validato, CodiceValidazione, DataValidazione,
             Sesso, Password, Citta, DataNascita, Permessi) VALUES
             ('$codFiscale', '$nome', '$cognome', '$email',
-             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 1, NULL, '2019-03-12',
-             '$sesso', '$pwd', 279, '$dataNascita', 3)";
+             '$viaPzz', $numeroCivico, '$telCellulare', $fisso, 0, '$codValidazione', '$dataOdierna',
+             '$sesso', '$hashed', 279, '$dataNascita', 3)";
 
-        // Mostra l'errore
-        // if (!$query_res = mysqli_query($conn, $qry)) {
-        //     echo ("ERROR: " . mysqli_error($conn));
-        // }
+        // Esegui la query
+        $ris_aggiunta = mysqli_query($conn, $qry);
+
+        // Se ci sono stati errori
+        if (!$ris_aggiunta)
+            return mysqli_error($conn);
+        
+        // Altrimenti, invia una mail all'interessato
+        
 
         //Chiudo la connessione
         mysqli_close($conn);
+
+        // Riporta ok
+        return "ok";
     }
 
     $stato = "";
@@ -132,8 +165,6 @@
     if (isset($_POST["nome"]))
         // Esegui la funzione per la registrazione
         $stato = registrazione();
-
-
     ?>
 
 
@@ -151,7 +182,7 @@
             echo "$stato</div>";
         }
         // Se la registrazione è avvenuta con successo
-        else {
+        else if ($stato == 'ok') {
             // Stampa un messaggio di successo
             echo '<div class="alert alert-success" role="alert">La registrazione è avvenuta con successo. ';
             echo 'Controlla la tua casella di posta elettronica</div>';
