@@ -59,7 +59,7 @@ function inviaMail($a, $oggetto, $html)
  * 
  * @return bool Se la mail è stata iniviata
  */
-function inviaMailDiConferma($indirizzo, $validazione)
+function inviaMailDiConferma($indirizzo, $validazione, $nome, $cognome, $sesso)
 {
     // Nome del sito
     $sito = "localhost/bib2";
@@ -68,10 +68,12 @@ function inviaMailDiConferma($indirizzo, $validazione)
     // Ottieni l'anno attuale
     $anno = date('Y');
 
+    $strsesso = $sesso == 'F' ? 'a' : 'o';
+
     // Invia mail al destinatario
     return inviaMail(
         $indirizzo,
         'Conferma account Bibliotech',
-        "<body style='border:0;margin:0;font-family:Helvetica'><div style='background:black;color:white;padding:4em'><h1>Grazie per esserti registrato</h1>Per completare l'attivazione del tuo account clicca su questo pulsante:<br><div style='text-align:center'><a style='margin:1em;text-decoration:none;padding:1em 2em;background:white;display:inline-block;border-radius:1em;color:black;font-family:Segoe UI' href='$sito/php/validazione.php?codice=$validazione'>Attiva il tuo account</a></div></div><div style='background:grey;color:lightgray;padding:1em;text-align:center;font-size:11pt'>Se non hai creato tu quest'account, puoi ignorare questa e-mail.<br>Per qualsiasi informazione, contatta <a href='mailto:$email' style='color:#ddd;'>$email</a>, non rispondere a questa mail<br><a href='$sito/' style='color:#ddd'>Bibliotech</a>, $anno</div></body>"
+        "<body style='border:0;margin:0;font-family:Helvetica'><div style='background:black;color:white;padding:4em'><h1>Ciao, $nome $cognome!<br>Grazie per esserti registrat$strsesso</h1>Per completare l'attivazione del tuo account clicca su questo pulsante:<br><div style='text-align:center'><a style='margin:1em;text-decoration:none;padding:1em 2em;background:white;display:inline-block;border-radius:1em;color:black;font-family:Segoe UI' href='$sito/php/validazione.php?codice=$validazione'>Attiva il tuo account</a></div></div><div style='background:grey;color:lightgray;padding:1em;text-align:center;font-size:11pt'>Se non hai creato tu quest'account, puoi ignorare questa e-mail.<br>Per qualsiasi informazione, contatta <a href='mailto:$email' style='color:#ddd;'>$email</a>, non rispondere a questa mail<br><a href='$sito/' style='color:#ddd'>Bibliotech</a>, $anno</div></body>"
     );
 }

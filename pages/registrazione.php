@@ -137,7 +137,7 @@
         $codValidazione = generateRandomString(13) . $timestampOdierno;
         
         // Altrimenti, invia una mail all'interessato
-        $inviata = inviaMailDiConferma($email, $codValidazione);
+        $inviata = inviaMailDiConferma($email, $codValidazione, $nome, $cognome, $sesso);
 
         // Se la mail non è stata inviata
         if (!$inviata)
