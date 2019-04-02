@@ -19,11 +19,81 @@
 <body class="text-center">
     <!-- Importa l'header -->
     <?php include "../views/header.php" ?>
+    
+    <!--Script PHP-->
+    <?php
+    // Includo la funzione per la connessione al DB
+    require_once "../php/connessione.php";
+
+    function login()
+    {
+        // Recupero le informazioni inserite nei form
+        $email = $_POST["email"];
+        $pw = $_POST["password"];
+
+        // Connettiti al database
+        $conn = connettitiAlDb();
+
+        // Query per ottenere utente e la password hashata data la e-mail
+        $qry = "SELECT Email, Password, CodFiscale, Nome, Cognome FROM Utenti WHERE Email = '$email'";
+        $qry_res = mysqli_query($conn, $qry) 
+            or die("Errore durante l'esecuzione della query");
+
+        // Se la mail non è presente nel database
+        if (mysqli_num_rows($qry_res) == 0)
+            // Esci con un errore
+            return "Indirizzo e-mail non trovato";
+
+        // Ottiieni il primo risultato
+        $ris = mysqli_fetch_row($qry_res);
+
+        // Salva la password hashata
+        $md5 = $ris[1];
+        // Salva il codice fiscale
+        $codFiscale = $ris[2];        
+        // Ottieni nome e cognome
+        $nome = $ris[3];
+        $cognome = $ris[4];
+
+        // Controlla se la password è giusta
+        if (md5($pw) == $md5) {
+            session_start();
+
+            // Imposta i parametri della sessione
+            $_SESSION['user_id'] = $codFiscale;
+            $_SESSION['nome'] = $nome;
+            $_SESSION['cognome'] = $cognome;
+
+            return "ok";
+        } 
+        // Altrimenti la password è sbagliata
+        else 
+            // Esci con un errore
+            return "Password errata";
+    }
+
+    $stato = "";
+    if (isset($_POST["email"])) 
+        $stato = login();
+    ?>
 
     <form class="form-signin" name="log" method="post" action="">
         <!-- Icona di Bibliotech -->
         <h1>Bibliotech</h1>
         <h1 class="h3 mb-3 font-weight-normal">Schermata di accesso</h1> <br>
+
+        <?php
+            // Se il login è avvenuto con successo
+            if ($stato == "ok") {
+                // Torna alla homepage
+                echo "<script>location.href='index.php'</script>";
+            }
+            else if ($stato != '') {
+                echo '<div class="alert alert-danger" role="alert">';
+                echo $stato;
+                echo '</div>';
+            }
+        ?>
 
         <!-- Casella per l'e-mail -->
         <label for="email" class="sr-only">Indirizzo mail</label>
@@ -50,70 +120,6 @@
         <p class="mt-5 mb-3 text-muted">&copy; Bibliotech, 2019 </p>
     </form>
 
-    <!--Script PHP-->
-    <?php
-    //includo la funzione per la connessione al DB
-    include "../php/connessione.php";
-
-    if (isset($_POST["email"])) {
-        //recupero le informazioni inserite nei form
-        $email = $_POST["email"];
-        $pw = $_POST["password"];
-
-        //connetto al DB
-        $conn = connettitiAlDb();
-
-        //query per vedere se le informazioni sono corrette
-        $qry = "SELECT Email, Password FROM Utenti WHERE Email = '$email'";
-        $qry_res = mysqli_query($conn, $qry) or die("Impossibile eseguire query<br>" . mysqli_error($conn));
-
-        //se la mail è presente nel database
-        $r = mysqli_fetch_row($qry_res);
-        if ($r == "") {
-            echo "<script language=javascript>
-                    document.getElementByName('log').style.color = 'red';
-                    </script>";
-                    
-            $messaggio = urlencode('Email errata');
-            header("location: login.php?msg=$messaggio");
-        } 
-        else {
-            //$r = mysqli_fetch_row($qry_res);
-            //estraggo i risultati
-            $md5 = $r[1];
-
-            //controlla se la password è giusta
-            if (md5($pw) == $md5) {
-                //echo "Password corretta<br>";
-                //echo "<script language=javascript>document.location.href='index.php'</script>";
-                session_start();
-                $_SESSION["user_id"] = $record["id"];
-                $sess = $_SESSION["user_id"];
-                $messaggio = urlencode('Login effettuato');
-                //header("location: index.php?msg=$messaggio");
-                header("location: index.php?session=$sess");
-            } else {
-                //echo "password errata<br>";
-                //echo "<script language=javascript>document.location.href='login.php'</script>";
-                $messaggio = urlencode('Password errata');
-                header("location: login.php?msg=$messaggio");
-            }
-            /*$password = md5($pw);
-            echo "md5: " . $md5 . "---pw: " . $pw . "---PSW: " . $password . "<br>";*/
-        }
-    }
-    ?>
-
-    <!-- Javascript per evidenziare le caselle dei form 
-    <script type="text/javascript">
-        // Controllo per combaciamento password
-        function coloraCasella(var cs, var bl) {
-            if(bl == true)
-                document.getElementByName(cs).style.color = 'green';
-            else
-                document.getElementByName(cs).style.color = 'red';
-        }
-    </script>-->
 </body>
 
 </html> 
