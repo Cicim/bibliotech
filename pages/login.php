@@ -35,7 +35,7 @@
         $conn = connettitiAlDb();
 
         // Query per ottenere utente e la password hashata data la e-mail
-        $qry = "SELECT Email, Password, CodFiscale, Nome, Cognome FROM Utenti WHERE Email = '$email'";
+        $qry = "SELECT Email, Password, CodFiscale, Nome, Cognome, Validato FROM Utenti WHERE Email = '$email'";
         $qry_res = mysqli_query($conn, $qry) 
             or die("Errore durante l'esecuzione della query");
 
@@ -46,6 +46,13 @@
 
         // Ottiieni il primo risultato
         $ris = mysqli_fetch_row($qry_res);
+
+        // Ottieni se l'account è validato
+        $validato = $ris[5];
+        // Esegui il controllo
+        if ($validato == 0)
+            // Esci con un errore
+            return "Questo indirizzo e-mail non è ancora stato confermato";
 
         // Salva la password hashata
         $md5 = $ris[1];
