@@ -1,5 +1,6 @@
 <?php
     /**
+     * @author Claudio Cicimurri, 5CI
      * Funzione per connettersi al database
      * @return mysqli Riporta connessione al database
      */
@@ -19,6 +20,7 @@
     }
 
     /**
+     * @author Claudio Cicimurri, 5CI
      * Funzione per ottenere l'id di una città
      * data la stringa in input
      * @param string $citta Stringa da cercare

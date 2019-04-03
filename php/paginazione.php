@@ -7,9 +7,10 @@
 include "loggedin.php";
 
 /**
+ * @author Andrea Cicimurri, 5CI
  * Funzione per creare una lista numerata di libri
  * @param Query per decidere quali libri andare ad impaginare
- * @return
+ * @return 1
  */
 function paginazione($query)
 {
@@ -65,6 +66,7 @@ function paginazione($query)
 }
 
 /**
+ * @author Andrea Cicimurri, 5CI
  * Funzione per stampare la barra di navigazione
  * @param $pagina La pagina del catalogo corrente
  * @param $totPagine Il numero totale di pagine del catalogo
@@ -138,6 +140,7 @@ function stampa_barra($pagina, $totPagine)
 
 
 /**
+ * @author Andrea Cicimurri, 5CI
  * Funzione per stampare un libro
  * @param $libro (associativo) una riga della query che ottiene i libri
  * @param sessione di connessione al database
@@ -193,6 +196,7 @@ function stampa_libro($libro, $conn)
 }
 
 /**
+ * @author Andrea Cicimurri, 5CI
  * Funzione per ottenere una string composta dalla lista
  * degli autori di un libro separati da virgola
  * @param $isbnLibro int libro da cui prendere gli autori
