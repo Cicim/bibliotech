@@ -3,7 +3,7 @@
 
 <!-- Codice per la stampa di un libro e per la paginazione -->
 <?php
-// Includo la funzione per il controllo del login
+ // Includo la funzione per il controllo del login
 include "loggedin.php";
 
 /**
@@ -89,13 +89,13 @@ function stampa_barra($pagina, $totPagine)
     echo '<ul class="pagination justify-content-center">';
     // Pulsante per andare alla prima pagina
     // Disabilitato se si è alla prima pagina
-    echo '<li class="'.$classi.' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
+    echo '<li class="' . $classi . ' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=0">Prima</a>';
     echo '</li>';
     // Pulsante per andare alla pagina prima
     // Disabilitato se si è alla prima pagina
     echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="'.$classi.' page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
+    echo '<a class="' . $classi . ' page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
     echo '</li>';
 
     // Mostra le pagine vicine
@@ -122,17 +122,17 @@ function stampa_barra($pagina, $totPagine)
         for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
             // Pulsanti per andare alle pagine vicine
             echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
-            echo '<a class="'.$classi.' page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
+            echo '<a class="' . $classi . ' page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
             echo '</li>';
         }
     }
 
     // Pulsante per andare alla pagina dopo
-    echo '<li class="'.$classi.' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
     echo '</li>';
     // Pulsante per andare all'ultima pagina
-    echo '<li class="'.$classi.' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+    echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
     echo '<a class="page-link" href="?page=' . ($totPagine - 1) . '">Ultima</a>';
     // Chiudi i tag restanti
     echo '</li></ul></nav></div></div>';
@@ -148,11 +148,23 @@ function stampa_barra($pagina, $totPagine)
  */
 function stampa_libro($libro, $conn)
 {
+    // Controlla se il login è stato effettuato
+    $log = logged();
+    // Href del pulsante lista dei desideri
+    $linklista = "";
+    
+    // Se non sei loggato imposta a login.php
+    if (!$log) {
+        $linklista = "../pages/login.php";
+    } else 
+        // Altrimenti fai ###
+        $linklista = "#";
+
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
 
     // Pulsante da cliccare per aprile le info del libro
-    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="pl-4 margin-auto text-left container-fluid bg-light mb-2 border border-info">';
+    echo '<button onClick="location.href=' . "'libro.php?ISBN=" . $libro["ISBN"] . "'" . '" class="pl-4 margin-auto text-left container-fluid bg-light mb-2 border border-info">';
     // Stampa il titolo del libro
     echo "  <b style='font-size:1.2em;'>" . $libro["Titolo"] . "</b>";
     // Riga contenente il pulsante e autore/editore
@@ -162,32 +174,17 @@ function stampa_libro($libro, $conn)
     // Inserisci uno span contenente l'autore
     echo "          <span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "          <br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> ".$libro["nomeEditore"]."</a></i></span>";
+    echo "          <br><span><i><a class='text-secondary' href=editore.php?idEditore='" . $libro["idEditore"] . "'> " . $libro["nomeEditore"] . "</a></i></span>";
     echo "      </div>";
-    
+
     // Colonna contenente il pulsante per la prenotazione
     echo "      <div class='col text-right p-1'>";
 
-    // Funzione per controllare lo stato del log
-    $log = logged();
 
-    // Se il login non è avvenuto, allora rimanda alla pagina login
-    if($log == false)
-    {
-        // On Mobile
-        echo "          <a href='../pages/login.php' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
-        // On Desktop
-        echo "          <a href='../pages/login.php' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
-    }
-    // Altrimenti il login è già avvenuto
-    else
-    {
-        // On Mobile
-        echo "          <a href='#' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
-        // On Desktop
-        echo "          <a href='#' style='' class='add-to-list full-text btn btn-primary btn-info'>Aggiungi a Lista</a>";
-    }
-
+    // On Mobile
+    echo "          <a href='" . $linklista . "' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+    // On Desktop
+    echo "          <a href='" . $linklista . "' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
     echo "      </div>";
     // Chiusura row
     echo "</div>";
@@ -230,7 +227,7 @@ function crea_lista_autori($isbnLibro, $conn)
                 $la .= ", ";
 
             // Aggiungi un link alla pagina dell'autore
-            $la .= '<a class="text-info" href="autore.php?idAutore='.$row[1].'">'.$row[0].'</a>';
+            $la .= '<a class="text-info" href="autore.php?idAutore=' . $row[1] . '">' . $row[0] . '</a>';
 
             $i++;
         }
