@@ -6,6 +6,17 @@
  // Includo la funzione per il controllo del login
 include "login-utils.php";
 
+
+function imposta_query($url, $query, $valore) {
+    // Crea stringa
+    $nuovoUrl = $url ;
+    
+    // Ottieni una stringa di tutte le query get tranne quello cercato
+
+
+    
+}
+
 /**
  * @author Andrea Cicimurri, 5CI
  * Funzione per creare una lista numerata di libri
@@ -65,6 +76,7 @@ function paginazione($query)
     return 1;
 }
 
+
 /**
  * @author Andrea Cicimurri, 5CI
  * Funzione per stampare la barra di navigazione
@@ -74,6 +86,9 @@ function paginazione($query)
  */
 function stampa_barra($pagina, $totPagine)
 {
+    // Stringa comune nell'href di tutti i pulsanti della navigazione
+    $urlComune = $_SERVER["QUERY_STRING"];
+
     // Classi comune a tutti gli elementi
     $classi = "navbar-font-size";
     echo "<style>.navbar-font-size { font-size: 0.8em }</style>";
@@ -90,7 +105,7 @@ function stampa_barra($pagina, $totPagine)
     // Pulsante per andare alla prima pagina
     // Disabilitato se si è alla prima pagina
     echo '<li class="' . $classi . ' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="?page=0">Prima</a>';
+    echo '<a class="page-link" href="?'.$urlComune.'&page=0">Prima</a>';
     echo '</li>';
     // Pulsante per andare alla pagina prima
     // Disabilitato se si è alla prima pagina
@@ -152,11 +167,11 @@ function stampa_libro($libro, $conn)
     $log = logged();
     // Href del pulsante lista dei desideri
     $linklista = "";
-    
+
     // Se non sei loggato imposta a login.php
     if (!$log) {
         $linklista = "../pages/login.php";
-    } else 
+    } else
         // Altrimenti fai ###
         $linklista = "#";
 
