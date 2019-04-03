@@ -79,6 +79,10 @@
         // E l'indirizzo e-mail in lowercase
         $email = strtolower($email);
 
+        // Se il numero civico non esiste, trasformalo in null
+        if (!$numeroCivico or $numeroCivico == '')
+            $numeroCivico = 'NULL';
+
         // Esegui i necessari controlli
         // Controlla che le due password combacino
         if ($password != $confermaPassword)
@@ -321,8 +325,13 @@
         </div>
 
         <!-- Javascript per il controllo delle password -->
-        <script type="text/javascript">
-            // Controllo per combaciamento password
+        <script>
+            /**
+            * @author Claudio Cicimurri, 5CI
+            * Funzione eseguita al cambiamento di valore nei campi
+            * password e confermaPassword.
+            * Fa diventare le password verdi se combaciano, altrimenti rosse
+            */
             function passwordUguali() {
                 if (document.getElementById('password').value ==
                     document.getElementById('confermaPassword').value) {
