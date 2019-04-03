@@ -12,6 +12,7 @@
      - contenuto
      - footer (importato da ../views/footer.php)
 -->
+
 <body class="wrapper">
     <?php
     // Connessione al Database
@@ -127,7 +128,7 @@
                 ?>
             </h5>
         </div>
-        
+
         <!-- Tabella dettagli del libro -->
         <table class="table table-striped mb-5" style="max-width:60%;margin:auto;">
             <tbody>
@@ -157,10 +158,33 @@
                 </tr>
             </tbody>
         </table>
+
+        <?php
+        /**
+         * @author Lorenzo Clazzer, 5CI
+         * Script utilizzato per la stampa di un pulsante
+         * per aggiungere il libro alla lista, solo se loggato
+         */
+
+        // Controlla se è stato effettuato l'accesso, allora aggiungi il pulsante 'Aggiungi alla lista'
+        include "../php/login-utils.php";
+
+        $log = logged();
+        if ($log == false)
+            // L'utente non è loggato, non stampa il pulsante
+            echo "";
+        // Altrimenti stampa il pulsante
+        else {
+            echo "<div class='col text-center mb-4'>";
+            echo "<a href='#' style='' class='add-to-list full-text btn btn-info btn-lg mt-0'>Aggiungi a Lista</a>";
+            echo "</div>";
+        }
+        ?>
+
     </div>
 
     <!-- footer importato -->
     <?php include "../views/footer.php" ?>
 </body>
 
-</html>
+</html> 
