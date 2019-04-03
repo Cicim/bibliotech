@@ -25,18 +25,21 @@
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
 
-                // Stampa il dropdown
-                    echo "<li class='nav-item dropdown'>
-                          <a class='button btn btn-info' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+
+                    // Stampa il dropdown
+                    echo "<div class='wrapper'>
+                    <ul class='nav-item dropdown'>
+                    <a class='button btn btn-info' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                           <font color='white'>$nome $cognome</font>
-                          </a>
+                    </a>
                           <div class='dropdown-menu dropdown-menu-lg-right' aria-labelledby='navbarDropdownMenuLink'>
                             <a class='dropdown-item' href='#'>Pagina Utente</a>
                             <a class='dropdown-item' href='#'>Lista dei desideri</a>
                             <a class='dropdown-item' href='#'>Lista dei prestiti</a>
                             <a class='dropdown-item' href='../php/logout.php'>Esci</a>
-                        </li>
-                    </div>";
+                        
+                    </div>
+                    </ul>";
             } 
             // Oppure stampa il pulsante accedi
             else
