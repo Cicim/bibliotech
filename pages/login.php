@@ -50,7 +50,7 @@
         // Ottieni se l'account è validato
         $validato = $ris[5];
         // Esegui il controllo
-        if ($validato == 0)
+        if ($validato != 0)
             // Esci con un errore
             return "Questo indirizzo e-mail non è ancora stato confermato";
 

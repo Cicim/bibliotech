@@ -5,10 +5,9 @@
   padding: 5px;
   padding-top: 15px;
   padding-bottom: 25px;
-  z-index: 1000;
 }
 
-hr {
+.footer hr {
   display: block;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
@@ -17,4 +16,15 @@ hr {
   border-style: inset;
   border-width: 1px;
   color: #bbb;
+}
+.wrapper {
+  display: grid;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+
+  min-height: 100%;
+  width: 100%;
+
+  margin: 0;
 }

@@ -1,3 +1,6 @@
+<!-- Aggiungi gli stili -->
+<link rel="stylesheet" href="../css/paginazione.css">
+
 <!-- Codice per la stampa di un libro e per la paginazione -->
 <?php
 /**
@@ -67,7 +70,8 @@ function paginazione($query)
 function stampa_barra($pagina, $totPagine)
 {
     // Classi comune a tutti gli elementi
-    $classi = "";
+    $classi = "navbar-font-size";
+    echo "<style>.navbar-font-size { font-size: 0.8em }</style>";
     //
     // Stampa i pulsanti per spostarsi tra le pagine
     //
@@ -141,33 +145,31 @@ function stampa_libro($libro, $conn)
 
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
-    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="row margin-auto text-left container-fluid bg-light mb-2 border border-info">';
-    
-    echo '<div class="col-12">';
-    
-    // Riga che contiene le colonne che vengono dopo
-    echo '<div class="row">';
-    
-    // Colonna delle informazioni sul libro
-    echo "<div class='col'>";
+
+    // Pulsante da cliccare per aprile le info del libro
+    echo '<button onClick="location.href='."'libro.php?ISBN=".$libro["ISBN"]."'".'" class="pl-4 margin-auto text-left container-fluid bg-light mb-2 border border-info">';
     // Stampa il titolo del libro
-    echo "<b style='font-size:1.2em;'>" . $libro["Titolo"] . "</b>";
+    echo "  <b style='font-size:1.2em;'>" . $libro["Titolo"] . "</b>";
+    // Riga contenente il pulsante e autore/editore
+    echo "  <div class='row'>";
+    // Riga che contiene le colonne che vengono dopo
+    echo '      <div class="col-10">';
     // Inserisci uno span contenente l'autore
-    echo "<br><span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
+    echo "          <span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "<br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> "
-         .$libro["nomeEditore"]."</a></i></span>";
-    echo "</div>";
+    echo "          <br><span><i><a class='text-secondary' href=editore.php?idEditore='".$libro["idEditore"]."'> ".$libro["nomeEditore"]."</a></i></span>";
+    echo "      </div>";
     
     // Colonna contenente il pulsante per la prenotazione
-    echo "<div class='col text-right p-1'>";
-    echo "  <a href='#' style='width:10em' class='btn btn-info btn-sm'>Lista</a>";
+    echo "      <div class='col text-right p-1'>";
+    // On Mobile
+    echo "          <a href='#' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+    // On Desktop
+    echo "          <a href='#' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
+    echo "      </div>";
+    // Chiusura row
     echo "</div>";
-    
-    echo "</div>";  
-    
-    echo "</div>";  
-    
+    // Chiusura button    
     echo "</button>";
 
 
