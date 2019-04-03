@@ -246,7 +246,7 @@ CREATE TABLE Armadi (
 CREATE TABLE Ripiani (
   idRipiano INT NOT NULL AUTO_INCREMENT,
   idArmadio INT NOT NULL,
-  NumeroRipiano INT NOT NULL,
+  NumeroRipiano VARCHAR(4) NOT NULL,
   PRIMARY KEY (idRipiano),
   FOREIGN KEY (idArmadio) REFERENCES Armadi(idArmadio)
 );
@@ -320,9 +320,12 @@ CREATE TABLE Prestiti (
   bibRiconsegna CHAR(16) NULL,
   PRIMARY KEY (idPrestito, bibRiconsegna),
   FOREIGN KEY (idCopia) REFERENCES Copie(idCopia),
-  FOREIGN KEY (codFiscaleUtente) REFERENCES Utenti(CodFiscale),
-  FOREIGN KEY (bibConsenga) REFERENCES Utenti(CodFiscale),
+  FOREIGN KEY (codFiscaleUtente) REFERENCES Utenti(CodFiscale)
+    ON DELETE CASCADE,
+  FOREIGN KEY (bibConsenga) REFERENCES Utenti(CodFiscale)
+    ON DELETE CASCADE,
   FOREIGN KEY (bibRiconsegna) REFERENCES Utenti(CodFiscale)
+    ON DELETE CASCADE
 );
 
 
@@ -335,6 +338,7 @@ CREATE TABLE Lista_Interessi (
   Commento VARCHAR(45) NULL,
   DataInserimento DATE NOT NULL,
   PRIMARY KEY (codFiscaleUtente, ISBNLibro),
-  FOREIGN KEY (codFiscaleUtente) REFERENCES Utenti(CodFiscale),
+  FOREIGN KEY (codFiscaleUtente) REFERENCES Utenti(CodFiscale)
+    ON DELETE CASCADE,
   FOREIGN KEY (ISBNLibro) REFERENCES Libri(ISBN)
 );
