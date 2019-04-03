@@ -15,7 +15,7 @@ include "login-utils.php";
 function ristampaQueryTranne($tranne) {
     // Crea stringa
     $nuovoUrl = '?';
-    // Ottieni una stringa di tutte le query get tranne quello cercato
+    // Ottieni una stringa di tutte le query get tranne quella cercata
     foreach($_GET as $key => $param) {
         if ($key != $tranne)
             $nuovoUrl .= $key . '=' . $param . '&';
@@ -31,12 +31,21 @@ function ristampaQueryTranne($tranne) {
  */
 function paginazione($query)
 {
+    // Se la query risulta vuota
+    if ($query === "") {
+        echo '<div class="jumbotron" style="padding: 2rem 2rem">';
+        echo '    <h1 class="display-4 text-center">La query eseguita è vuota!</h1>';
+        echo '    <h5 class="display-5 text-center">Non sappiamo cosa fare per aiutarti... Questo non è previsto!</h5>';
+        echo '</div>';
+        return;
+    }
     // Connettiti al db
     $conn = connettitiAlDb();
     // Ottieni i dati in utf-8
     mysqli_query($conn, "set names 'utf8'");
     // Esegui la query
     $res = mysqli_query($conn, $query);
+
     // Pagina corrente
     $pagina = 0;
 
