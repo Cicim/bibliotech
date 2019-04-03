@@ -210,7 +210,6 @@ function stampaLibro($libro, $conn)
     // Colonna contenente il pulsante per la prenotazione
     echo "      <div class='col text-right p-1'>";
 
-
     // On Mobile
     echo "          <a href='" . $linklista . "' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
     // On Desktop

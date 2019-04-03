@@ -35,7 +35,7 @@
 
         // Controlla che la ricerca per codice dia almeno un risultato
         if (mysqli_num_rows($ris) == 0)
-            return "Il codice fornito non è valido o è già stato. Assicurati di aver aperto l'e-mail giusta.";
+            return "Il codice fornito non è valido o è già stato validato. Assicurati di aver aperto l'e-mail giusta.";
 
         // Ottieni i dati su questo account
         $dati = mysqli_fetch_row($ris);
