@@ -1,4 +1,5 @@
 <header>
+<link rel="stylesheet" type="text/css" href="../css/dropdown.css">
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
         <a class="navbar-brand" href="../index.php">Bibliotech</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -25,16 +26,16 @@
                 $cognome = $_SESSION["cognome"];
 
                 // Stampa il dropdown
-                echo "<div class='btn-group'>
-                        <a class='button btn btn-info' href='#'>$nome $cognome</a>
-                        <button type='button' class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle='dropdown'></button>
-                        <div class='dropdown-menu dropdown-menu-lg-right'>
-                            <a class='dropdown-item' href='#'>Pagina utente</a>
+                    echo "<li class='nav-item dropdown'>
+                          <a class='button btn btn-info' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                          <font color='white'>$nome $cognome</font>
+                          </a>
+                          <div class='dropdown-menu dropdown-menu-lg-right' aria-labelledby='navbarDropdownMenuLink'>
+                            <a class='dropdown-item' href='#'>Pagina Utente</a>
                             <a class='dropdown-item' href='#'>Lista dei desideri</a>
                             <a class='dropdown-item' href='#'>Lista dei prestiti</a>
-                            <div class='dropdown-divider'></div>
                             <a class='dropdown-item' href='../php/logout.php'>Esci</a>
-                        </div>
+                        </li>
                     </div>";
             } 
             // Oppure stampa il pulsante accedi
