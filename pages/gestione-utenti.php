@@ -1,3 +1,4 @@
+<!-- Pagina scritta dal gruppo di lavoro 2 -->
 <!DOCTYPE html>
 <html>
 
@@ -87,11 +88,11 @@
                             }
                             #Pulsante per aggiungere un nuovo bibliotecario
                             #(Aggiungere il link alla pagina NuovoBibliotecario.php)
-                            echo "<td><a class=\"btn btn-info ml-2\" id=\"btnNuovoBibliotecario\" href=\"#\">Rendi bibliotecario</a></td>";
+                            echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnNuovoBibliotecario\" href=\"#\"><i class=\"fa fa-plus\"></i> Rendi bibliotecario</a></td>";
                         
                             #Pulsante per modificare un utente -->
                             #(Aggiungere il link alla pagina ModificaUtente.php)
-                            echo "<td><a class=\"btn btn-info ml-2\" id=\"btnModificaUtente\" href=\"#\">Modifica utente</a></td>";               
+                            echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnModificaUtente\" href=\"#\"><i class=\"fa fa-edit\"></i> Modifica utente</a></td>";               
                         }
                     }
                 }            
@@ -99,6 +100,13 @@
         
         ?>
     </table>
+
+    <br>
+
+    <!-- Bottone per uscire dalla sezione amministrativa e tornare ad index.php -->
+    <div align = "center">
+        <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+    </div>
 
     <br>
 
