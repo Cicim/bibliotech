@@ -24,6 +24,8 @@
     <?php
     // Includo la funzione per la connessione al DB
     require_once "../php/connessione.php";
+    // Includi le utility per il login
+    require_once "../php/login-utils.php";
 
     /**
      * @author Claudio Cicimurri, Lorenzo Clazzer, 5CI
@@ -70,14 +72,13 @@
 
         // Controlla se la password è giusta
         if (md5($pw) == $md5) {
-            session_start();
+            // Effettua il login
+            $logged = effettualLogin($codFiscale, $nome, $cognome);
 
-            // Imposta i parametri della sessione
-            $_SESSION['user_id'] = $codFiscale;
-            $_SESSION['nome'] = $nome;
-            $_SESSION['cognome'] = $cognome;
-
-            return "ok";
+            // Se il login è stato effettuato
+            if ($logged) return "ok";
+            // Altrimenti, avverti che l'utente è già loggato con un altro account
+            else return "Hai già eseguito il login con un altro account";
         } 
         // Altrimenti la password è sbagliata
         else 

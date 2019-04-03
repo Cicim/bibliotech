@@ -23,7 +23,7 @@
     function validazione()
     {
         // Connettiti al database
-        require_once 'connessione.php';
+        include 'connessione.php';
         $conn = connettitiAlDB();
 
         // Ottieni il codice
@@ -46,6 +46,11 @@
         // Valida il codice per l'account selezionato
         $query_valida = "UPDATE Utenti SET Validato = 1, CodiceValidazione = NULL WHERE CodFiscale = '$codFiscale'";
         $ris_valida = mysqli_query($conn, $query_valida);
+
+        // Richiedi le utility per il login
+        include "login-utils.php";
+        // Esegui il login con i dati letti
+        effettualLogin($codFiscale, $nome, $cognome);
 
         if ($ris_valida)
             return "ok";
