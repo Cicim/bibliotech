@@ -31,6 +31,7 @@
     include "../php/invio.php";
 
     /**
+     * @author Claudio Cicimurri, 5CI
      * Funzione per generare una string a caso
      * @param int $length Lunghezza della stringa
      * @return string String a caso;
@@ -46,6 +47,7 @@
     }
 
     /**
+     * @author Claudio Cicimurri, 5CI
      * Funzione per effettuare la registrazione.
      * Per poter uscire in qualsiasi momento
      * utilizzando la keyword return. 

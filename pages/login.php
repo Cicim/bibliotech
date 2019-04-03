@@ -25,6 +25,12 @@
     // Includo la funzione per la connessione al DB
     require_once "../php/connessione.php";
 
+    /**
+     * @author Claudio Cicimurri, Lorenzo Clazzer, 5CI
+     * Funzione per poter fermare il processo di login con
+     * un messaggio di errore
+     * @return string Codice di errore o "ok" se tutto è andato a buon fine
+     */
     function login()
     {
         // Recupero le informazioni inserite nei form
@@ -50,7 +56,7 @@
         // Ottieni se l'account è validato
         $validato = $ris[5];
         // Esegui il controllo
-        if ($validato != 0)
+        if ($validato == 0)
             // Esci con un errore
             return "Questo indirizzo e-mail non è ancora stato confermato";
 

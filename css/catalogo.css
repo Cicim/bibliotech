@@ -1,0 +1,13 @@
+.small-search {
+    display: none;
+}
+
+@media (max-width: 960px) {
+    .full-search {
+        display: none;
+    }
+    .small-search {
+        display: inline-block;
+    }
+    
+}

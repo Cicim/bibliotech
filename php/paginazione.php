@@ -3,6 +3,9 @@
 
 <!-- Codice per la stampa di un libro e per la paginazione -->
 <?php
+// Includo la funzione per il controllo del login
+include "loggedin.php";
+
 /**
  * Funzione per creare una lista numerata di libri
  * @param Query per decidere quali libri andare ad impaginare
@@ -142,7 +145,6 @@ function stampa_barra($pagina, $totPagine)
  */
 function stampa_libro($libro, $conn)
 {
-
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
 
@@ -162,17 +164,32 @@ function stampa_libro($libro, $conn)
     
     // Colonna contenente il pulsante per la prenotazione
     echo "      <div class='col text-right p-1'>";
-    // On Mobile
-    echo "          <a href='#' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
-    // On Desktop
-    echo "          <a href='#' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
+
+    // Funzione per controllare lo stato del log
+    $log = logged();
+
+    // Se il login non è avvenuto, allora rimanda alla pagina login
+    if($log == false)
+    {
+        // On Mobile
+        echo "          <a href='../pages/login.php' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+        // On Desktop
+        echo "          <a href='../pages/login.php' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
+    }
+    // Altrimenti il login è già avvenuto
+    else
+    {
+        // On Mobile
+        echo "          <a href='#' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+        // On Desktop
+        echo "          <a href='#' style='' class='add-to-list full-text btn btn-primary btn-info'>Aggiungi a Lista</a>";
+    }
+
     echo "      </div>";
     // Chiusura row
     echo "</div>";
     // Chiusura button    
     echo "</button>";
-
-
 }
 
 /**
