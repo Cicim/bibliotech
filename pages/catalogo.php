@@ -42,7 +42,7 @@
         <!-- Barra di ricerca -->
         <form method="get">
             <div class="container w-60" style="margin:auto">
-                <div class="input-group mb-3">
+                <div class="input-group mb-0">
                     <input type="text" class="form-control" placeholder="Cosa stai cercando?">
                     <div class="input-group-append">
                         <!-- Desktop -->
@@ -53,9 +53,8 @@
                     </div>
                 </div>
                 <!-- Filtro -->
-                <!-- Rimettere .collapse -->
-                <div class="container w-60 text-center" style="margin:auto" id="filterForm">
-                    <h5 class="text-center">Aggiungi filtri</h5>
+                <div class="jumbotron text-center collapse py-1 mt-0" style="margin:auto" id="filterForm">
+                    <h1 class="badge badge-info mt-2" style="font-size: 16pt !important">Aggiungi filtri</h1>
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="autore">Autore</label>
