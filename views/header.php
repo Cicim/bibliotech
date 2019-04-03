@@ -15,6 +15,7 @@
                     <a class="nav-link" href="#">Catalogo</a>
                 </li>
             </ul>
+        
 
             <?php
             // Inizializza la sessione
@@ -27,19 +28,20 @@
 
 
                     // Stampa il dropdown
-                    echo "<div class='wrapper'>
-                    <ul class='nav-item dropdown'>
+                   echo "<div class='wrapper'>
+                    <li class='nav-item dropdown'>
                     <a class='button btn btn-info' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                           <font color='white'>$nome $cognome</font>
                     </a>
                           <div class='dropdown-menu dropdown-menu-lg-right' aria-labelledby='navbarDropdownMenuLink'>
-                            <a class='dropdown-item' href='#'>Pagina Utente</a>
+                            <a class='dropdown-item' href='../pages/area_personale.php'>Pagina Utente</a>
                             <a class='dropdown-item' href='#'>Lista dei desideri</a>
                             <a class='dropdown-item' href='#'>Lista dei prestiti</a>
                             <a class='dropdown-item' href='../php/logout.php'>Esci</a>
                         
-                    </div>
-                    </ul>";
+                   
+                    </li>
+                    </div>";
             } 
             // Oppure stampa il pulsante accedi
             else
