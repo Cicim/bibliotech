@@ -15,14 +15,33 @@
                 </li>
             </ul>
 
-            <!-- Bottone per poter visualizzare numero di libri della Lista Desideri. Al click va nella lista -->
-            <!--
-            <a class="btn btn-info ml-2" id="libriDesiderio" href="">
-                <i class="fa fa-book" style="font-size:24px;color:brown" aria-hidden="true"></i> Libri Desiderati
-            </a>
-            Non va qua
-            -->
-            <a class="btn btn-info ml-2" id="btnAccedi" href="login.php">Accedi</a>
+            <?php
+            // Inizializza la sessione
+            session_start();
+
+            if (isset($_SESSION["user_id"])) {
+                // Ottieni nome e cognome dell'utente
+                $nome = $_SESSION["nome"];
+                $cognome = $_SESSION["cognome"];
+
+                // Stampa il dropdown
+                echo "<div class='btn-group'>
+                        <a class='button btn btn-info' href='#'>$nome $cognome</a>
+                        <button type='button' class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle='dropdown'></button>
+                        <div class='dropdown-menu dropdown-menu-lg-right'>
+                            <a class='dropdown-item' href='#'>Pagina utente</a>
+                            <a class='dropdown-item' href='#'>Lista dei desideri</a>
+                            <a class='dropdown-item' href='#'>Lista dei prestiti</a>
+                            <div class='dropdown-divider'></div>
+                            <a class='dropdown-item' href='../php/logout.php'>Esci</a>
+                        </div>
+                    </div>";
+            } 
+            // Oppure stampa il pulsante accedi
+            else
+                echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";
+
+            ?>
         </div>
     </nav>
 </header> 

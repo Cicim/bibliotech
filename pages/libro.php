@@ -2,25 +2,31 @@
 
 <head>
     <meta charset="utf-8" />
-    <?php include "../views/header.php" ?>
-</head>
-
-<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include "../php/imports.php" ?>
     <?php include "../php/connessione.php" ?>
-    <!-- Jumbotron -->
-    <!--<div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center">Vetrina</h1>
-    </div>-->
+</head>
+
+<!-- wrapper:
+     - header (importato da ../views/header.php)
+     - contenuto
+     - footer (importato da ../views/footer.php)
+-->
+<body class="wrapper">
     <?php
-        // Connessione al Database
+    // Connessione al Database
     $conn = connettitiAlDb();
     // Ottieni i dati in utf-8
     mysqli_query($conn, "set names 'utf8'");
 
-    // Ottieni il valore della pagina
-    //$isbn = $_GET["ISBN"];                                                        
-    $isbn = "9788889672501";
+    // ISBN libro
+    $isbn = false;
+
+    // Ottieni l'ISBN del libro da visualizzare
+    if (isset($_GET["ISBN"])) {
+        // Se l'ISBN esiste mettilo nella variabile
+        $isbn = $_GET["ISBN"];
+    }
 
     // Ottieni i dati sul libro
     $q1 = "SELECT ISBN, Titolo, Descrizione, AnnoPubblicazione From Libri WHERE Libri.ISBN = '$isbn'";
@@ -46,7 +52,6 @@
     // Ottieni i dati sul libro
     $row = mysqli_fetch_row($q1_res);
     $row2 = mysqli_fetch_row($q2_res);
-    //$row3 = mysqli_fetch_row($q3_res);
 
     // Ottieni tutti gli autori
     $autori = array();
@@ -57,76 +62,105 @@
     }
 
     // Salva i dati in variabili
-    $titolo = $row[1];
-    $desc = $row[2]; // Non perviene per alcun libro (inutile)
+    $titolo = htmlspecialchars($row[1]);
+    $desc = htmlspecialchars($row[2]); // Non perviene per alcun libro (inutile)
     $anno = $row[3];
-    $genere = $row2[0];
-    $tipo = $row2[1];
-    $editore = $row2[2];
-    $lingua = $row2[3];
-    $collana = $row2[4];
-
-    /*echo "titolo: " . $titolo . "<br>";
-    echo "descrizione: " . $desc . "<br>";
-    echo "anno: " . $anno . "<br>";
-    echo "genere: " . $genere . "<br>";
-    echo "tipo: " . $tipo . "<br>";
-    echo "editore: " . $editore . "<br>";
-    echo "lingua: " . $lingua . "<br>";
-    echo "collana: " . $collana . "<br>";*/
+    $genere = htmlspecialchars($row2[0]);
+    $tipo = htmlspecialchars($row2[1]);
+    $editore = htmlspecialchars($row2[2]);
+    $lingua = htmlspecialchars($row2[3]);
+    $collana = htmlspecialchars($row2[4]);
     ?>
 
-    <!--                    TITOLO                  -->
-    <!--                  di $autore                -->
-    <div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center"><?php echo $titolo ?></h1>
-        <h5 class="display-5 text-center">
-            <?php 
-            // Impagina gli autori di modo che compaiano
-            // in una lista referenziabile
-            echo "di ";
-            for ($i = 0; $i < sizeof($autori); $i++) {
-                echo "<a href='autore.php?idAutore=";
-                echo $id_a[$i];
-                echo "'>".$autori[$i]."</a>";
+    <!-- header imporrtato -->
+    <?php include "../views/header.php" ?>
 
-                if($i < sizeof($autori) - 1) echo ", ";
-            }
-            ?>
-        </h5>
+    <!-- contenuto principale della pagina -->
+    <div>
+        <!--                    TITOLO                  -->
+        <!--                  di $autore                -->
+        <div class=<?php
+                    if ($titolo) {
+                        if ($isbn) echo '"jumbotron"';
+                        else echo '"jumbotron text-danger bg-warning"';
+                    } else
+                        echo '"jumbotron text-danger bg-warning"';
+                    ?> style="padding: 2rem 2rem">
+            <h1 class="display-4 text-center">
+                <?php
+                if ($titolo) {
+                    // Se l'ISBN è valido e i dati non sono stati recuperati
+                    echo $titolo;
+                } else if (!$titolo && $isbn) {
+                    // Se l'ISBN non è valido e non è stato possibile recuperare i dati
+                    echo "Errore nel caricamento del libro";
+                }
+                // Se non è stato possibile recuperare l'ISBN
+                else
+                    echo "Errore nel caricamento del codice ISBN";
+                ?>
+            </h1>
+            <h5 class="display-5 text-center">
+                <?php 
+                // Controlla se l'isbn è stato reperito
+                // per mostrare il messaggio di errore nel caso
+                // in cui non lo sia stato
+                if ($titolo) {
+                    // Controlla se la lista degli autori è vuota
+                    if (sizeof($autori) > 0) {
+                        // Impagina gli autori di modo che compaiano
+                        // in una lista referenziabile
+                        echo "di ";
+                        for ($i = 0; $i < sizeof($autori); $i++) {
+                            echo "<a style='text-style: italic' href='autore.php?idAutore=";
+                            echo $id_a[$i];
+                            echo "'>" . $autori[$i] . "</a>";
+
+                            if ($i < sizeof($autori) - 1) echo ", ";
+                        }
+                    } else echo "Autore non pervenuto";
+                } else if (!$titolo && $isbn) {
+                    echo "Non è stato possibile recuperare i dati per questo ISBN!<br>Controlla se il codice è esistente nel database e riprova!";
+                } else {
+                    echo "Non è stato possibile recuperare il codice ISBN dall'URL!<br>Verificare che l'accesso alla pagina sia stato effettuato in modo corretto!";
+                }
+                ?>
+            </h5>
+        </div>
+        
+        <!-- Tabella dettagli del libro -->
+        <table class="table table-striped mb-5" style="max-width:60%;margin:auto;">
+            <tbody>
+                <tr>
+                    <th scope="row">Genere</th>
+                    <td><?php echo $genere ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Editore</th>
+                    <td><?php echo $editore ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Collana</th>
+                    <td><?php echo $collana ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Pubblicazione</th>
+                    <td><?php echo $anno ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">Lingua</th>
+                    <td><?php echo $lingua ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">ISBN/Codice</th>
+                    <td><?php echo $isbn ?></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <!-- DISPONIBILITÀ: ~~  -->
-    <table class="table table-striped" style="max-width:60%;margin:auto;">
-        <tbody>
-            <tr>
-                <th scope="row">Genere</th>
-                <td><?php echo $genere ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Editore</th>
-                <td><?php echo $editore ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Collana</th>
-                <td><?php echo $collana ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Pubblicazione</th>
-                <td><?php echo $anno ?></td>
-            </tr>
-            <tr>
-                <th scope="row">Lingua</th>
-                <td><?php echo $lingua ?></td>
-            </tr>
-            <tr>
-                <th scope="row">ISBN</th>
-                <td><?php echo $isbn ?></td>
-            </tr>
-        </tbody>
-    </table>
-
+    <!-- footer importato -->
     <?php include "../views/footer.php" ?>
 </body>
 
-</html> 
+</html>

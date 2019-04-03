@@ -9,51 +9,47 @@
     <title>Homepage - Bibliotech</title>
 
     <!-- Include le librerie comuni -->
-    <?php include "../php/imports.php"; ?>
+    <?php include "../php/imports.php";
+    // Includi il codice per la paginazione
+    include "../php/paginazione.php";
+    // Includi il codice per la connessione al database
+    include '../php/connessione.php'; ?>
 
     <!-- Carica il css per il catalogo -->
     <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
 </head>
 
-<body>
-    <!-- Pagina dell'header importata -->
-    <?php include "../views/header.php"; ?>
-    
-    <!-- Rettangolo grigio per il titolo della sezione -->
-    <div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center">Vetrina</h1>
-    </div>
+<body class="wrapper">
+        <!-- Pagina dell'header importata -->
+        <?php include "../views/header.php"; ?>
 
-    <!-- Homepage - Vetrina -->
-    <div class="container books">
-        <div class="row">
-            <!-- TODO Script da eliminare -->
-            <?php
-            // Includi il codice per la paginazione
-            include "../php/paginazione.php";
-            // Includi il codice per la connessione al database
-            include '../php/connessione.php';
+        <div>
+            <!-- Rettangolo grigio per il titolo della sezione -->
+            <div class="jumbotron" style="padding: 2rem 2rem">
+                <h1 class="display-4 text-center">Libri in Vetrina</h1>
+            </div>
 
-            // Connettiti al db
-            $conn = connettitiAlDb();
+            <!-- Homepage - Vetrina -->
+            <div class="container books margin-auto">
 
-            // Crea la query per ottenere tutti i libri
-            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore,
-                            Editori.Nome AS "NomeEditore", Generi.Descrizione AS "Genere",
-                            Tipologie.Descrizione AS "Tipologia"
-                        FROM Libri, Generi, Editori, Tipologie
-                        WHERE Libri.idGenere = Generi.idGenere
-                          AND Libri.idEditore = Editori.idEditore
-                          AND Libri.idTipo = Tipologie.idTipologia
-                        ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
+                <?php
+                    // Crea la query per ottenere tutti i libri
+                    $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
+                    Generi.Descrizione AS "Genere",
+                    Tipologie.Descrizione AS "Tipologia"
+                    FROM Libri, Generi, Editori, Tipologie
+                    WHERE Libri.idGenere = Generi.idGenere
+                    AND Libri.idEditore = Editori.idEditore
+                    AND Libri.idTipo = Tipologie.idTipologia
+                    ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
 
-            // Stampa tutti i libri con quella query
-            paginazione($conn, $query);
-            ?>
+                    // Stampa tutti i libri risultati dalla query
+                    paginazione($query);
+                    ?>
+
+            </div>
         </div>
-    </div>
 
-    <!-- Pagina del footer importata -->
-    <?php include "../views/footer.php"; ?>
-
+        <!-- Pagina del footer importata -->
+        <?php include "../views/footer.php"; ?>
 </body> 
