@@ -6,15 +6,21 @@
  // Includo la funzione per il controllo del login
 include "login-utils.php";
 
-
-function imposta_query($url, $query, $valore) {
+/**
+ * @author Claudio Cicimurri 5CI
+ * Riporta l'url meno la query inserita
+ * @param $tranne la query che non deve ristampare
+ * @return Il nuovo URL da mettere in un tag a
+ */
+function ristampaQueryTranne($tranne) {
     // Crea stringa
-    $nuovoUrl = $url ;
-    
+    $nuovoUrl = '?';
     // Ottieni una stringa di tutte le query get tranne quello cercato
-
-
-    
+    foreach($_GET as $key => $param) {
+        if ($key != $tranne)
+            $nuovoUrl .= $key . '=' . $param . '&';
+    }
+    return $nuovoUrl;
 }
 
 /**
@@ -67,12 +73,12 @@ function paginazione($query)
     // Stampa la lista dei libri
     while ($libro = mysqli_fetch_assoc($res2)) {
         // Chiama la funzione stampa_libro
-        stampa_libro($libro, $conn);
+        stampaLibro($libro, $conn);
     }
 
     mysqli_close($conn);
 
-    stampa_barra($pagina, $totPagine);
+    stampaBarra($pagina, $totPagine);
     return 1;
 }
 
@@ -84,10 +90,10 @@ function paginazione($query)
  * @param $totPagine Il numero totale di pagine del catalogo
  * @return
  */
-function stampa_barra($pagina, $totPagine)
+function stampaBarra($pagina, $totPagine)
 {
     // Stringa comune nell'href di tutti i pulsanti della navigazione
-    $urlComune = $_SERVER["QUERY_STRING"];
+    $urlComune = ristampaQueryTranne('page');
 
     // Classi comune a tutti gli elementi
     $classi = "navbar-font-size";
@@ -105,12 +111,12 @@ function stampa_barra($pagina, $totPagine)
     // Pulsante per andare alla prima pagina
     // Disabilitato se si è alla prima pagina
     echo '<li class="' . $classi . ' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="?'.$urlComune.'&page=0">Prima</a>';
+    echo '<a class="page-link" href="'.$urlComune.'page=0">Prima</a>';
     echo '</li>';
     // Pulsante per andare alla pagina prima
     // Disabilitato se si è alla prima pagina
     echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="' . $classi . ' page-link" href="?page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
+    echo '<a class="' . $classi . ' page-link" href="'.$urlComune.'page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
     echo '</li>';
 
     // Mostra le pagine vicine
@@ -137,18 +143,18 @@ function stampa_barra($pagina, $totPagine)
         for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
             // Pulsanti per andare alle pagine vicine
             echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
-            echo '<a class="' . $classi . ' page-link" href="?page=' . $i . '">' . ($i + 1) . '</a>';
+            echo '<a class="' . $classi . ' page-link" href="'.$urlComune.'page=' . $i . '">' . ($i + 1) . '</a>';
             echo '</li>';
         }
     }
 
     // Pulsante per andare alla pagina dopo
     echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="?page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
+    echo '<a class="page-link" href="'.$urlComune.'page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
     echo '</li>';
     // Pulsante per andare all'ultima pagina
     echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="?page=' . ($totPagine - 1) . '">Ultima</a>';
+    echo '<a class="page-link" href="'.$urlComune.'page=' . ($totPagine - 1) . '">Ultima</a>';
     // Chiudi i tag restanti
     echo '</li></ul></nav></div></div>';
 }
@@ -161,7 +167,7 @@ function stampa_barra($pagina, $totPagine)
  * @param sessione di connessione al database
  * @return
  */
-function stampa_libro($libro, $conn)
+function stampaLibro($libro, $conn)
 {
     // Controlla se il login è stato effettuato
     $log = logged();
@@ -187,7 +193,7 @@ function stampa_libro($libro, $conn)
     // Riga che contiene le colonne che vengono dopo
     echo '      <div class="col-10">';
     // Inserisci uno span contenente l'autore
-    echo "          <span>" . crea_lista_autori($libro["ISBN"], $conn) . "</span>";
+    echo "          <span>" . creaListaAutori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
     echo "          <br><span><i><a class='text-secondary' href=editore.php?idEditore='" . $libro["idEditore"] . "'> " . $libro["nomeEditore"] . "</a></i></span>";
     echo "      </div>";
@@ -215,7 +221,7 @@ function stampa_libro($libro, $conn)
  * @param $conn sessione di connessione al db
  * @return $lista String lista degli autori
  */
-function crea_lista_autori($isbnLibro, $conn)
+function creaListaAutori($isbnLibro, $conn)
 {
     // Ottieni i dati in utf-8
     mysqli_query($conn, "set names 'utf8'");
