@@ -4,7 +4,7 @@
 <!-- Codice per la stampa di un libro e per la paginazione -->
 <?php
  // Includo la funzione per il controllo del login
-include "loggedin.php";
+include "login-utils.php";
 
 /**
  * @author Andrea Cicimurri, 5CI
