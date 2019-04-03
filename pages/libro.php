@@ -27,7 +27,6 @@
         // Se l'ISBN esiste mettilo nella variabile
         $isbn = $_GET["ISBN"];
     }
-    // $isbn = "N000000000128";
 
     // Ottieni i dati sul libro
     $q1 = "SELECT ISBN, Titolo, Descrizione, AnnoPubblicazione From Libri WHERE Libri.ISBN = '$isbn'";
@@ -103,7 +102,6 @@
             </h1>
             <h5 class="display-5 text-center">
                 <?php 
-
                 // Controlla se l'isbn è stato reperito
                 // per mostrare il messaggio di errore nel caso
                 // in cui non lo sia stato
@@ -129,8 +127,8 @@
                 ?>
             </h5>
         </div>
-
-        <!-- DISPONIBILITÀ: ~~  -->
+        
+        <!-- Tabella dettagli del libro -->
         <table class="table table-striped mb-5" style="max-width:60%;margin:auto;">
             <tbody>
                 <tr>
