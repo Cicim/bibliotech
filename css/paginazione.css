@@ -1,0 +1,24 @@
+.add-to-list {
+    float: right;
+}
+
+.short-text {
+    display: none;
+    width: 10em;
+}
+
+@media (max-width: 960px) {
+    .short-text {
+        display: inline-block;
+        margin-right: 5px;
+        width: 30px;
+        height: 30px;
+        padding-bottom: 4px;
+        border-radius: 20px;
+        padding: 6px;
+
+    }
+    .full-text {
+        display: none;
+    }
+}
