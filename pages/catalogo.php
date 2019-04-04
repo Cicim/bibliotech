@@ -43,13 +43,13 @@
         <form method="get">
             <div class="container w-60" style="margin:auto">
                 <div class="input-group mb-0">
-                    <input type="text" class="form-control" placeholder="Cosa stai cercando?">
+                    <input type="text" name="titolo" class="form-control" placeholder="Cosa stai cercando?">
                     <div class="input-group-append">
                         <!-- Desktop -->
                         <button class="btn btn-outline-info fa fa-filter" name="filtra" type="button" data-toggle="collapse" data-target="#filterForm"><span class="ml-2" style="font-family:arial">Filtri</span></button>
-                        <button type="submit" class="btn btn-outline-info fa fa-search full-search" name="cerca" type="button"><span class="ml-2" style="font-family:arial">Cerca</span></button>
+                        <button type="submit" value="1" class="btn btn-outline-info fa fa-search full-search" name="cerca" type="button"><span class="ml-2" style="font-family:arial">Cerca</span></button>
                         <!-- Mobile -->
-                        <button type="submit" class="btn btn-outline-info fa fa-search small-search" name="cerca" type="button"></button>
+                        <button type="submit" value="1" class="btn btn-outline-info fa fa-search small-search" name="cerca" type="button"></button>
                     </div>
                 </div>
                 <!-- Filtro -->
@@ -96,6 +96,7 @@
                                 </div>
                                 <!-- <input name="genere" id="tipologia" type="text" class="d-none"> -->
                             </div>
+                            <input name="tipologia" id="tipologia" type="text" class="d-none">
                         </div>
                         <script>
                             $(function() {
@@ -141,21 +142,45 @@
 
         <!-- Catalogo -->
         <div class="container books">
-
+            <!-- Script per la ricerca -->
             <?php
+            // Definisci la query di ricerca senza impostarla
+            $ricerca = '';
 
-            // Crea la query per ottenere tutti i libri
-            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
-                    Generi.Descrizione AS "Genere",
-                    Tipologie.Descrizione AS "Tipologia"
-                    FROM Libri, Generi, Editori, Tipologie
-                    WHERE Libri.idGenere = Generi.idGenere
-                    AND Libri.idEditore = Editori.idEditore
-                    AND Libri.idTipo = Tipologie.idTipologia
-                    ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
+            // Assicurati che sia stata effettuata una ricerca
+            if (isset($_GET['cerca'])) {
+                // Ottieni la query per il titolo
+                $titolo = $_GET['titolo'];
+                // Ottieni la query per l'autore
+                $autore = $_GET['autore'];
+                // Ottieni la query per l'editore
+                $editore = $_GET['editore'];
+                // Ottieni la query per la collana
+                $collana = $_GET['collana'];
 
-            // Stampa tutti i libri risultati dalla query
-            paginazione($query);
+                // Ottieni la tipologia cercata
+                $tipologia = $_GET['tipologia'];
+                // Ottieni il genere cercata
+                $genere = $_GET['genere'];
+
+                
+            }
+
+            // Se non è stata impostata, mostra tutti i libri
+            if ($ricerca == '')
+                // Crea la query per ottenere tutti i libri
+                $ricerca = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
+                        Generi.Descrizione AS "Genere",
+                        Tipologie.Descrizione AS "Tipologia"
+                        FROM Libri, Generi, Editori, Tipologie
+                        WHERE Libri.idGenere = Generi.idGenere
+                        AND Libri.idEditore = Editori.idEditore
+                        AND Libri.idTipo = Tipologie.idTipologia
+                        ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
+
+            // Passa alla funzione di paginazione la query
+            // corretta per la ricerca effettuata
+            paginazione($ricerca);
             ?>
 
         </div>
