@@ -43,7 +43,7 @@
         <form method="get">
             <div class="container w-60" style="margin:auto">
                 <div class="input-group mb-0">
-                    <input type="text" name="titolo" class="form-control" placeholder="Cosa stai cercando?">
+                    <input type="text" name="titolo" class="form-control" placeholder="Cosa stai cercando?" value="<?php echo isset($_GET['titolo']) ? $_GET['titolo'] : '' ?>">
                     <div class="input-group-append">
                         <!-- Desktop -->
                         <button class="btn btn-outline-info fa fa-filter" name="filtra" type="button" data-toggle="collapse" data-target="#filterForm"><span class="ml-2" style="font-family:arial">Filtri</span></button>
@@ -54,21 +54,21 @@
                 </div>
                 <!-- Filtro -->
                 <div class="jumbotron text-center collapse py-1 mt-0" style="margin:auto" id="filterForm">
-                    <h1 class="badge badge-info mt-2" style="font-size: 16pt !important">Aggiungi filtri</h1>
+                    <h1 class="display-4 mt-2" style="font-size: 16pt !important">Aggiungi filtri</h1>
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="autore">Autore</label>
-                            <input class="form-control w-100" name="autore" placeholder="Nome o Cognome autore">
+                            <input class="form-control w-100" name="autore" placeholder="Nome o Cognome autore"  value="<?php echo isset($_GET['autore']) ? $_GET['autore'] : '' ?>">
                         </div>
                         <div class="col-6 mb-3">
                             <label for="editore">Editore</label>
-                            <input class="form-control w-100" name="editore" placeholder="Nome editore">
+                            <input class="form-control w-100" name="editore" placeholder="Nome editore" value="<?php echo isset($_GET['editore']) ? $_GET['editore'] : '' ?>">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-12">
                             <label for="collana">Collana</label>
-                            <input class="form-control w-100" name="collana" placeholder="Nome collana">
+                            <input class="form-control w-100" name="collana" placeholder="Nome collana" value="<?php echo isset($_GET['collana']) ? $_GET['collana'] : '' ?>">
                         </div>
                     </div>
                     <div class="row mb-3">
