@@ -39,28 +39,29 @@
             </div>
     </div>
 
-            <!-- Seconda riga (3 caselle) -->
-            <div class="row">
-                <!--Data consegna -->
-                <div class="col-md-4 mb-3">
-                    <label for="dataRicons">Data Riconsegna</label>
-                    <input class="form-control w-100" name="dataRicons" placeholder="Es. 21/2/2017" required="true">
-                    <div class="invalid-feedback">Inserisci una data per la consegna valida</div>
-                </div>
+    <!-- Seconda riga (3 caselle) -->
+    <div class="row">
+        <!--Data consegna -->
+        <div class="col-md-4 mb-3">
+            <label for="dataRicons">Data Riconsegna</label>
+            <input class="form-control w-100" name="dataRicons" placeholder="Es. 21/2/2017" required="true">
+            <div class="invalid-feedback">Inserisci una data per la consegna valida</div>
+        </div>
 
-                <!--  -->
-                <div class="col-md-4 mb-3">
-                    <label for="idCopia">idCopia</label>
-                    <input class="form-control w-100" name="idCopia" placeholder="Es. 9000" required="true">
-                    <div class="invalid-feedback">Inserisci un id valido.</div>
-                </div>
-            </div>
+        <!--  -->
+        <div class="col-md-4 mb-3">
+            <label for="idCopia">idCopia</label>
+            <input class="form-control w-100" name="idCopia" placeholder="Es. 9000" required="true">
+            <div class="invalid-feedback">Inserisci un id valido.</div>
+        </div>
+    </div>
 
 <!--working progress-->
 
 
 <!--Script php per l'invio dei dati al database-->
 <?php
+
     //recupero dati inseriti nel form
     if (isset($_POST["titolo"])) {
         //Connetto al DB
