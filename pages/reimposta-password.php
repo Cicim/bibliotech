@@ -23,6 +23,7 @@
     include "../php/connessione.php";
 
     /**
+     * @author Lorenzo Clazzer, 5CI
      * Funzione per il recupero della password
      * @return string Messaggio di errore
      */ 
@@ -38,7 +39,7 @@
 
         $password = md5($pw1);
         // Da abilitare a validazione prevista: $validazione = $_GET["cval"];
-        $validazione = "9eewLrYDQf8WL2f530fcba83369ddcebde85a892068c2";
+        $validazione = "F98VzydVmFxXW799d9142438c97d318b8b979cb12b6a7";
 
         // Connessione al Database
         $conn = connettitiAlDb();
@@ -103,17 +104,22 @@
     </form>
 
     <!-- Javascript per il controllo delle password -->
-    <script type="text/javascript">
-            // Controllo per combaciamento password
-            function passwordUguali() {
-                if (document.getElementById('password').value ==
-                    document.getElementById('confermaPassword').value) {
-                    document.getElementById('confermaPassword').style.color = 'green';
-                } else {
-                    document.getElementById('confermaPassword').style.color = 'red';
-                }
+    <script>
+        /**
+         * @author Claudio Cicimurri, 5CI
+         * Funzione eseguita al cambiamento di valore nei campi
+         * password e confermaPassword.
+         * Fa diventare le password verdi se combaciano, altrimenti rosse
+         */
+        function passwordUguali() {
+            if (document.getElementById('password').value ==
+                document.getElementById('confermaPassword').value) {
+                document.getElementById('confermaPassword').style.color = 'green';
+            } else {
+                document.getElementById('confermaPassword').style.color = 'red';
             }
-        </script>
+        }
+    </script>
 
 </body>
 

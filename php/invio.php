@@ -4,6 +4,7 @@ require_once "libs/class.phpmailer.php";
 require_once "libs/class.smtp.php";
 
 /**
+ * @author Claudio Cicimurri, 5CI
  * Funzione per inviare una mail
  * @param string $a L'indirizzo del destinatario
  * @param string $oggetto L'oggetto dell'e-mail
@@ -53,6 +54,7 @@ function inviaMail($a, $oggetto, $html)
 }
 
 /**
+ * @author Claudio Cicimurri, 5CI
  * Funzione per richiedere la conferma dell'account da parte dell'indirizzo mail
  * @param string $indirizzo Destinatario
  * @param string $validazione Codice per la validazione
