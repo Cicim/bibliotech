@@ -22,6 +22,11 @@
         <h1 class="display-4 text-center">Gestione utenti</h1>
     </div>
 
+    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+    <div align = "center">
+        <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+    </div>
+
     <br><br>
 
     <!-- Lista utenti registrati -->
