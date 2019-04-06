@@ -26,7 +26,7 @@
 
     <!-- Connessione al database -->
     <?php
-        // Connettiti al database
+    // Connettiti al database
     $conn = connettitiAlDb();
     // Ottieni i dati in utf-8
     mysqli_query($conn, "set names 'utf8'");
@@ -144,26 +144,109 @@
         <div class="container books">
             <!-- Script per la ricerca -->
             <?php
+
+            /**
+             * @author Claudio Cicimurri, 5CI
+             * Funzione per generare la funzione MATCH di SQL, per comodità
+             * @param string $field Il nome del campo
+             * @param string $against Il testo della ricerca
+             * @param int $weight Il peso del campo nella ricerca
+             * @return string La parte di query generata 
+             */
+            function generaMatch($field, $against, $weight)
+            {
+                return "MATCH ($field) AGAINST ('$against' IN BOOLEAN MODE) * $weight";
+            }
+
             // Definisci la query di ricerca senza impostarla
             $ricerca = '';
 
             // Assicurati che sia stata effettuata una ricerca
             if (isset($_GET['cerca'])) {
-                // Ottieni la query per il titolo
+                // ANCHOR Ricerche testuali possibili
+                // Titolo del libro (Libri.Titolo)      PESO: 1
                 $titolo = $_GET['titolo'];
-                // Ottieni la query per l'autore
+                // Autore del libro (Autori.NomeAutore, Autori.CognomeAutore,
+                //                   Autori.NomeArte)   PESO: 0.4, 0.6, 0.8
                 $autore = $_GET['autore'];
-                // Ottieni la query per l'editore
+                // Nome dell'editore (Editori.Nome)     PESO: 0.8
                 $editore = $_GET['editore'];
-                // Ottieni la query per la collana
+                // Nome della collana (Collane.Nome)    PESO: 0.5
                 $collana = $_GET['collana'];
 
-                // Ottieni la tipologia cercata
+                // ANCHOR Ricerche per id possibili
+                // Tipologia (Tipologie.idTipologia)
                 $tipologia = $_GET['tipologia'];
-                // Ottieni il genere cercata
+                // Genere (Generi.idGenere)
                 $genere = $_GET['genere'];
 
+                // ANCHOR Attributi necessari per la stampare i dati su un libro
+                //  - Libri.ISBN,
+                //  - Libri.Titolo, 
+                //  - Editori.idEditore AS idEditore, 
+                //  - Editori.Nome AS nomeEditore,
+                //  - Generi.Descrizione AS Genere,
+                //  - Tipologie.Descrizione AS Tipologia
+
+                // ANCHOR Componi la query per la ricerca
+                //  Inizia con i SELECT generali
+                $ricerca = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
+                Generi.Descrizione AS "Genere", Tipologie.Descrizione AS "Tipologia"';
+                // ANCHOR Memorizza tutte le ricerche testuali da effettuare
+                $testuale = array();
+                // Aggiungi solo le query che esistono
+                if ($titolo != '')
+                    $testuale[] = generaMatch('Libri.Titolo', $titolo, 1);
+                if ($editore != '')
+                    $testuale[] = generaMatch('Editori.Nome', $editore, 0.3);
+                if ($collana != '')
+                    $testuale[] = generaMatch('Collane.Nome', $collana, 0.5);
+
+                // Crea la match per il punteggio per gli autori
+                $scoreAutori = '';
+                if ($autore != '') {
+                    $scoreAutori = "(SELECT SUM(" . generaMatch('Autori.NomeAutore', $autore, 0.4) .
+                        "\n + " . generaMatch('Autori.CognomeAutore', $autore, 0.6) .
+                        "\n + " . generaMatch('Autori.NomeArte', $autore, 0.8) . ")
+     FROM Autori, Autori_Libri 
+     WHERE Autori_Libri.ISBNLibro = Libri.ISBN 
+       AND Autori_Libri.idAutore = Autori.idAutore 
+     GROUP BY Libri.ISBN)";
+                }
+                // Ottieni la somma dei punteggi per i testi tranne gli autori
+                $testuale = join(" + \n", $testuale);
+
+                // Unisci gli score
+                if ($testuale != '' and $scoreAutori != '')
+                    $score = $testuale . " +\n" . $scoreAutori;
+                else if ($testuale != '')
+                    $score = $testuale;
+                else $score = $scoreAutori;
+                // Contempla anche il caso in cui non viene effettuata una ricerca testuale
+                if ($testuale == '' and $scoreAutori == '')
+                    $score = '';
+
+                // Aggiungi gli altri select
+                if ($score != '')
+                    $ricerca .= ", \n$score AS Score\n";
+
                 
+                // ANCHOR Aggiungi i from
+                $ricerca .= "FROM Libri, Generi, Editori, Tipologie, Collane\n";
+
+                // ANCHOR Aggiungi le condizioni di WHERE generali
+                $ricerca .= "WHERE Libri.idGenere = Generi.idGenere
+    AND Libri.idEditore = Editori.idEditore
+    AND Libri.idTipo = Tipologie.idTipologia
+    AND Libri.idCollana = Collane.idCollana\n";
+
+                // Aggiungi la condizione per le ricerche testuali
+                // cioè che il punteggio della ricerca sia diverso da 0
+                if ($score != '')
+                    $ricerca .= "AND ($score) <> 0\n";
+
+                // Ordina per punteggio
+                $ricerca .= 'ORDER BY Score DESC';
             }
 
             // Se non è stata impostata, mostra tutti i libri
@@ -190,4 +273,4 @@
     <?php include "../views/footer.php"; ?>
 </body>
 
-</html> 
+</html>
