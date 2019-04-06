@@ -47,7 +47,12 @@
                     echo "Database non trovato";
                 }
                 else{
-                    $query = "SELECT * FROM Libri";
+                    $query = "SELECT Libri.ISBN, Libri.Titolo, Libri.AnnoPubblicazione, Generi.Descrizione AS Genere, Tipologie.Descrizione AS Tipologia, Editori.Nome, Lingue.Abbreviazione
+                        FROM Libri, Generi, Tipologie, Editori, Lingue 
+                        WHERE Generi.idGenere = Libri.idGenere
+                        AND Tipologie.idTipologia = Libri.idTipo
+                        AND Editori.idEditore = Libri.idEditore
+                        AND Lingue.idLingua = Libri.idLingua";
                     $risultato = mysqli_query($connessione, $query);
                     if(!$risultato){
                         echo "Errore nella query";
@@ -80,17 +85,17 @@
                             '</td><td>' . 
                             $riga['AnnoPubblicazione'] . 
                             '</td><td>' . 
-                            $riga['idGenere'] . 
+                            $riga['Genere'] . 
                             '</td><td>' . 
-                            $riga['idTipo'] .
+                            $riga['Tipologia'] .
                             '</td><td>' . 
-                            $riga['idEditore'] .
+                            $riga['Nome'] .
                             '</td><td>' .
-                            $riga['idLingua'];
+                            $riga['Abbreviazione'];
                         
                             #Pulsante per modificare un libro -->
                             #(Aggiungere il link alla pagina ModificaLibro.php)
-                            echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnModificaLibro\" href=\"#\"><i class=\"fa fa-edit\"></i> Modifica libro</a></td></tr>";               
+                            echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnModificaLibro\" href=\"#\"><i class=\"fa fa-edit\"></i> Modifica</a></td></tr>";               
                         }
                     }
                 }            
