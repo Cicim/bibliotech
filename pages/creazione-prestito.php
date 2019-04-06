@@ -114,6 +114,7 @@
         <!-- Conferma della creazione del prestito -->
         <a class="btn btn-success ml-2 block" id="btnConferma" href="#"><i class="fa fa-check"></i> Crea prestito</a>
         <!-- Esecuzione della query -->
+        <!---->
     </div>
 
     <br>

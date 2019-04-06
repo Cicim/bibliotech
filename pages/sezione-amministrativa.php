@@ -47,7 +47,7 @@
             </td>
             <!-- Bottone per la pagina di gestione libri -->
             <td align = "left" width="30%">
-                <a class="btn btn-success ml-2 block" id="btnGestioneLibri" href="#"><i class="fa fa-book"></i> Gestione libri</a>
+                <a class="btn btn-success ml-2 block" id="btnGestioneLibri" href="gestione-libri.php"><i class="fa fa-book"></i> Gestione libri</a>
             </td>
             <!-- Bottone per la pagina con l'elenco dei prestiti in corso e delle date di scadenza, con relative opzioni di rinnovo e restituzione -->
             <td width="30%">
