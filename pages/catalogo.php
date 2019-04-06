@@ -54,7 +54,14 @@
                 </div>
                 <!-- Filtro -->
                 <div class="jumbotron text-center collapse py-1 mt-0" style="margin:auto" id="filterForm">
-                    <h1 class="display-4 mt-2" style="font-size: 16pt !important">Aggiungi filtri</h1>
+                    <h1 class="display-4 mt-2" style="font-size: 16pt !important">
+                        <?php
+                            if(haFiltri()) 
+                                echo "<a href='catalogo.php?titolo=&cerca=&autore=&editore=&collana=&tipologia=&genere=' class='text-danger'> Rimuovi filtri</a>";
+                            else
+                                echo "Aggiungi filtri";
+                        ?>
+                    </h1>
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="autore">Autore</label>
@@ -160,6 +167,19 @@
 
             // Definisci la query di ricerca senza impostarla
             $ricerca = '';
+
+            /**
+             * @author Andrea Cicimurri, 5CI
+             * Controlla se ci sono filtri settati nella pagina di ricerca
+             * Ingnora la casella principale del Titolo
+             * @return bool true se ci sono filtri, altrimenti false
+             * */
+            function haFiltri() {
+                if($_GET["autore"] || $_GET["editore"] || $_GET["genere"] || $_GET["tipologia"] || $_GET["collana"]) {
+                    return true;
+                }
+                else return false;
+            }
 
             // Assicurati che sia stata effettuata una ricerca
             if (isset($_GET['cerca'])) {
