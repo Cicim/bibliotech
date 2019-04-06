@@ -43,7 +43,7 @@
         <form method="get">
             <div class="container w-60" style="margin:auto">
                 <div class="input-group mb-0">
-                    <input type="text" name="titolo" class="form-control" placeholder="Cosa stai cercando?" value="<?php echo isset($_GET['titolo']) ? $_GET['titolo'] : '' ?>">
+                    <input type="text" name="titolo" class="form-control" placeholder="Cosa stai cercando?" value="<?php echo isset($_GET['titolo']) ? $_GET['titolo'] : '' ?>" autofocus>
                     <div class="input-group-append">
                         <!-- Desktop -->
                         <button class="btn btn-outline-info fa fa-filter" name="filtra" type="button" data-toggle="collapse" data-target="#filterForm"><span class="ml-2" style="font-family:arial">Filtri</span></button>
@@ -107,7 +107,7 @@
                                 </div>
                                 <!-- <input name="genere" id="tipologia" type="text" class="d-none"> -->
                             </div>
-                            <input name="tipologia" id="tipologia" type="text" class="d-none">
+                            <input name="tipologia" id="tipologia" type="text" class="d-none" value="<?php echo isset($_GET['tipologia']) ? $_GET['tipologia'] : '' ?>">
                         </div>
                         <script>
                             $(function() {
@@ -138,7 +138,7 @@
                                         ?>
                                     </div>
                                 </div>
-                                <input name="genere" id="genere" type="text" class="d-none">
+                                <input name="genere" id="genere" type="text" class="d-none" value="<?php echo isset($_GET['genere']) ? $_GET['genere'] : '' ?>">
                             </div>
                             <script>
                                 $(function() {
