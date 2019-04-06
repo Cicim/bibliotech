@@ -9,11 +9,9 @@
 
     <title>Gestione utenti - Bibliotech</title>
 
-    <!-- Include le librerie comuni -->
+    <!-- Inclusione librerie di Bootstrap -->
     <?php include "../php/imports.php"; ?>
 
-    <!-- Carica il css per il catalogo -->
-    <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
 </head>
 
 <body>
@@ -107,6 +105,18 @@
         <br>
         <br>
     -->
+
+    <div align = "center">
+        <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+        <a class="btn btn-danger ml-2 block" id="btnAnnulla" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Annulla</a>
+
+        <!-- Conferma della creazione del prestito -->
+        <a class="btn btn-success ml-2 block" id="btnConferma" href="#"><i class="fa fa-check"></i> Crea prestito</a>
+        <!-- Esecuzione della query -->
+    </div>
+
+    <br>
+
     <!-- Pagina del footer importata -->
     <?php include "../views/footer.php"; ?>
 

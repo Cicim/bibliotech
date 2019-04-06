@@ -8,11 +8,9 @@
 
     <title>Gestione utenti - Bibliotech</title>
 
-    <!-- Include le librerie comuni -->
+    <!-- Inclusione librerie di Bootstrap -->
     <?php include "../php/imports.php"; ?>
 
-    <!-- Carica il css per il catalogo -->
-    <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
 </head>
 
 <body>
@@ -103,7 +101,7 @@
 
     <br>
 
-    <!-- Bottone per uscire dalla sezione amministrativa e tornare ad index.php -->
+    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
     <div align = "center">
         <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
     </div>

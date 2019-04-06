@@ -8,12 +8,10 @@
 
     <title>Sezione amministrativa - Bibliotech</title>
 
-    <!-- Include le librerie comuni -->
+    <!-- Inclusione librerie di Bootstrap -->
     <?php include "../php/imports.php"; ?>
 
-    <!-- Carica il css per il catalogo -->
-    <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
-
+    <!-- CSS per la tabella principale della pagina -->
     <style>
         table, th, td {
             border: 0px solid black;
@@ -30,27 +28,28 @@
 </head>
 
 <body>
-    <!-- Pagina dell'header importata -->
+    <!-- Inclusione dell'header -->
     <?php include "../views/header.php"; ?>
     
-    <!-- Rettangolo grigio per il titolo della sezione -->
+    <!-- Titolo della pagina -->
     <div class="jumbotron" style="padding: 2rem 2rem">
         <h1 class="display-4 text-center">Sezione amministrativa</h1>
     </div>
 
     <br><br>
-
+    
+    
     <table border = "0" align = "center" class = "table">
         <tr>
-            <!-- Bottone per gestione utenti -->
+            <!-- Bottone per la pagina di gestione utenti -->
             <td align = "right" width="30%">
                 <a class="btn btn-success ml-2 block" id="btnGestioneUtenti" href="gestione-utenti.php"><i class="fa fa-user"></i> Gestione utenti</a>
             </td>
-            <!-- Bottone per gestione libri -->
+            <!-- Bottone per la pagina di gestione libri -->
             <td align = "left" width="30%">
                 <a class="btn btn-success ml-2 block" id="btnGestioneLibri" href="#"><i class="fa fa-book"></i> Gestione libri</a>
             </td>
-            <!-- Bottone per visualizzare l'elenco dei prestiti in corso e delle date di scadenza, con relative opzioni di rinnovo e restituzione -->
+            <!-- Bottone per la pagina con l'elenco dei prestiti in corso e delle date di scadenza, con relative opzioni di rinnovo e restituzione -->
             <td width="30%">
                 <a class="btn btn-success ml-2 block" id="btnVisPrestitiScadenze" href="vis-prestiti-scadenze.php"><i class="fa fa-leanpub"></i> Prestiti</a>
             </td>
@@ -64,7 +63,7 @@
             <td align = "left" width="30%">
                 <a class="btn btn-success ml-2 block" id="btnCreazionePrestitio" href="creazione-prestito.php"><i class="fa fa-plus"></i> Crea prestito</a>
             </td>
-            <!-- Bottone per uscire dalla sezione amministrativa e tornare ad index.php -->
+            <!-- Bottone per uscire dalla sezione amministrativa e tornare alla pagina principale -->
             <td width="30%">
                 <a class="btn btn-danger ml-2 block" id="btnIndietro" href="index.php"><i class="fa fa-times-circle"></i> Esci</a>
             </td>
