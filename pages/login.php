@@ -24,7 +24,15 @@
     <?php
     // Includo la funzione per la connessione al DB
     require_once "../php/connessione.php";
+    // Includi le utility per il login
+    require_once "../php/login-utils.php";
 
+    /**
+     * @author Claudio Cicimurri, Lorenzo Clazzer, 5CI
+     * Funzione per poter fermare il processo di login con
+     * un messaggio di errore
+     * @return string Codice di errore o "ok" se tutto è andato a buon fine
+     */
     function login()
     {
         // Recupero le informazioni inserite nei form
@@ -50,7 +58,7 @@
         // Ottieni se l'account è validato
         $validato = $ris[5];
         // Esegui il controllo
-        if ($validato != 0)
+        if ($validato == 0)
             // Esci con un errore
             return "Questo indirizzo e-mail non è ancora stato confermato";
 
@@ -64,14 +72,13 @@
 
         // Controlla se la password è giusta
         if (md5($pw) == $md5) {
-            session_start();
+            // Effettua il login
+            $logged = effettualLogin($codFiscale, $nome, $cognome);
 
-            // Imposta i parametri della sessione
-            $_SESSION['user_id'] = $codFiscale;
-            $_SESSION['nome'] = $nome;
-            $_SESSION['cognome'] = $cognome;
-
-            return "ok";
+            // Se il login è stato effettuato
+            if ($logged) return "ok";
+            // Altrimenti, avverti che l'utente è già loggato con un altro account
+            else return "Hai già eseguito il login con un altro account";
         } 
         // Altrimenti la password è sbagliata
         else 
