@@ -230,7 +230,7 @@
                 if ($score != '')
                     $ricerca .= ", \n$score AS Score\n";
 
-                
+
                 // ANCHOR Aggiungi i from
                 $ricerca .= "FROM Libri, Generi, Editori, Tipologie, Collane\n";
 
@@ -240,13 +240,21 @@
     AND Libri.idTipo = Tipologie.idTipologia
     AND Libri.idCollana = Collane.idCollana\n";
 
+
                 // Aggiungi la condizione per le ricerche testuali
                 // cioè che il punteggio della ricerca sia diverso da 0
                 if ($score != '')
                     $ricerca .= "AND ($score) <> 0\n";
 
-                // Ordina per punteggio
-                $ricerca .= 'ORDER BY Score DESC';
+                // ANCHOR Aggiungi ricerca per id
+                if ($tipologia != '')
+                    $ricerca .= "AND Tipologie.idTipologia = $tipologia\n";
+                if ($genere != '')
+                    $ricerca .= "AND Generi.idGenere = $genere\n";
+
+                // ANCHOR Ordina per punteggio
+                if ($score != '')
+                    $ricerca .= 'ORDER BY Score DESC';
             }
 
             // Se non è stata impostata, mostra tutti i libri
