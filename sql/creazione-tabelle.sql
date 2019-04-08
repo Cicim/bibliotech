@@ -32,7 +32,9 @@ CREATE TABLE Editori (
   idEditore INT NOT NULL,
   Nome VARCHAR(45) NOT NULL,
   Descrizione VARCHAR(200) NULL,
-  PRIMARY KEY (idEditore)
+  PRIMARY KEY (idEditore),
+
+  FULLTEXT(Nome)
 );
 
 
@@ -42,7 +44,9 @@ CREATE TABLE Editori (
 CREATE TABLE Collane (
   idCollana INT NOT NULL,
   Nome VARCHAR(80) NOT NULL,
-  PRIMARY KEY (idCollana)
+  PRIMARY KEY (idCollana),
+
+  FULLTEXT(Nome)
 );
 
 
@@ -76,7 +80,9 @@ CREATE TABLE Libri (
   FOREIGN KEY (idTipo) REFERENCES Tipologie(idTipologia),
   FOREIGN KEY (idEditore) REFERENCES Editori(idEditore),
   FOREIGN KEY (idCollana) REFERENCES Collane(idCollana),
-  FOREIGN KEY (idLingua) REFERENCES Lingue(idLingua)
+  FOREIGN KEY (idLingua) REFERENCES Lingue(idLingua),
+
+  FULLTEXT(Titolo)
 );
 
 
@@ -118,22 +124,11 @@ CREATE TABLE Autori (
   PRIMARY KEY (idAutore),
   FOREIGN KEY (idNazionalita) REFERENCES Nazionalita(idNazionalita),
   FOREIGN KEY (idCittaNascita) REFERENCES Citta(idCitta),
-  FOREIGN KEY (idCittaMorte) REFERENCES Citta(idCitta)
-);
+  FOREIGN KEY (idCittaMorte) REFERENCES Citta(idCitta),
 
-
--- -----------------------------------------------------
--- Table Autori_has_Libri
--- -----------------------------------------------------
-CREATE TABLE Autori_has_Libri (
-  Autori_idAutore INT NOT NULL,
-  Libri_ISBN CHAR(13) NOT NULL,
-  Libri_codGenere INT NOT NULL,
-  Libri_codTipo INT NOT NULL,
-  Libri_codEditore INT NOT NULL,
-  PRIMARY KEY (Autori_idAutore, Libri_ISBN),
-  FOREIGN KEY (Autori_idAutore) REFERENCES Autori(idAutore),
-  FOREIGN KEY (Libri_ISBN) REFERENCES Libri(ISBN)
+  FULLTEXT(NomeAutore),
+  FULLTEXT(CognomeAutore),
+  FULLTEXT(NomeArte)
 );
 
 

@@ -66,4 +66,8 @@ function combobox(parent, send) {
                 ja.hide();
         });
     }
+
+    if(send.val()) {
+        inp.val(dropdown.find('a[value=' + send.val() + ']').text());
+    }
 }

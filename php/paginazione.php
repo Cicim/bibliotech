@@ -3,7 +3,7 @@
 
 <!-- Codice per la stampa di un libro e per la paginazione -->
 <?php
- // Includo la funzione per il controllo del login
+// Includo la funzione per il controllo del login
 include "login-utils.php";
 
 /**
@@ -12,11 +12,12 @@ include "login-utils.php";
  * @param $tranne la query che non deve ristampare
  * @return Il nuovo URL da mettere in un tag a
  */
-function ristampaQueryTranne($tranne) {
+function ristampaQueryTranne($tranne)
+{
     // Crea stringa
     $nuovoUrl = '?';
     // Ottieni una stringa di tutte le query get tranne quella cercata
-    foreach($_GET as $key => $param) {
+    foreach ($_GET as $key => $param) {
         if ($key != $tranne)
             $nuovoUrl .= $key . '=' . $param . '&';
     }
@@ -35,7 +36,7 @@ function paginazione($query)
     if ($query === "") {
         echo '<div class="jumbotron" style="padding: 2rem 2rem">';
         echo '    <h1 class="display-4 text-center">La query eseguita è vuota!</h1>';
-        echo '    <h5 class="display-5 text-center">Non sappiamo cosa fare per aiutarti... Questo non è previsto!</h5>';
+        echo '    <h5 class="text-center">Non sappiamo cosa fare per aiutarti... Questo non è previsto!</h5>';
         echo '</div>';
         return;
     }
@@ -51,6 +52,18 @@ function paginazione($query)
 
     // Ottieni il numero massimo di libri
     $totLibri = mysqli_num_rows($res);
+
+    // Controlla se ha trovato libri
+    if ($totLibri == 0) {
+        // Stampa messaggio "nessun risultato"
+        echo '<div class="jumbotron" style="padding: 2rem 2rem">';
+        echo '    <h1 class="display-4 text-center text-muted">Nessun risultato</h1>';
+        echo '    <h5 class="text-center text-muted">La ricerca non ha prodotto risulati</h5>';
+        echo '</div>';
+
+        return 0;
+    }
+
     // Numero massimo di libri per schermata
     $maxLibri = 15;
     // Numero di schermate
@@ -76,8 +89,6 @@ function paginazione($query)
     $qryPagina = $query . " LIMIT " . $maxLibri . " OFFSET " . ($maxLibri * $pagina);
     // Esegui la query
     $res2 = mysqli_query($conn, $qryPagina);
-
-    // Impaginazione vera e propria
 
     // Stampa la lista dei libri
     while ($libro = mysqli_fetch_assoc($res2)) {
@@ -111,61 +122,64 @@ function stampaBarra($pagina, $totPagine)
     // Stampa i pulsanti per spostarsi tra le pagine
     //
 
-    // Centra tutto
-    echo '<div class="dividerPagine" style="margin:auto">';
-    // Mostra i pulsanti per andare avanti e indietro di pagina
-    echo '<nav aria-label="Page navigation example">';
-    // Lista dei pulsanti
-    echo '<ul class="pagination justify-content-center">';
-    // Pulsante per andare alla prima pagina
-    // Disabilitato se si è alla prima pagina
-    echo '<li class="' . $classi . ' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="'.$urlComune.'page=0">Prima</a>';
-    echo '</li>';
-    // Pulsante per andare alla pagina prima
-    // Disabilitato se si è alla prima pagina
-    echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
-    echo '<a class="' . $classi . ' page-link" href="'.$urlComune.'page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
-    echo '</li>';
+    // Stampa solo se c'è almeno una pagina
+    if ($totPagine > 1) {
+        // Centra tutto
+        echo '<div class="dividerPagine" style="margin:auto">';
+        // Mostra i pulsanti per andare avanti e indietro di pagina
+        echo '<nav aria-label="Page navigation example">';
+        // Lista dei pulsanti
+        echo '<ul class="pagination justify-content-center">';
+        // Pulsante per andare alla prima pagina
+        // Disabilitato se si è alla prima pagina
+        echo '<li class="' . $classi . ' page-item' . ($pagina == 0 ? " disabled" : "") . '">';
+        echo '<a class="page-link" href="' . $urlComune . 'page=0">Prima</a>';
+        echo '</li>';
+        // Pulsante per andare alla pagina prima
+        // Disabilitato se si è alla prima pagina
+        echo '<li class="page-item' . ($pagina == 0 ? " disabled" : "") . '">';
+        echo '<a class="' . $classi . ' page-link" href="' . $urlComune . 'page=' . ($pagina - 1 > 0 ? $pagina - 1 : 0) . '">«</a>';
+        echo '</li>';
 
-    // Mostra le pagine vicine
-    if ($totPagine <= 1) echo $pagina;
-    else {
-        // Calcolare quanto si può andare indietro
-        $indietro = $pagina;
-        // Calcolare quanto si può andare avanti
-        $avanti  = $totPagine - $pagina;
+        // Mostra le pagine vicine
+        if ($totPagine <= 1) echo $pagina;
+        else {
+            // Calcolare quanto si può andare indietro
+            $indietro = $pagina;
+            // Calcolare quanto si può andare avanti
+            $avanti  = $totPagine - $pagina;
 
-        // Metti un tetto a 5 per ogni intervallo
-        $indietro = $indietro > 5 ? 5 : $indietro;
-        $avanti = $avanti > 5 ? 5 : $avanti;
+            // Metti un tetto a 5 per ogni intervallo
+            $indietro = $indietro > 5 ? 5 : $indietro;
+            $avanti = $avanti > 5 ? 5 : $avanti;
 
-        // Indietro + avanti non deve superare il 5
-        // Rimuovi uno dall'intervallo più lungo finché la loro
-        // somma non diventa minore o uguale a 5
-        while ($avanti + $indietro > 5) {
-            if ($avanti > $indietro) $avanti--;
-            else $indietro--;
+            // Indietro + avanti non deve superare il 5
+            // Rimuovi uno dall'intervallo più lungo finché la loro
+            // somma non diventa minore o uguale a 5
+            while ($avanti + $indietro > 5) {
+                if ($avanti > $indietro) $avanti--;
+                else $indietro--;
+            }
+
+            // Stampa i collegamenti
+            for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
+                // Pulsanti per andare alle pagine vicine
+                echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
+                echo '<a class="' . $classi . ' page-link" href="' . $urlComune . 'page=' . $i . '">' . ($i + 1) . '</a>';
+                echo '</li>';
+            }
         }
 
-        // Stampa i collegamenti
-        for ($i = $pagina - $indietro; $i < $pagina + $avanti; $i++) {
-            // Pulsanti per andare alle pagine vicine
-            echo '<li class="page-item ' . ($i == $pagina ? "active" : "") . '">';
-            echo '<a class="' . $classi . ' page-link" href="'.$urlComune.'page=' . $i . '">' . ($i + 1) . '</a>';
-            echo '</li>';
-        }
+        // Pulsante per andare alla pagina dopo
+        echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+        echo '<a class="page-link" href="' . $urlComune . 'page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
+        echo '</li>';
+        // Pulsante per andare all'ultima pagina
+        echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
+        echo '<a class="page-link" href="' . $urlComune . 'page=' . ($totPagine - 1) . '">Ultima</a>';
+        // Chiudi i tag restanti
+        echo '</li></ul></nav></div></div>';
     }
-
-    // Pulsante per andare alla pagina dopo
-    echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="'.$urlComune.'page=' . ($pagina + 1 < $totPagine ? $pagina + 1 : $totPagine - 1) . '">»</a>';
-    echo '</li>';
-    // Pulsante per andare all'ultima pagina
-    echo '<li class="' . $classi . ' page-item' . ($pagina == $totPagine - 1 ? " disabled" : "") . '">';
-    echo '<a class="page-link" href="'.$urlComune.'page=' . ($totPagine - 1) . '">Ultima</a>';
-    // Chiudi i tag restanti
-    echo '</li></ul></nav></div></div>';
 }
 
 
