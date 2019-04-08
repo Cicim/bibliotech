@@ -42,19 +42,33 @@ echo "<br>
 <div class='row'>
 <div class='col-md-12'>";
 
-$sql = 'SELECT *
-FROM Prestiti';
+$sql = 'SELECT Titolo
+FROM Libri, ';
 
 
  $conn = connettitiAlDb();
  // Ottieni i dati in utf-8
  $res = mysqli_query($conn, $sql);
- echo "<div class='col-md-9'>";
- while($row = mysqli_fetch_array($res)) {
+ ?>
 
-    echo " $row[DataConsegna]";
+
+<table border="1">
+<tr>
+    <th>Nome Libro</th>
+    <th>Data Prestito</th>
+    <th>Data Riconsegna</th>
+  </tr>  
+
+
+ <?php
+ while($row = mysqli_fetch_array($res)) {
+    echo "<tr> \n";
+    echo "<td>" . $row["idCopia"] . "</td> \n";
+    echo "<td>" . $row["DataConsegna"] . "</td> \n";
+    echo "<td>" . $row["DataRiconsegna"] . "</td> \n";
+    echo " </tr> \n";
  }
- echo "</div>"
+ echo "</table>"
 
 ?>
 
