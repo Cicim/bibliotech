@@ -15,7 +15,7 @@
     include '../php/connessione.php'; ?>
 
     <!-- Carica il css per il catalogo -->
-    <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
+    <link rel="stylesheet" type="text/css" href="../css/prova.css">
 </head>
 
 <body>
@@ -27,24 +27,28 @@
 echo "<br>
 <br>
 <div class='container'>
-<div class='row'>
+  <div class='row'>
     <div class='col-md-3 '>
          <div class='list-group '>
-          <a href='#' class='list-group-item list-group-item-action'>Informazioni Utente</a>
+          <a href='area_personale.php' class='list-group-item list-group-item-action'>Informazioni Utente</a>
           <a href='#' class='list-group-item list-group-item-action'>Impostazioni Account</a>
           <a href='#' class='list-group-item list-group-item-action'>Lista Desideri</a>
           <a href='cronologia_prestiti.php' class='list-group-item list-group-item-action active'>Cronologia Prestiti</a>                
         </div> 
     </div>
-</div>
+
 
 <br>
-<div class='row'>
-<div class='col-md-12'>";
+<div class='col-md-9'>
+        <div class='card'>
+            <div class='card-body'>
+                <div class='row'>
+                    <div class='col-md-12'>";
 
 $sql = "SELECT Titolo, DataConsegna, DataRiconsegna
 FROM Libri, Copie, Prestiti, Utenti
 WHERE Utenti.Nome = '$nome'
+AND Utenti.CodFiscale = '$codfisc'
 AND Utenti.Cognome = '$cognome'
 AND Copie.idCopia = Prestiti.idCopia
 AND Copie.ISBN = Libri.ISBN";
@@ -55,25 +59,26 @@ AND Copie.ISBN = Libri.ISBN";
  $res = mysqli_query($conn, $sql);
  ?>
 
-<table border="1">
-<tr>
-    <th>Nome Libro</th>
-    <th>Data Prestito</th>
-    <th>Data Riconsegna</th>
-  </tr>  
-
+  <ul class="list-group-horizontal">
+  <li class="list-group-item">Nome Libro</li>
+  <li class="list-group-item">Data Prestito</li>
+  <li class="list-group-item">Data Riconsegna</li>
+  </ul>
 
  <?php
  while($row = mysqli_fetch_array($res)) {
-    echo "<tr> \n";
-    echo "<td>" . $row["Titolo"] . "</td> \n";
-    echo "<td>" . $row["DataConsegna"] . "</td> \n";
-    echo "<td>" . $row["DataRiconsegna"] . "</td> \n";
-    echo " </tr> \n";
+    echo "<ul class='list-group-horizontal'> ";
+    echo "<li class='list-group-item'>" . $row["Titolo"] . "</li> ";
+    echo "<li class='list-group-item'>" . $row["DataConsegna"] . "</li> ";
+    echo "<li class='list-group-item'>" . $row["DataRiconsegna"] . "</li> ";
+    echo " </ul> \n";
  }
- echo "</table>"
+ echo "
+ </div></div></div></div></div></div><br><br>";
 
 ?>
+
+
 
         <!-- Pagina del footer importata -->
         <?php include "../views/footer.php"; ?>

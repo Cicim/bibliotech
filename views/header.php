@@ -25,7 +25,7 @@
                 // Ottieni nome e cognome dell'utente
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
-            
+                $codfisc = $_SESSION["user_id"];
 
                
 
