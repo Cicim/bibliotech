@@ -42,15 +42,18 @@ echo "<br>
 <div class='row'>
 <div class='col-md-12'>";
 
-$sql = 'SELECT Titolo
-FROM Libri, ';
+$sql = "SELECT Titolo, DataConsegna, DataRiconsegna
+FROM Libri, Copie, Prestiti, Utenti
+WHERE Utenti.Nome = '$nome'
+AND Utenti.Cognome = '$cognome'
+AND Copie.idCopia = Prestiti.idCopia
+AND Copie.ISBN = Libri.ISBN";
 
 
  $conn = connettitiAlDb();
  // Ottieni i dati in utf-8
  $res = mysqli_query($conn, $sql);
  ?>
-
 
 <table border="1">
 <tr>
@@ -63,7 +66,7 @@ FROM Libri, ';
  <?php
  while($row = mysqli_fetch_array($res)) {
     echo "<tr> \n";
-    echo "<td>" . $row["idCopia"] . "</td> \n";
+    echo "<td>" . $row["Titolo"] . "</td> \n";
     echo "<td>" . $row["DataConsegna"] . "</td> \n";
     echo "<td>" . $row["DataRiconsegna"] . "</td> \n";
     echo " </tr> \n";
