@@ -113,9 +113,9 @@
                         // in una lista referenziabile
                         echo "di ";
                         for ($i = 0; $i < sizeof($autori); $i++) {
-                            echo "<a style='text-style: italic' href='autore.php?idAutore=";
-                            echo $id_a[$i];
-                            echo "'>" . $autori[$i] . "</a>";
+                            echo "<a style='text-style: italic' href='catalogo.php?titolo=&cerca=1&autore=";
+                            echo $autori[$i];
+                            echo "&editore=&collana=&tipologia=&genere='>" . $autori[$i] . "</a>";
 
                             if ($i < sizeof($autori) - 1) echo ", ";
                         }

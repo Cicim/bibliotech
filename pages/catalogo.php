@@ -56,20 +56,20 @@
                 <div class="jumbotron text-center collapse py-1 mt-0" style="margin:auto" id="filterForm">
                     <h1 class="display-4 mt-2" style="font-size: 16pt !important">
                         <?php
-                            // Controlla se ci sono filtri
-                            if(haFiltri())
-                                // E stampa un pulsante che porta alla stessa pagina
-                                // meno tutti i filtri settati
-                                echo "<a href='catalogo.php?titolo=".$_GET["titolo"]."&cerca=&autore=&editore=&collana=&tipologia=&genere=' class='text-danger'> Rimuovi filtri</a>";
-                            else
-                                // Altrimenti manda il solito messaggio
-                                echo "Aggiungi filtri";
+                        // Controlla se ci sono filtri
+                        if (haFiltri())
+                            // E stampa un pulsante che porta alla stessa pagina
+                            // meno tutti i filtri settati
+                            echo "<a href='catalogo.php?titolo=" . $_GET["titolo"] . "&cerca=&autore=&editore=&collana=&tipologia=&genere=' class='text-danger'> Rimuovi filtri</a>";
+                        else
+                            // Altrimenti manda il solito messaggio
+                            echo "Aggiungi filtri";
                         ?>
                     </h1>
                     <div class="row">
                         <div class="col-6 mb-3">
                             <label for="autore">Autore</label>
-                            <input class="form-control w-100" name="autore" placeholder="Nome o Cognome autore"  value="<?php echo isset($_GET['autore']) ? $_GET['autore'] : '' ?>">
+                            <input class="form-control w-100" name="autore" placeholder="Nome o Cognome autore" value="<?php echo isset($_GET['autore']) ? $_GET['autore'] : '' ?>">
                         </div>
                         <div class="col-6 mb-3">
                             <label for="editore">Editore</label>
@@ -178,11 +178,12 @@
              * Ingnora la casella principale del Titolo
              * @return bool true se ci sono filtri, altrimenti false
              * */
-            function haFiltri() {
-                if($_GET["autore"] || $_GET["editore"] || $_GET["genere"] || $_GET["tipologia"] || $_GET["collana"]) {
-                    return true;
-                }
-                else return false;
+            function haFiltri()
+            {
+                if (isset($_GET["cerca"]))
+                    if ($_GET["autore"] || $_GET["editore"] || $_GET["genere"] || $_GET["tipologia"] || $_GET["collana"])
+                        return true;
+                    else return false;
             }
 
             // Assicurati che sia stata effettuata una ricerca

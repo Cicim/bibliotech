@@ -218,7 +218,7 @@ function stampaLibro($libro, $conn)
     // Inserisci uno span contenente l'autore
     echo "          <span>" . creaListaAutori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "          <br><span><i><a class='text-secondary' href=editore.php?idEditore='" . $libro["idEditore"] . "'> " . $libro["nomeEditore"] . "</a></i></span>";
+    echo "          <br><span><i><a class='text-secondary' href='catalogo.php?titolo=&cerca=1&autore=&editore=" . $libro["nomeEditore"] . "&collana=&tipologia=&genere='> " . $libro["nomeEditore"] . "</a></i></span>";
     echo "      </div>";
 
     // Colonna contenente il pulsante per la prenotazione
@@ -270,7 +270,7 @@ function creaListaAutori($isbnLibro, $conn)
                 $la .= ", ";
 
             // Aggiungi un link alla pagina dell'autore
-            $la .= '<a class="text-info" href="autore.php?idAutore=' . $row[1] . '">' . $row[0] . '</a>';
+            $la .= '<a class="text-info" href="catalogo.php?titolo=&cerca=1&autore=' . $row[0] . '&editore=&collana=&tipologia=&genere=">' . $row[0] . '</a>';
 
             $i++;
         }
