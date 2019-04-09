@@ -62,19 +62,19 @@ AND Copie.ISBN = Libri.ISBN";
   <ul class="list-group-horizontal">
   <li class="list-group-item">Nome Libro</li>
   <li class="list-group-item">Data Prestito</li>
-  <li class="list-group-item">Data Riconsegna</li>
-  </ul>
+  <li class="list-group-item">Data Riconsegna</li><br>
+
 
  <?php
  while($row = mysqli_fetch_array($res)) {
-    echo "<ul class='list-group-horizontal'> ";
+    
     echo "<li class='list-group-item'>" . $row["Titolo"] . "</li> ";
     echo "<li class='list-group-item'>" . $row["DataConsegna"] . "</li> ";
     echo "<li class='list-group-item'>" . $row["DataRiconsegna"] . "</li> ";
-    echo " </ul> \n";
+    echo "<br>";
  }
  echo "
- </div></div></div></div></div></div><br><br>";
+ </div></div></div></div></div></div></ul><br><br>";
 
 ?>
 

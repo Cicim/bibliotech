@@ -5,7 +5,8 @@
 	margin-bottom: 0;
 	margin-left:-4px;
 	margin-right: 0;
- 	border-right-width: 0;
+	border-right-width: 0;
+	width: 33%;
 }
 .list-group-horizontal .list-group-item:first-child {
 	border-top-right-radius:0;
