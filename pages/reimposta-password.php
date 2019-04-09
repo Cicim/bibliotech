@@ -29,7 +29,26 @@
      */ 
     function reimposta()
     {
-        // Recupero l'email inserita nel form                                    
+        // Connessione al Database
+        $conn = connettitiAlDb();
+
+        // Ottieni il codice di validazione
+        $validazione = $_GET["codice"];
+        // Se non è fornito
+        if (!$validazione)
+            return "Nessun codice fornito";
+
+        // Ottieni l'account dal codice di validazione
+        $ris_ricerca = mysqli_query($conn, "SELECT CodFiscale FROM Utenti WHERE CodiceValidazione = '$validazione'");
+        // Conta i risultati
+        if (mysqli_num_rows($ris_ricerca) == 0)
+            return "Codice non valido";
+
+        // Ottieni il codice fiscale
+        $codFiscale = mysqli_fetch_row($ris_ricerca)[0];
+
+
+        // Recupera le due password                         
         $pw1 = $_POST["password"];
         $pw2 = $_POST["conferma"];
 
@@ -37,24 +56,19 @@
         if ($pw1 != $pw2)
             return "Le due password non combaciano";
 
+        // Calcola l'md5 della password
         $password = md5($pw1);
-        // Da abilitare a validazione prevista: $validazione = $_GET["cval"];
-        $validazione = "F98VzydVmFxXW799d9142438c97d318b8b979cb12b6a7";
 
-        // Connessione al Database
-        $conn = connettitiAlDb();
-        //esegui il controllo sull'email
-        $qry = "UPDATE utenti SET Password = '$password' WHERE CodiceValidazione = '$validazione'";
+        // Resetta la password
+        $qry = "UPDATE utenti SET CodiceValidazione = NULL, Password = '$password' WHERE CodFiscale = '$codFiscale'";
         // Esegui la query
-        $qry_res = mysqli_query($conn, $qry) or die("Impossibile eseguire la query");
+        $qry_res = mysqli_query($conn, $qry);
+
         // Mostra un messaggio se l'email è esistente
         if(!$qry_res)
             return "Qualcosa è andato storto. Riprova.";
         else
             return "ok";
-
-        // Chiudo la connessione
-        mysqli_close($conn);
     }
     $stato = "";
     // Una volta inserito l'indirizzo e-mail per il recupero
