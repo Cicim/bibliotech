@@ -29,22 +29,8 @@
     <?php
     // Importa il codice per l'invio di una mail
     include "../php/invio.php";
-
-    /**
-     * @author Claudio Cicimurri, 5CI
-     * Funzione per generare una string a caso
-     * @param int $length Lunghezza della stringa
-     * @return string String a caso;
-     */
-    function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }
+    // Importa le utility per generare i codici
+    include "../php/utils.php";
 
     /**
      * @author Claudio Cicimurri, 5CI
@@ -137,10 +123,7 @@
         $dataOdierna = date("Y-m-d");
 
         // Genera un codice di validazione
-        // Ottieni il timestamp odierno e hashalo
-        $timestampOdierno = md5(time());
-        // Ottieni una stringa a caso e uniscila al timestamp calcolato
-        $codValidazione = generateRandomString(13) . $timestampOdierno;
+        $codValidazione = generaCodice();
         
         // Altrimenti, invia una mail all'interessato
         $inviata = inviaMailDiConferma($email, $codValidazione, $nome, $cognome, $sesso);
