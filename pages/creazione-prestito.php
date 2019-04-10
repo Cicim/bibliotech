@@ -12,6 +12,14 @@
     <!-- Inclusione librerie di Bootstrap -->
     <?php include "../php/imports.php"; ?>
 
+    <style>
+        table, tr, td {
+            
+            border: none;
+
+        }
+    </style>
+
 </head>
 
 <body>
@@ -23,38 +31,47 @@
         <h1 class="display-4 text-center">Creazione nuovo prestito</h1>
     </div>
 
-    <!-- Prima riga (3 caselle) -->
-    <div class="row">
-            <!-- IdPrestito -->
-            <div class="col-md-4 mb-3">
-                <label for="idPrestitp">idPrestito</label>
-                <input type="text" class="form-control" name="idPrestito" placeholder="Es. 254123" value="" required="true">
-                <div class="invalid-feedback">Inserisci un id valido</div>
-            </div>
-            <!-- Codice Fiscale Utente -->
-            <div class="col-md-4 mb-3">
-                <label for="Codfisc">Codice Fiscale</label>
-                <input type="text" class="form-control" name="Codfisc" placeholder="Es. HPFMWS46H48G903E" value="" required="true">
-                <div class="invalid-feedback">Inserisci un codice fiscale valido.</div>
-            </div>
-    </div>
+    <table align = center width = "66%">
+        <tr align = center>
+            <td>
+                <!-- Prima riga (3 caselle) -->
+                <div class="row">
+                        <!-- IdPrestito -->
+                        <div class="col-md-6 mb-3">
+                            <label for="idPrestito">idPrestito</label>
+                            <input type="text" class="form-control" name="idPrestito" placeholder="Es. 254123" value="" required="true">
+                            <div class="invalid-feedback">Inserisci un id valido</div>
+                        </div>
+                        <!-- Codice Fiscale Utente -->
+                        <div class="col-md-6 mb-3">
+                            <label for="Codfisc">Codice Fiscale</label>
+                            <input type="text" class="form-control" name="Codfisc" placeholder="Es. HPFMWS46H48G903E" value="" required="true">
+                            <div class="invalid-feedback">Inserisci un codice fiscale valido.</div>
+                        </div>
+                </div>
+            </td>
+        </tr>
+        <tr align = center>
+            <td>
+                <!-- Seconda riga (3 caselle) -->
+                <div class="row">
+                    <!--Data consegna -->
+                    <div class="col-md-6 mb-3">
+                        <label for="dataRicons">Data Riconsegna</label>
+                        <input class="form-control w-100" name="dataRicons" placeholder="Es. 21/2/2017" required="true">
+                        <div class="invalid-feedback">Inserisci una data per la consegna valida</div>
+                    </div>
 
-    <!-- Seconda riga (3 caselle) -->
-    <div class="row">
-        <!--Data consegna -->
-        <div class="col-md-4 mb-3">
-            <label for="dataRicons">Data Riconsegna</label>
-            <input class="form-control w-100" name="dataRicons" placeholder="Es. 21/2/2017" required="true">
-            <div class="invalid-feedback">Inserisci una data per la consegna valida</div>
-        </div>
-
-        <!--  -->
-        <div class="col-md-4 mb-3">
-            <label for="idCopia">idCopia</label>
-            <input class="form-control w-100" name="idCopia" placeholder="Es. 9000" required="true">
-            <div class="invalid-feedback">Inserisci un id valido.</div>
-        </div>
-    </div>
+                    <!--  -->
+                    <div class="col-md-6 mb-3">
+                        <label for="idCopia">idCopia</label>
+                        <input class="form-control w-100" name="idCopia" placeholder="Es. 9000" required="true">
+                        <div class="invalid-feedback">Inserisci un id valido.</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 <!--working progress-->
 
@@ -94,6 +111,15 @@
     }
     ?>
 
+    <div align = center>
+        <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+        <a class="btn btn-danger ml-2 block" id="btnAnnulla" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Annulla</a>
+
+        <!-- Conferma della creazione del prestito -->
+        <a class="btn btn-success ml-2 block" id="btnConferma" href="#"><i class="fa fa-check"></i> Crea prestito</a>
+        <!-- Esecuzione della query -->
+        <!---->
+    </div>
 
     <!-- Pulsante per inviare -->
     <!--
@@ -106,16 +132,6 @@
         <br>
         <br>
     -->
-
-    <div align = "center">
-        <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
-        <a class="btn btn-danger ml-2 block" id="btnAnnulla" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Annulla</a>
-
-        <!-- Conferma della creazione del prestito -->
-        <a class="btn btn-success ml-2 block" id="btnConferma" href="#"><i class="fa fa-check"></i> Crea prestito</a>
-        <!-- Esecuzione della query -->
-        <!---->
-    </div>
 
     <br>
 
