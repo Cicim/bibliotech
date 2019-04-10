@@ -1,5 +1,7 @@
+
 .list-group-horizontal .list-group-item {
 	display: inline-block;
+
 }
 .list-group-horizontal .list-group-item {
 	margin-bottom: 0;
@@ -7,6 +9,11 @@
 	margin-right: 0;
 	border-right-width: 0;
 	width: 33%;
+	height: 55px;
+	overflow: auto;
+	text-align: center;
+	overflow-y: hidden;
+	white-space: nowrap;
 }
 .list-group-horizontal .list-group-item:first-child {
 	border-top-right-radius:0;

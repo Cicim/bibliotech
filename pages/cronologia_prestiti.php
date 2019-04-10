@@ -47,9 +47,7 @@ echo "<br>
 
 $sql = "SELECT Titolo, DataConsegna, DataRiconsegna
 FROM Libri, Copie, Prestiti, Utenti
-WHERE Utenti.Nome = '$nome'
-AND Utenti.CodFiscale = '$codfisc'
-AND Utenti.Cognome = '$cognome'
+WHERE Utenti.CodFiscale = '$codfisc'
 AND Copie.idCopia = Prestiti.idCopia
 AND Copie.ISBN = Libri.ISBN";
 
@@ -59,22 +57,23 @@ AND Copie.ISBN = Libri.ISBN";
  $res = mysqli_query($conn, $sql);
  ?>
 
-  <ul class="list-group-horizontal">
+<ul class="list-group-horizontal">
   <li class="list-group-item">Nome Libro</li>
   <li class="list-group-item">Data Prestito</li>
-  <li class="list-group-item">Data Riconsegna</li><br>
+  <li class="list-group-item">Data Riconsegna</li>
+</ul>
 
 
  <?php
  while($row = mysqli_fetch_array($res)) {
-    
+    echo "<ul class='list-group-horizontal'>";
     echo "<li class='list-group-item'>" . $row["Titolo"] . "</li> ";
     echo "<li class='list-group-item'>" . $row["DataConsegna"] . "</li> ";
     echo "<li class='list-group-item'>" . $row["DataRiconsegna"] . "</li> ";
-    echo "<br>";
+    echo "</ul>";
  }
  echo "
- </div></div></div></div></div></div></ul><br><br>";
+ </div></div></div></div></div></div></div><br><br>";
 
 ?>
 

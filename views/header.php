@@ -1,5 +1,6 @@
 <header>
 <link rel="stylesheet" type="text/css" href="../css/dropdown.css">
+<meta http-equiv="Cache-control" content="no-cache"> <!-- da cancellare -->
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
         <a class="navbar-brand" href="../index.php">Bibliotech</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
