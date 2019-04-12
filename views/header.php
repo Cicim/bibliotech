@@ -1,5 +1,5 @@
 <header>
-<link rel="stylesheet" type="text/css" href="../css/dropdown.css">
+<link rel="stylesheet" type="text/css" href="../css/header.css">
 <meta http-equiv="Cache-control" content="no-cache"> <!-- da cancellare -->
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
         <a class="navbar-brand" href="../index.php">Bibliotech</a>
@@ -32,20 +32,15 @@
 
 
                     // Stampa il dropdown
-                   echo "<div class='wrapper'>
-                    <li class='nav-item dropdown'>
-                    <a class='button btn btn-info' id='navbarDropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                          <font color='white'>$nome $cognome</font>
-                    </a>
-                          <div class='dropdown-menu dropdown-menu-lg-right' aria-labelledby='navbarDropdownMenuLink'>
-                            <a class='dropdown-item' href='../pages/area_personale.php'>Pagina Utente</a>
-                            <a class='dropdown-item' href='#'>Lista dei desideri</a>
-                            <a class='dropdown-item' href='#'>Lista dei prestiti</a>
-                            <a class='dropdown-item' href='../php/logout.php'>Esci</a>
-                        
-                   
-                    </li>
-                    </div>";
+                   echo " <div class='dropdown'>
+                   <button class='dropbtn'>$nome $cognome</button>
+                   <div class='dropdown-content'>
+                     <a href='../pages/area_personale.php'>Pagina Utente</a>
+                     <a href='#'>Lista Desideri</a>
+                     <a href='../pages/cronologia_prestiti.php'>Lista Prestiti</a>
+                     <a href='../php/logout.php'>Esci</a>
+                   </div>
+                 </div> ";
             } 
             // Oppure stampa il pulsante accedi
             else

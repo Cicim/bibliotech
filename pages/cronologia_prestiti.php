@@ -15,7 +15,7 @@
     include '../php/connessione.php'; ?>
 
     <!-- Carica il css per il catalogo -->
-    <link rel="stylesheet" type="text/css" href="../css/prova.css">
+    <link rel="stylesheet" type="text/css" href="../css/cronologia_prestiti.css">
 </head>
 
 <body>
@@ -58,9 +58,9 @@ AND Copie.ISBN = Libri.ISBN";
  ?>
 
 <ul class="list-group-horizontal">
-  <li class="list-group-item">Nome Libro</li>
-  <li class="list-group-item">Data Prestito</li>
-  <li class="list-group-item">Data Riconsegna</li>
+  <li class="list-group-item"><b>Nome Libro</b></li> 
+  <li class="list-group-item"><b>Data Prestito</b></li>
+  <li class="list-group-item"><b>Data Riconsegna</b></li>
 </ul>
 
 
