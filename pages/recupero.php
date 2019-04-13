@@ -21,6 +21,10 @@
     <?php
     // Includi la funzione per la connessione
     include "../php/connessione.php";
+    // Includi la funzione per generare il codice
+    include "../php/utils.php";
+    // Includi le librerie per inviare e-mail
+    include "../php/invio.php";
 
     /**
      * Funzione per il recupero della password
@@ -33,21 +37,52 @@
         // Connessione al Database
         $conn = connettitiAlDb();
         //esegui il controllo sull'email
-        $qry = "SELECT Email FROM utenti WHERE utenti.Email = '$email'";
+        $qry = "SELECT Email, Validato, CodiceValidazione, Nome, Cognome FROM utenti WHERE utenti.Email = '$email'";
         // Esegui la query
         $qry_res = mysqli_query($conn, $qry) or die("Impossibile eseguire la query");
         // Mostra un messaggio se l'email è esistente
         $row = mysqli_fetch_row($qry_res);
 
-        // Se l'email non è presente riporta errore
-        if (!$row[0])                    
+        // Ottieni l'e-mail
+        $email = $row[0];
+        // Se l'email non è presente riporta un errore
+        if (!$row[0])      
             return "Email non presente";
-        // Altrimenti riporta il nome dell'utente
-        else 
-            return "ok";
+        
+        // Controlla se l'utente è validato
+        $validato = $row[1];
+        if (!$validato)
+            return "L'account deve essere validato";
 
-        // Chiudo la connessione
+        // Ottieni il codice di validazione
+        $codice = $row[2];
+        // Se esiste l'email non deve essere reinviata
+        if ($codice)
+            return "Una mail è già stata inviata";
+
+        // Altrimenti, genera un nuovo codice
+        $codice = generaCodice();
+
+        // Ottieni nome e cognome dell'utente
+        $nome = $row[3];
+        $cognome = $row[4];
+        
+        // Esegui la query per l'aggiornamento del codice
+        $ris = mysqli_query($conn, "UPDATE Utenti SET CodiceValidazione = '$codice' WHERE Email = '$email'");
+        // Se la query fallisce
+        if (!$ris)
+            return "Errore durante l'aggiornamento del database<br>" . mysqli_error($conn);
+
+        // Invia una mail
+        $inviata = inviaMailDiRecupero($email, $codice, $nome, $cognome);
+        // Se la mail non è stata inviata
+        if (!$inviata)
+            return "Errore durante l'invio della mail";
+
+        // Chiudi la connessione
         mysqli_close($conn);
+        // Riporta ok alla fine di tutto
+        return "ok";
     }
     $stato = "";
     // Una volta inserito l'indirizzo e-mail per il recupero
