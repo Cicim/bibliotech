@@ -1,6 +1,5 @@
 <header>
 <link rel="stylesheet" type="text/css" href="../css/header.css">
-<meta http-equiv="Cache-control" content="no-cache"> <!-- da cancellare -->
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
         <a class="navbar-brand" href="../index.php">Bibliotech</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -33,10 +32,10 @@
 
                     // Stampa il dropdown
                    echo " <div class='dropdown'>
-                   <button class='dropbtn'>$nome $cognome</button>
+                   <button class='btn btn-info ml2'>$nome $cognome</button>
                    <div class='dropdown-content'>
                      <a href='../pages/area_personale.php'>Pagina Utente</a>
-                     <a href='#'>Lista Desideri</a>
+                     <a href='../pages/lista_desideri.php'>Lista Desideri</a>
                      <a href='../pages/cronologia_prestiti.php'>Lista Prestiti</a>
                      <a href='../php/logout.php'>Esci</a>
                    </div>

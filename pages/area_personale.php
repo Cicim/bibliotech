@@ -27,6 +27,20 @@
     <?php include "../views/header.php"; ?>
 <?php
 
+$sql = "SELECT DataValidazione, Email
+FROM Utenti
+WHERE Utenti.CodFiscale = '$codfisc'";
+
+
+ $conn = connettitiAlDb();
+
+ $res = mysqli_query($conn, $sql);
+
+ while($row = mysqli_fetch_array($res)){
+   $email = $row['Email'];
+   $datavalidazione = $row['DataValidazione'];
+ }
+
 echo "<br>
 <br>
 <div class='container'>
@@ -34,7 +48,6 @@ echo "<br>
     <div class='col-md-3 '>
          <div class='list-group '>
           <a href='#' class='list-group-item list-group-item-action active'>Informazioni Utente</a>
-          <a href='#' class='list-group-item list-group-item-action'>Impostazioni Account</a>
           <a href='lista_desideri.php' class='list-group-item list-group-item-action'>Lista Desideri</a>
           <a href='cronologia_prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
           
@@ -68,13 +81,13 @@ echo "<br>
                           <div class='form-group row'>
                             <label class='col-4 col-form-label'>Email</label> 
                             <div class='col-8'>
-                            <input class='form-control here' placeholder=''  type='text' disabled>
+                            <input class='form-control here' placeholder='$email'  type='text' disabled>
                             </div>
                           </div>
                           <div class='form-group row'>
                             <label for='text' class='col-4 col-form-label'>Account Registrato il</label> 
                             <div class='col-8'>
-                              <input placeholder='' class='form-control here' type='text' disabled> 
+                              <input placeholder='$datavalidazione' class='form-control here' type='text' disabled> 
                             </div>
                           </div>
                         </form>

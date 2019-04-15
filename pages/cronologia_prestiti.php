@@ -31,7 +31,6 @@ echo "<br>
     <div class='col-md-3 '>
          <div class='list-group '>
           <a href='area_personale.php' class='list-group-item list-group-item-action'>Informazioni Utente</a>
-          <a href='#' class='list-group-item list-group-item-action'>Impostazioni Account</a>
           <a href='lista_desideri.php' class='list-group-item list-group-item-action'>Lista Desideri</a>
           <a href='#' class='list-group-item list-group-item-action active'>Cronologia Prestiti</a>                
         </div> 
@@ -53,7 +52,7 @@ AND Copie.ISBN = Libri.ISBN";
 
 
  $conn = connettitiAlDb();
- // Ottieni i dati in utf-8
+
  $res = mysqli_query($conn, $sql);
  ?>
 

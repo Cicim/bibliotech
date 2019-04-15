@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include "../php/imports.php" ?>
     <?php include "../php/connessione.php" ?>
+    <link rel="stylesheet" type="text/css" href="../css/libro.css">
 </head>
 
 <!-- wrapper:
@@ -176,12 +177,33 @@
         // Altrimenti stampa il pulsante
         else {
             echo "<div class='col text-center mb-4'>";
-            echo "<a href='#' style='' class='add-to-list full-text btn btn-info btn-lg mt-0'>Aggiungi a Lista</a>";
+            echo "<form action='libro.php?ISBN=$isbn' method='post'>";
+            echo "<button type='submit' class='btn btn-primary btn-lg' name='prova' >Aggiungi a Lista</button>";
+            echo "</form>";
             echo "</div>";
+        }
+
+        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['prova'])){
+            $sql = "INSERT INTO lista_interessi (codFiscaleUtente, ISBNLibro, DataInserimento)
+            VALUES ('$codfisc', '$isbn', curdate());";
+
+
+            $conn = connettitiAlDb();
+            
+            $res = mysqli_query($conn, $sql);
+
+            echo"  <div class='alert alert-success alert-dismissible'>
+            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+            <strong>Libro Aggiunto!</strong> <a href='lista_desideri.php'> Clicca qui </a> per andare alla Lista Desideri.
+          </div> ";
         }
         ?>
 
     </div>
+
+    <?php
+
+    ?>
 
     <!-- footer importato -->
     <?php include "../views/footer.php" ?>
