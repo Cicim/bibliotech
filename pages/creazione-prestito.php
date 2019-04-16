@@ -35,6 +35,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
         </div>
 
         <?php
+        include_once "../php/connessione.php";
         $fisc = '';
         /**
          * @author Claudio Cicimurri, 5CI
@@ -45,7 +46,6 @@ livelloRichiesto(BIBLIOTECARIO); ?>
         function selezioneCodiceFiscale()
         {
             // Connettiti al database
-            include_once "../php/connessione.php";
             $conn = connettitiAlDb();
 
             // Ottieni il codice fiscale
@@ -55,6 +55,9 @@ livelloRichiesto(BIBLIOTECARIO); ?>
 
             // Ottieni l'utente, se esiste
             $ris = mysqli_query($conn, "SELECT Nome, Cognome, Email FROM Utenti WHERE CodFiscale = '$fisc'");
+
+            // Chiudi la connessione
+            mysqli_close($conn);
 
             if (mysqli_num_rows($ris) == 1) {
                 $ris = mysqli_fetch_row($ris);
@@ -70,13 +73,87 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 return false;
         }
 
+        $stato_fisc = "";
         // Controlla se l'utente è già stato selezionato
         if (isset($_GET['codiceFiscale']))
             $stato_fisc = selezioneCodiceFiscale();
+
+        /**
+         * @author Claudio Cicimurri, 5CI
+         * Funzione per uscire in qualsiasi momento con un errore
+         * dalla creazione di un prestito
+         * @return string Codice di errore o ok
+         */
+        function creazionePrestito()
+        {
+            global $stato_fisc, $fisc;
+            // Assicurati che un utente sia stato selezionato
+            if (!$stato_fisc)
+                return "Nessun utente selezionato";
+
+            // Ottieni il codice fiscale dell'utente
+            $codUtente = $fisc;
+            // Ottieni il codice fiscale del bibliotecario
+            $codBib = $_SESSION['user_id'];
+
+            // Ottieni l'id della copia
+            $idCopia = $_POST['idCopia'];
+            // Ottieni la data di riconsegna
+            $dataRiconsegna = $_POST['dataRiconsegna'];
+
+            // Se l'idCopia non è definito
+            if ($idCopia == '')
+                return "Non è stata scelta nessuna copia";
+            // Se la dataRiconsegna non è definita
+            if ($dataRiconsegna == '')
+                return "Data riconsegna non valida";
+
+            // Ottieni la data odierna
+            $dataConsegna = date('Y-m-d');
+
+            // Connettiti al db
+            $conn = connettitiAlDb();
+
+            // Controlla che il libro non sia già prenotato
+            if (mysqli_fetch_row(mysqli_query($conn, "SELECT Prestato FROM Copie WHERE idCopia = $idCopia"))[0])
+                return "Copia già prestata";
+
+            // Blocca il libro
+            mysqli_query($conn, "UPDATE Copie SET Prestato = TRUE WHERE idCopia = $idCopia");
+
+            // Esegui la query
+            $query = "INSERT INTO Prestiti (DataConsegna, DataRiconsegna, idCopia, codFiscaleUtente, bibConsegna)
+                        VALUES ('$dataConsegna', '$dataRiconsegna', $idCopia, '$codUtente', '$codBib')";
+            // Aggiungi il prestito
+            $ris = mysqli_query($conn, $query);
+
+            if ($ris)
+                return "ok";
+            else
+                return "Errore durante l'esecuzione della query<br>" . mysqli_error($conn);
+        }
+
+        $stato = "";
+        // Script per effettuare il prestito
+        if (isset($_POST['dataRiconsegna']))
+            $stato = creazionePrestito();
         ?>
+
 
         <!-- Contenitore -->
         <div class="container">
+            <?php
+            global $stato;
+
+            // Se il prestito è stato effettuato con successo
+            if ($stato == "ok")
+                echo '<div class="alert alert-success" role="alert">Libro prestato</div>';
+            else if ($stato != '') {
+                echo '<div class="alert alert-danger" role="alert">';
+                echo $stato;
+                echo '</div>';
+            }
+            ?>
             <!-- Prima riga: selezione utente -->
             <form action="" method="GET">
                 <div class="input-group mb-3">
@@ -98,7 +175,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                         Utente con codice fiscale \"<b>$fisc</b>\" non trovato</div>";
 
                 // Calcola la prossima data di riconsegna
-                $riconsegna =  date('Y-m-d',strtotime('+30 days',time())) 
+                $riconsegna =  date('Y-m-d', strtotime('+30 days', time()))
                 ?>
             </form>
 
@@ -113,7 +190,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                     </div>
                 </div>
 
-                <label for="dataRiconsegna">Seleziona la data di riconsegna</label>
+                <label for="dataRiconsegna">Seleziona la data di riconsegna (di default fra 30 giorni):</label>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker" data-target-input="nearest">
                         <input type="text" class="form-control datetimepicker-input" id="dataRiconsegna" name="dataRiconsegna" data-target="#datetimepicker" value="<?php echo $riconsegna ?>" />
@@ -133,6 +210,12 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                         });
                     });
                 </script>
+
+
+                <!-- Pulsante per creare il prestito -->
+                <button type="submit" class="btn btn-info">Crea prestito</button>
+                <br>
+                <br>
             </form>
         </div>
     </div>

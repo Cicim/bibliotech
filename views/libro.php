@@ -42,7 +42,6 @@
     $ris = mysqli_query($conn, "SELECT idCopia, ISBN, Prestato, NumeroRipiano, Armadi.Descrizione AS Armadio, ProprietaDi
                                     FROM Copie, Ripiani, Armadi
                                     WHERE ISBN = '$isbn'
-                                      AND Prestato = 0
                                       AND Ripiani.idArmadio = Armadi.idArmadio
                                       AND Copie.idRipiano = Ripiani.idRipiano
                                     ORDER BY Prestato ASC;");

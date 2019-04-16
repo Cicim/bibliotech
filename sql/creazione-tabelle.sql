@@ -313,11 +313,11 @@ CREATE TABLE Prestiti (
   codFiscaleUtente CHAR(16) NOT NULL,
   bibConsegna CHAR(16) NOT NULL,
   bibRiconsegna CHAR(16) NULL,
-  PRIMARY KEY (idPrestito, bibRiconsegna),
+  PRIMARY KEY (idPrestito),
   FOREIGN KEY (idCopia) REFERENCES Copie(idCopia),
   FOREIGN KEY (codFiscaleUtente) REFERENCES Utenti(CodFiscale)
     ON DELETE CASCADE,
-  FOREIGN KEY (bibConsenga) REFERENCES Utenti(CodFiscale)
+  FOREIGN KEY (bibConsegna) REFERENCES Utenti(CodFiscale)
     ON DELETE CASCADE,
   FOREIGN KEY (bibRiconsegna) REFERENCES Utenti(CodFiscale)
     ON DELETE CASCADE
