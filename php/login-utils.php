@@ -1,17 +1,29 @@
 <?php
 /**
- * @author Lorenzo Clazzer, 5CI
+ * @author Lorenzo Clazzer, Claudio Cicimurri, 5CI
  * Riporta il codice dell'utente se ha eseguito il login
  * @return string|false Codice utente o false in caso di errore
  */
 function logged()
 {
+    // Imposta false come valore di default
+    $ret = false;
+    // Controlla che esista una sessione
     if (isset($_SESSION['user_id'])) {
+        // Avvia la sessione
+        session_start();
+        // A seconda dell'id della sessione, salva il valore
+        // da riportare in una variabile
         if ($_SESSION['user_id'] != "")
-            return $_SESSION['user_id'];
+            $ret = $_SESSION['user_id'];
         else
-            return false;
+            $ret = false;
     }
+    // Chiudi la sessione
+    session_abort();
+
+    // Riporta il risultato
+    return $ret;
 }
 
 /**
