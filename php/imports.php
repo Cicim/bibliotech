@@ -9,3 +9,8 @@
 
 <!-- Carica font-awesome per le class .fa.fa-icon (icone come testo) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<?php 
+// Avvia la sessione
+session_start();
+?>

@@ -18,7 +18,6 @@
 
 
             <?php
-            session_start();
             // Controlla che l'utente sia loggato
             if (isset($_SESSION["user_id"])) {
                 // Ottieni nome e cognome dell'utente

@@ -49,8 +49,8 @@ function effettualLogin($codFiscale, $nome, $cognome)
  * @return true Quando il logout è stato effettuato
  */
 function logout()
-{ 
-    // Crea la sessione
+{
+    // Crea la sessione (anche se potrebbe dare errore)
     session_start();
     // Cancella i dati della sessione
     $_SESSION['user_id'] = null;

@@ -16,7 +16,6 @@
      * @return int Livello di accesso
      */
     function ottieniLivelloDiAccesso() {
-        session_start();
         // Controlla se sei loggato
         if ($codFiscale = logged()) {
             // Connettiti al database
