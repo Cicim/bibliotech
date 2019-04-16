@@ -42,8 +42,6 @@ function paginazione($query)
     }
     // Connettiti al db
     $conn = connettitiAlDb();
-    // Ottieni i dati in utf-8
-    mysqli_query($conn, "set names 'utf8'");
     // Esegui la query
     $res = mysqli_query($conn, $query);
 
@@ -248,8 +246,6 @@ function stampaLibro($libro, $conn)
  */
 function creaListaAutori($isbnLibro, $conn)
 {
-    // Ottieni i dati in utf-8
-    mysqli_query($conn, "set names 'utf8'");
     // Lista degli autori
     $la = "";
     // Query per eseguire la ricerca

@@ -14,7 +14,10 @@
         $conn = mysqli_connect($host, $user, "") or die("Impossibile raggiungere il DBMS");
 
         // Selezione del database
-        $seldb = mysqli_select_db($conn, $db) or die("Impossibile connettersi al database");
+        mysqli_select_db($conn, $db) or die("Impossibile connettersi al database");
+
+        // Ottieni i dati in utf-8
+        mysqli_query($conn, "set names 'utf8'");
 
         return $conn;
     }
@@ -42,4 +45,3 @@
         // Riportalo
         return $id[0];
     }
-?>
