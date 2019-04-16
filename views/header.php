@@ -1,5 +1,5 @@
 <header>
-<link rel="stylesheet" type="text/css" href="../css/header.css">
+    <link rel="stylesheet" type="text/css" href="../css/header.css">
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
         <a class="navbar-brand" href="../index.php">Bibliotech</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -15,32 +15,30 @@
                     <a class="nav-link" href="catalogo.php">Catalogo</a>
                 </li>
             </ul>
-        
+
 
             <?php
-            // Inizializza la sessione
             session_start();
-
-            if (isset($_SESSION["user_id"])) {
+            // Controlla che l'utente sia loggato
+            if (logged()) {
                 // Ottieni nome e cognome dell'utente
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
                 $codfisc = $_SESSION["user_id"];
 
-               
-
-
-                    // Stampa il dropdown
-                   echo " <div class='dropdown'>
-                   <button class='btn btn-info ml2'>$nome $cognome</button>
-                   <div class='dropdown-content'>
-                     <a href='../pages/area_personale.php'>Pagina Utente</a>
-                     <a href='../pages/lista_desideri.php'>Lista Desideri</a>
-                     <a href='../pages/cronologia_prestiti.php'>Lista Prestiti</a>
-                     <a href='../php/logout.php'>Esci</a>
-                   </div>
-                 </div> ";
-            } 
+                // Stampa il dropdown
+                echo "<div class='btn-group'>
+                        <a class='button btn btn-info' href='#'>$nome $cognome</a>
+                        <button type='button' class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle='dropdown'></button>
+                        <div class='dropdown-menu dropdown-menu-lg-right'>
+                            <a class='dropdown-item' href='area_personale.php'>Pagina utente</a>
+                            <a class='dropdown-item' href='lista_desideri.php'>Lista dei desideri</a>
+                            <a class='dropdown-item' href='cronologia_prestiti.php'>Lista dei prestiti</a>
+                            <div class='dropdown-divider'></div>
+                            <a class='dropdown-item' href='../php/logout.php'>Esci</a>
+                        </div>
+                    </div>";
+            }
             // Oppure stampa il pulsante accedi
             else
                 echo "<a class='btn btn-info ml-2' id='btnAccedi' href='login.php'>Accedi</a>";
@@ -48,4 +46,4 @@
             ?>
         </div>
     </nav>
-</header> 
+</header>

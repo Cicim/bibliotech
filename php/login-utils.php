@@ -6,7 +6,6 @@
  */
 function logged()
 {
-    //session_start();
     if (isset($_SESSION['user_id'])) {
         if ($_SESSION['user_id'] != "")
             return $_SESSION['user_id'];
