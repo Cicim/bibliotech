@@ -8,7 +8,7 @@
     <title>Bibliotech - Registrazione</title>
 
     <!-- Importa tutte le librerie comuni -->
-    <?php include "../php/imports.php" ?>
+    <?php include_once "../php/imports.php" ?>
 
     <!-- Importa lo stile per il login -->
     <link href="../css/login.css" rel="stylesheet">
@@ -23,14 +23,14 @@
 
 <body class="text-center">
     <!-- Includi l'header -->
-    <?php include "../views/header.php" ?>
+    <?php include_once "../views/header.php" ?>
 
     <!--Script php per l'invio dei dati al database-->
     <?php
     // Importa il codice per l'invio di una mail
-    include "../php/invio.php";
+    include_once "../php/invio.php";
     // Importa le utility per generare i codici
-    include "../php/utils.php";
+    include_once "../php/utils.php";
 
     /**
      * @author Claudio Cicimurri, 5CI
@@ -42,7 +42,7 @@
     function registrazione()
     {
         // Includi il codice per la connessione al database
-        include "../php/connessione.php";
+        include_once "../php/connessione.php";
         $conn = connettitiAlDb();
 
         // Recupera i dati dal form

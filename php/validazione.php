@@ -8,7 +8,7 @@
     <title>Bibliotech - Registrazione</title>
 
     <!-- Importa tutte le librerie comuni -->
-    <?php include "imports.php" ?>
+    <?php include_once "imports.php" ?>
 </head>
 
 <body>
@@ -50,7 +50,7 @@
         $ris_valida = mysqli_query($conn, $query_valida);
 
         // Richiedi le utility per il login
-        include "login-utils.php";
+        include_once "login-utils.php";
         // Esegui il login con i dati letti
         effettualLogin($codFiscale, $nome, $cognome);
 

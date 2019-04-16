@@ -8,9 +8,9 @@
     <title>Homepage - Bibliotech</title>
 
     <!-- Include le librerie comuni -->
-    <?php include "../php/imports.php";
+    <?php include_once "../php/imports.php";
     // Includi il codice per la paginazione
-    include "../php/paginazione.php";
+    include_once "../php/paginazione.php";
     // Includi il codice per la connessione al database
     include '../php/connessione.php'; ?>
 
@@ -21,12 +21,12 @@
 
 <!-- Esci in caso di accesso negato -->
 <?php 
-    include "../php/access-denied.php";
+    include_once "../php/access-denied.php";
     livelloRichiesto(UTENTE_REGISTRATO); ?>
 
 <body class="wrapper">
     <!-- Pagina dell'header importata -->
-    <?php include "../views/header.php"; ?>
+    <?php include_once "../views/header.php"; ?>
 
     <!-- Script per ottenere i dati sulla validazione -->
     <?php
@@ -112,6 +112,6 @@
 
 
     <!-- Pagina del footer importata -->
-    <?php include "../views/footer.php"; ?>
+    <?php include_once "../views/footer.php"; ?>
 
 </body>

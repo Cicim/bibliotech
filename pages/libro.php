@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php include "../php/imports.php" ?>
-    <?php include "../php/connessione.php" ?>
+    <?php include_once "../php/imports.php" ?>
+    <?php include_once "../php/connessione.php" ?>
     <link rel="stylesheet" type="text/css" href="../css/libro.css">
 </head>
 
@@ -75,7 +75,7 @@
     ?>
 
     <!-- header imporrtato -->
-    <?php include "../views/header.php" ?>
+    <?php include_once "../views/header.php" ?>
 
     <!-- contenuto principale della pagina -->
     <div>
@@ -162,7 +162,7 @@
 
         <?php
         // Controlla se è stato effettuato l'accesso, allora aggiungi il pulsante 'Aggiungi alla lista'
-        include "../php/login-utils.php";
+        include_once "../php/login-utils.php";
 
         if (logged()) {
             echo "<div class='col text-center mb-4'>";
@@ -195,7 +195,7 @@
     ?>
 
     <!-- footer importato -->
-    <?php include "../views/footer.php" ?>
+    <?php include_once "../views/footer.php" ?>
 </body>
 
 </html> 

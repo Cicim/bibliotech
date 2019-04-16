@@ -9,7 +9,7 @@
     <title>Sezione amministrativa - Bibliotech</title>
 
     <!-- Inclusione librerie di Bootstrap -->
-    <?php include "../php/imports.php"; ?>
+    <?php include_once "../php/imports.php"; ?>
 
     <!-- CSS per la tabella principale della pagina -->
     <style>
@@ -24,12 +24,12 @@
 
 <!-- Esci in caso di accesso negato -->
 <?php 
-    include "../php/access-denied.php";
+    include_once "../php/access-denied.php";
     livelloRichiesto(BIBLIOTECARIO); ?>
 
 <body class="wrapper">
     <!-- Inclusione dell'header -->
-    <?php include "../views/header.php"; ?>
+    <?php include_once "../views/header.php"; ?>
 
     <div>
         <!-- Titolo della pagina -->
@@ -76,6 +76,6 @@
     </div>
 
     <!-- Pagina del footer importata -->
-    <?php include "../views/footer.php"; ?>
+    <?php include_once "../views/footer.php"; ?>
 
 </body>

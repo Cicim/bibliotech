@@ -7,9 +7,9 @@
     <title>Catalogo</title>
 
     <!-- Include le librerie comuni -->
-    <?php include "../php/imports.php";
+    <?php include_once "../php/imports.php";
     // Includi il codice per la paginazione
-    include "../php/paginazione.php";
+    include_once "../php/paginazione.php";
     // Includi il codice per la connessione al database
     include '../php/connessione.php'; ?>
 
@@ -24,7 +24,7 @@
     <!-- Imposta la variabile seiNelCatalogo -->
     <?php $seiNelCatalogo = true ?>
     <!-- Pagina dell'header importata -->
-    <?php include "../views/header.php"; ?>
+    <?php include_once "../views/header.php"; ?>
 
     <!-- Connessione al database -->
     <?php
@@ -305,7 +305,7 @@
     </div>
 
     <!-- Pagina del footer importata -->
-    <?php include "../views/footer.php"; ?>
+    <?php include_once "../views/footer.php"; ?>
 </body>
 
 </html>

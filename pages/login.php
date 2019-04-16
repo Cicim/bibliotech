@@ -8,7 +8,7 @@
     <title>Bibliotech - Login</title>
 
     <!-- Importa tutte le librerie comuni -->
-    <?php include "../php/imports.php" ?>
+    <?php include_once "../php/imports.php" ?>
 
     <!-- Importa lo stile per il login -->
     <link href="../css/login.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 
 <body class="text-center">
     <!-- Importa l'header -->
-    <?php include "../views/header.php" ?>
+    <?php include_once "../views/header.php" ?>
     
     <!--Script PHP-->
     <?php

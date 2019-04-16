@@ -8,7 +8,7 @@
     <title>Bibliotech - Recupero password</title>
 
     <!-- Importa tutte le librerie comuni -->
-    <?php include "../php/imports.php" ?>
+    <?php include_once "../php/imports.php" ?>
 
     <!-- Importa lo stile per il login -->
     <link href="../css/login.css" rel="stylesheet">
@@ -16,11 +16,11 @@
 
 <body class="text-center">
     <!-- Includo l'header -->
-    <?php include "../views/header.php" ?>
+    <?php include_once "../views/header.php" ?>
 
     <?php
     // Includi la funzione per la connessione
-    include "../php/connessione.php";
+    include_once "../php/connessione.php";
 
     /**
      * @author Lorenzo Clazzer, 5CI

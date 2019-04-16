@@ -8,12 +8,12 @@
     <title>Bibliotech - Visualizzazione prestiti e scadenze</title>
 
     <!-- Importa tutte le librerie comuni -->
-    <?php include "../php/imports.php" ?>
+    <?php include_once "../php/imports.php" ?>
 </head>
 
 <body class="text-center">
     <!-- Includi l'header -->
-    <?php include "../views/header.php" ?>
+    <?php include_once "../views/header.php" ?>
 
     <?php
     // Includo la funzione per la connessione al DB

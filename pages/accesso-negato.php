@@ -9,13 +9,13 @@
     <title>Gestione utenti - Bibliotech</title>
 
     <!-- Inclusione librerie di Bootstrap -->
-    <?php include "../php/imports.php"; ?>
+    <?php include_once "../php/imports.php"; ?>
 
 </head>
 
 <body>
     <!-- Inclusione dell'header -->
-    <?php include "../views/header.php"; ?>
+    <?php include_once "../views/header.php"; ?>
 
     <!-- Titolo della pagina -->
     <div class="jumbotron" style="padding: 2rem 2rem">
@@ -38,6 +38,6 @@
     <br>
 
     <!-- Inclusione del footer -->
-    <?php include "../views/footer.php"; ?>
+    <?php include_once "../views/footer.php"; ?>
 
 </body> 

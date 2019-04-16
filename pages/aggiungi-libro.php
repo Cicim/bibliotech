@@ -10,12 +10,12 @@
     <title>Bibliotech - Aggiungi un libro</title>
 
     <!-- Importa tutte le librerie comuni -->
-    <?php include "../php/imports.php" ?>
+    <?php include_once "../php/imports.php" ?>
 
 </head>
 <body class="text-center">
     <!-- Includi l'header -->
-    <?php include "../views/header.php" ?>
+    <?php include_once "../views/header.php" ?>
 
     <div class="row">
             <!-- ISBN -->

@@ -10,7 +10,7 @@
     <title>Gestione utenti - Bibliotech</title>
 
     <!-- Inclusione librerie di Bootstrap -->
-    <?php include "../php/imports.php"; ?>
+    <?php include_once "../php/imports.php"; ?>
 
     <style>
         table, tr, td {
@@ -24,7 +24,7 @@
 
 <body>
     <!-- Pagina dell'header importata -->
-    <?php include "../views/header.php"; ?>
+    <?php include_once "../views/header.php"; ?>
     
     <!-- Rettangolo grigio per il titolo della sezione -->
     <div class="jumbotron" style="padding: 2rem 2rem">
@@ -97,7 +97,7 @@
             <!-- Esecuzione della query -->
         </form>
         <?php 
-            #include "connessione.php";
+            #include_once "connessione.php";
             #$conn = connettitiAlDb();
 
             $host = "localhost";
@@ -176,6 +176,6 @@
   
 
     <!-- Pagina del footer importata -->
-    <?php include "../views/footer.php"; ?>
+    <?php include_once "../views/footer.php"; ?>
 
 </body> 
