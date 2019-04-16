@@ -18,8 +18,12 @@
 
 
             <?php
+            // Ottieni il livello di permessi dell'account
+            include_once '../php/access-denied.php';
+            $permessi = ottieniLivelloDiAccesso();
+
             // Controlla che l'utente sia loggato
-            if (isset($_SESSION["user_id"])) {
+            if ($permessi < 3) {
                 // Ottieni nome e cognome dell'utente
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
@@ -29,10 +33,16 @@
                 echo "<div class='btn-group'>
                         <a class='button btn btn-info' href='area-personale.php'>$nome $cognome</a>
                         <button type='button' class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle='dropdown'></button>
-                        <div class='dropdown-menu dropdown-menu-lg-right'>
-                            <a class='dropdown-item' href='area-personale.php'>Pagina utente</a>
+                        <div class='dropdown-menu dropdown-menu-lg-right'>";
+
+                // Se l'utente è bibliotecario
+                if ($permessi < 2)
+                    echo "<a class='dropdown-item' href='sezione-amministrativa.php'>Sezione amministrativa</a>";
+
+                // Stampa la parte finale
+                echo "<a class='dropdown-item' href='area-personale.php'>Pagina utente</a>
                             <a class='dropdown-item' href='lista-desideri.php'>Lista dei desideri</a>
-                            <a class='dropdown-item' href='cronologia-prestiti.php'>Lista dei prestiti</a>
+                            <a class='dropdown-item' href='cronologia-prestiti.php'>Cronologia prestiti</a>
                             <div class='dropdown-divider'></div>
                             <a class='dropdown-item' href='../php/logout.php'>Esci</a>
                         </div>
