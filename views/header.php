@@ -30,9 +30,9 @@
                         <a class='button btn btn-info' href='#'>$nome $cognome</a>
                         <button type='button' class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle='dropdown'></button>
                         <div class='dropdown-menu dropdown-menu-lg-right'>
-                            <a class='dropdown-item' href='area_personale.php'>Pagina utente</a>
-                            <a class='dropdown-item' href='lista_desideri.php'>Lista dei desideri</a>
-                            <a class='dropdown-item' href='cronologia_prestiti.php'>Lista dei prestiti</a>
+                            <a class='dropdown-item' href='area-personale.php'>Pagina utente</a>
+                            <a class='dropdown-item' href='lista-desideri.php'>Lista dei desideri</a>
+                            <a class='dropdown-item' href='cronologia-prestiti.php'>Lista dei prestiti</a>
                             <div class='dropdown-divider'></div>
                             <a class='dropdown-item' href='../php/logout.php'>Esci</a>
                         </div>
