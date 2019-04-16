@@ -21,6 +21,8 @@
 </head>
 
 <body class="wrapper">
+    <!-- Imposta la variabile seiNelCatalogo -->
+    <?php $seiNelCatalogo = true ?>
     <!-- Pagina dell'header importata -->
     <?php include "../views/header.php"; ?>
 

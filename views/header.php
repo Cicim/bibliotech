@@ -8,10 +8,10 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-item <?php echo $seiNellIndex ? 'active' : '' ?>">
                     <a class="nav-link" href="index.php">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?php echo $seiNelCatalogo ? 'active' : '' ?>">
                     <a class="nav-link" href="catalogo.php">Catalogo</a>
                 </li>
             </ul>
@@ -24,6 +24,7 @@
                 // Ottieni nome e cognome dell'utente
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
+                $codfisc = $_SESSION["user_id"];
 
                 // Stampa il dropdown
                 echo "<div class='btn-group'>

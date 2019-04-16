@@ -20,21 +20,23 @@
 </head>
 
 <body class="wrapper">
-        <!-- Pagina dell'header importata -->
-        <?php include "../views/header.php"; ?>
+    <!-- Imposta la variabile seiNellIndex -->
+    <?php $seiNellIndex = true ?>
+    <!-- Pagina dell'header importata -->
+    <?php include "../views/header.php"; ?>
 
-        <div>
-            <!-- Rettangolo grigio per il titolo della sezione -->
-            <div class="jumbotron" style="padding: 2rem 2rem">
-                <h1 class="display-4 text-center">Libri in Vetrina</h1>
-            </div>
+    <div>
+        <!-- Rettangolo grigio per il titolo della sezione -->
+        <div class="jumbotron" style="padding: 2rem 2rem">
+            <h1 class="display-4 text-center">Libri in Vetrina</h1>
+        </div>
 
-            <!-- Homepage - Vetrina -->
-            <div class="container books margin-auto">
+        <!-- Homepage - Vetrina -->
+        <div class="container books margin-auto">
 
-                <?php
-                    // Crea la query per ottenere tutti i libri
-                    $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
+            <?php
+            // Crea la query per ottenere tutti i libri
+            $query = 'SELECT Libri.ISBN, Libri.Titolo, Editori.idEditore AS idEditore, Editori.Nome AS "nomeEditore",
                     Generi.Descrizione AS "Genere",
                     Tipologie.Descrizione AS "Tipologia"
                     FROM Libri, Generi, Editori, Tipologie
@@ -43,13 +45,13 @@
                     AND Libri.idTipo = Tipologie.idTipologia
                     ORDER BY Libri.DataAggiunta ASC, Libri.Titolo ASC';
 
-                    // Stampa tutti i libri risultati dalla query
-                    paginazione($query);
-                    ?>
+            // Stampa tutti i libri risultati dalla query
+            paginazione($query);
+            ?>
 
-            </div>
         </div>
+    </div>
 
-        <!-- Pagina del footer importata -->
-        <?php include "../views/footer.php"; ?>
-</body> 
+    <!-- Pagina del footer importata -->
+    <?php include "../views/footer.php"; ?>
+</body>
