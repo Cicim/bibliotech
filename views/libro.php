@@ -104,6 +104,13 @@
             window.close();
         }
     </script>
+
+    <script>
+        window.onkeydown = function(e) {
+            if (e.key === 'Escape')
+                window.location.href = 'catalogo.php?bibliotecario';
+        }
+    </script>
 </body>
 
 </html>
