@@ -20,11 +20,10 @@
             <?php
             session_start();
             // Controlla che l'utente sia loggato
-            if (logged()) {
+            if ($codfisc = logged()) {
                 // Ottieni nome e cognome dell'utente
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
-                $codfisc = $_SESSION["user_id"];
 
                 // Stampa il dropdown
                 echo "<div class='btn-group'>
