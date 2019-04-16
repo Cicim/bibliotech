@@ -15,8 +15,7 @@
     include '../php/connessione.php'; ?>
 
     <!-- Carica il css per il catalogo -->
-    <link rel="stylesheet" type="text/css" href="../css/catalogo.css">
-    <link rel="stylesheet" type="text/css" href="../css/area_personale.css">
+    <link rel="stylesheet" type="text/css" href="../css/area-personale.css">
 
 </head>
 
