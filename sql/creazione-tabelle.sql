@@ -306,7 +306,7 @@ CREATE TABLE Utenti (
 -- Table Prestiti
 -- -----------------------------------------------------
 CREATE TABLE Prestiti (
-  idPrestito INT NOT NULL,
+  idPrestito INT NOT NULL AUTO_INCREMENT,
   DataConsegna DATETIME NOT NULL,
   DataRiconsegna DATETIME NULL,
   idCopia INT NOT NULL,

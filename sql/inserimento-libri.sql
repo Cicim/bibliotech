@@ -1,7 +1,7 @@
 --  File SQL generato da bibliotech-sqlgen
 --  Leggi il codice su http://github.com/Cicim/bibliotech-sqlgen
 --  Realizzato da Claudio Cicimurri.
---  Compiled on Mon Apr 01 2019 19:45:09 GMT+0200 (GMT+02:00)
+--  Compiled on Tue Apr 02 2019 22:28:42 GMT+0200 (GMT+02:00)
 
 
 -- Generi -----
