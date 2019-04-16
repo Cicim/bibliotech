@@ -44,7 +44,9 @@
         $cognome = $dati[2];
 
         // Valida il codice per l'account selezionato
-        $query_valida = "UPDATE Utenti SET Validato = 1, CodiceValidazione = NULL WHERE CodFiscale = '$codFiscale'";
+        $query_valida = "UPDATE Utenti SET 
+                         Validato = 1, CodiceValidazione = NULL, Permessi = 2
+                         WHERE CodFiscale = '$codFiscale'";
         $ris_valida = mysqli_query($conn, $query_valida);
 
         // Richiedi le utility per il login
