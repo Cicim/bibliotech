@@ -59,29 +59,29 @@
 
                                 while ($row = mysqli_fetch_array($res)) {
                                     echo "<ul class='list-group-horizontal'>";
-                                    echo "<li class='list-group-item'>" . $row["Titolo"] . "</li> ";
-                                    echo "<li class='list-group-item'>" . $row["DataInserimento"] . "</li> ";
+                                    echo    "<li class='list-group-item'>" . $row["Titolo"] . "</li> ";
+                                    echo    "<li class='list-group-item'>" . $row["DataInserimento"] . "</li> ";
                                     $isbn = $row["ISBN"];
                                     echo "<li class='list-group-item'>
-<form action='lista_desideri.php' method='post'>
-<button type='submit' class='btn btn-danger btn-md center-block' name='rimuovi' value='$isbn'>Rimuovi</button>
-</form>
-</li>";
+                                            <form action='' method='post'>
+                                                <button type='submit' class='btn btn-danger btn-md center-block' name='rimuovi' value='$isbn'>Rimuovi</button>
+                                            </form>
+                                        </li>";
 
                                     echo "</ul>";
                                 }
 
-                                if ($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['rimuovi'])) {
-
+                                if (isset($_POST['rimuovi'])) {
                                     $valore_isbn = $_POST['rimuovi'];
 
                                     $sql = "DELETE FROM lista_interessi 
-                        WHERE ISBNLibro = '$valore_isbn'";
+                                            WHERE ISBNLibro = '$valore_isbn'";
 
+                                    // Connettiti al database
                                     $conn = connettitiAlDb();
 
                                     $res = mysqli_query($conn, $sql);
-                                    echo "<meta http-equiv=\"refresh\" content=\"0;URL=lista_desideri.php\">";
+                                    echo "<meta http-equiv='refresh' content='0;URL=lista-desideri.php'>";
                                 }
 
                                 ?>
