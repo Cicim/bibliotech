@@ -20,93 +20,94 @@
 
 </head>
 
-<body>
-
-
+<body class="wrapper">
     <!-- Pagina dell'header importata -->
     <?php include "../views/header.php"; ?>
-<?php
 
-$sql = "SELECT DataValidazione, Email
-FROM Utenti
-WHERE Utenti.CodFiscale = '$codfisc'";
+    <!-- Script per ottenere i dati sulla validazione -->
+    <?php
+    $sql = "SELECT DataValidazione, Email, DataNascita
+            FROM Utenti
+            WHERE Utenti.CodFiscale = '$codfisc'";
 
 
- $conn = connettitiAlDb();
+    $conn = connettitiAlDb();
 
- $res = mysqli_query($conn, $sql);
+    $res = mysqli_query($conn, $sql);
 
- while($row = mysqli_fetch_array($res)){
-   $email = $row['Email'];
-   $datavalidazione = $row['DataValidazione'];
- }
+    while ($row = mysqli_fetch_array($res)) {
+        // Ottieni tutti i campi dell'utente
+        $email = $row['Email'];
+        $datavalidazione = $row['DataValidazione'];
+        $datanascita = $row['DataNascita'];
+    } ?>
 
-echo "<br>
-<br>
-<div class='container'>
-<div class='row'>
-    <div class='col-md-3 '>
-         <div class='list-group '>
-          <a href='#' class='list-group-item list-group-item-action active'>Informazioni Utente</a>
-          <a href='lista_desideri.php' class='list-group-item list-group-item-action'>Lista Desideri</a>
-          <a href='cronologia_prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
-          
-          
-        </div> 
-    </div>
-    <div class='col-md-9'>
-        <div class='card'>
-            <div class='card-body'>
-                <div class='row'>
-                    <div class='col-md-12'>
-                        <h4>Il Tuo Profilo</h4>
-                        <hr>
+    <div class='container mt-4'>
+        <div class='row'>
+            <div class='col-md-3 '>
+                <div class='list-group '>
+                    <a href='#' class='list-group-item list-group-item-action active'>Informazioni Utente</a>
+                    <a href='lista_desideri.php' class='list-group-item list-group-item-action'>Lista Desideri</a>
+                    <a href='cronologia_prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
+
+
+                </div>
+            </div>
+            <div class='col-md-9'>
+                <div class='card'>
+                    <div class='card-body'>
+                        <div class='row'>
+                            <div class='col-md-12'>
+                                <h4>Il Tuo Profilo</h4>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-md-12'>
+                                <form>
+                                    <div class='form-group row'>
+                                        <label class='col-4 col-form-label'>Nome</label>
+                                        <div class='col-8'>
+                                            <input class='form-control here' placeholder='<?php echo $nome ?>' type='text' disabled>
+                                        </div>
+                                    </div>
+                                    <div class='form-group row'>
+                                        <label class='col-4 col-form-label'>Cognome</label>
+                                        <div class='col-8'>
+                                            <input class='form-control here' placeholder='<?php echo $cognome ?>' type='text' disabled>
+                                        </div>
+                                    </div>
+                                    <div class='form-group row'>
+                                        <label class='col-4 col-form-label'>Email</label>
+                                        <div class='col-8'>
+                                            <input class='form-control here' placeholder='<?php echo $email ?>' type='text' disabled>
+                                        </div>
+                                    </div>
+                                    <div class='form-group row'>
+                                        <label for='text' class='col-4 col-form-label'>Data di nascita</label>
+                                        <div class='col-8'>
+                                            <input placeholder='<?php echo $datanascita ?>' class='form-control here' type='text' disabled>
+                                        </div>
+                                    </div>
+                                    <div class='form-group row'>
+                                        <label for='text' class='col-4 col-form-label'>Account registrato il</label>
+                                        <div class='col-8'>
+                                            <input placeholder='<?php echo $datavalidazione ?>' class='form-control here' type='text' disabled>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                <div class='row'>
-                    <div class='col-md-12'>
-                        <form>
-                          <div class='form-group row'>
-                            <label class='col-4 col-form-label'>Nome Utente</label> 
-                            <div class='col-8'>
-                              <input class='form-control here' placeholder='$nome' type='text' disabled>
-                            </div>
-                          </div>
-                          <div class='form-group row'>
-                            <label class='col-4 col-form-label'>Cognome</label> 
-                            <div class='col-8'>
-                            <input class='form-control here' placeholder='$cognome' type='text' disabled>
-                            </div>
-                          </div>
-                          <div class='form-group row'>
-                            <label class='col-4 col-form-label'>Email</label> 
-                            <div class='col-8'>
-                            <input class='form-control here' placeholder='$email'  type='text' disabled>
-                            </div>
-                          </div>
-                          <div class='form-group row'>
-                            <label for='text' class='col-4 col-form-label'>Account Registrato il</label> 
-                            <div class='col-8'>
-                              <input placeholder='$datavalidazione' class='form-control here' type='text' disabled> 
-                            </div>
-                          </div>
-                        </form>
-                    </div>
-                </div>
-                
             </div>
         </div>
     </div>
-</div>
-</div>
 
-<br>"
 
-?>
-    
 
-        
     <!-- Pagina del footer importata -->
     <?php include "../views/footer.php"; ?>
 
-</body> 
+</body>
