@@ -214,6 +214,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
 
                 <!-- Pulsante per creare il prestito -->
                 <button type="submit" class="btn btn-info">Crea prestito</button>
+                <a class="btn btn-warning ml-2 block" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna alla sezione amministrativa</a>
                 <br>
                 <br>
             </form>
