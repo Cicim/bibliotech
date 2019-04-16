@@ -116,12 +116,7 @@
         <label for="password" class="sr-only">Password</label>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
 
-        <!-- Checkbox per essere ricordato -->
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me"> Ricordami
-            </label>
-        </div>
+        <br>
         <button class="btn btn-lg btn-primary btn-info btn-block" type="submit" name="accedi">Accedi</button> <br>
 
         <!-- Collegamento alla pagina per recuperare la password -->
