@@ -28,7 +28,7 @@
 
                 // Stampa il dropdown
                 echo "<div class='btn-group'>
-                        <a class='button btn btn-info' href='#'>$nome $cognome</a>
+                        <a class='button btn btn-info' href='area-personale.php'>$nome $cognome</a>
                         <button type='button' class='btn btn-info dropdown-toggle dropdown-toggle-split' data-toggle='dropdown'></button>
                         <div class='dropdown-menu dropdown-menu-lg-right'>
                             <a class='dropdown-item' href='area-personale.php'>Pagina utente</a>
