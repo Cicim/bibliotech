@@ -18,6 +18,11 @@
     <link rel="stylesheet" type="text/css" href="../css/area-personale.css">
 </head>
 
+<!-- Esci in caso di accesso negato -->
+<?php 
+    include "../php/access-denied.php";
+    livelloRichiesto(UTENTE_REGISTRATO); ?>
+    
 <body class="wrapper">
     <!-- Pagina dell'header importata -->
     <?php include "../views/header.php"; ?>
