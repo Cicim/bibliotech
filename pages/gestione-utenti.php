@@ -13,6 +13,12 @@
 
 </head>
 
+<!-- Esci in caso di accesso negato -->
+<?php 
+    include_once "../php/access-denied.php";
+    livelloRichiesto(BIBLIOTECARIO); ?>
+
+
 <body>
     <!-- Pagina dell'header importata -->
     <?php include_once "../views/header.php"; ?>
