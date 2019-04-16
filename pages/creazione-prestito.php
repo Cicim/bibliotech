@@ -12,6 +12,11 @@
 
     <!-- Inclusione librerie di Bootstrap -->
     <?php include_once "../php/imports.php"; ?>
+
+    <!-- Importa tutte le librerie per il datepicker -->
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
 </head>
 
 <!-- Esci in caso di accesso negato -->
@@ -77,7 +82,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Codice fiscale" name="codiceFiscale" value="<?php echo $fisc ?>">
                     <div class="input-group-append">
-                        <button class="btn btn-info" type="submit">Cerca utente</button>
+                        <button class="btn btn-info" type="submit">Verifica utente</button>
                     </div>
                 </div>
                 <?php
@@ -91,6 +96,9 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 else
                     echo "<div class='alert alert-danger'>
                         Utente con codice fiscale \"<b>$fisc</b>\" non trovato</div>";
+
+                // Calcola la prossima data di riconsegna
+                $riconsegna =  date('Y-m-d',strtotime('+30 days',time())) 
                 ?>
             </form>
 
@@ -104,8 +112,28 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                         <a class="btn btn-outline-info" href="javascript:window.open('../views/catalogo.php?bibliotecario', 'Seleziona id copia', 'width=600,height=400,status=yes,scrollbars=yes,resizable=yes')">Seleziona id copia</a>
                     </div>
                 </div>
-            </form>
 
+                <label for="dataRiconsegna">Seleziona la data di riconsegna</label>
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" id="dataRiconsegna" name="dataRiconsegna" data-target="#datetimepicker" value="<?php echo $riconsegna ?>" />
+                        <div class="input-group-append" data-target="#datetimepicker" data-toggle="datetimepicker">
+                            <div class="input-group-text">
+                                <i class="fa fa-calendar" style="font-size:24px"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Codice per il datetimepicker -->
+                <script type="text/javascript">
+                    $(function() {
+                        $('#datetimepicker').datetimepicker({
+                            format: 'YYYY-MM-DD',
+                            locale: 'it',
+                        });
+                    });
+                </script>
+            </form>
         </div>
     </div>
 
