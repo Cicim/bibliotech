@@ -99,8 +99,7 @@
         <?php
             // Se il login è avvenuto con successo
             if ($stato == "ok") {
-                // Torna alla homepage
-                echo "<script>location.href='index.php'</script>";
+                header("Location: index.php");
             }
             else if ($stato != '') {
                 echo '<div class="alert alert-danger" role="alert">';

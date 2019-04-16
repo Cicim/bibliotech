@@ -26,10 +26,10 @@ function logged()
 function effettualLogin($codFiscale, $nome, $cognome)
 {
     // Assicurati che l'utente non sia già loggato
-    if (logged() != false)
+    if (isset($_SESSION['user_id']))
         return false;
 
-    // Inizia la sessione
+    // Inizia la sessione (anche se potrebbe dare errore)
     session_start();
 
     // Imposta i parametri della sessione
