@@ -28,9 +28,9 @@
             <div class='col-md-3 '>
                 <!-- Lista dei collegamenti dell'area utente -->
                 <div class='list-group'>
-                    <a href='area_personale.php' class='list-group-item list-group-item-action'>Informazioni Utente</a>
+                    <a href='area-personale.php' class='list-group-item list-group-item-action'>Informazioni Utente</a>
                     <a href='#' class='list-group-item list-group-item-action active'>Lista Desideri</a>
-                    <a href='cronologia_prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
+                    <a href='cronologia-prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
                 </div>
             </div>
             <br>

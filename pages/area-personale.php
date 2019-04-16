@@ -46,8 +46,8 @@
             <div class='col-md-3 '>
                 <div class='list-group '>
                     <a href='#' class='list-group-item list-group-item-action active'>Informazioni Utente</a>
-                    <a href='lista_desideri.php' class='list-group-item list-group-item-action'>Lista Desideri</a>
-                    <a href='cronologia_prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
+                    <a href='lista-desideri.php' class='list-group-item list-group-item-action'>Lista Desideri</a>
+                    <a href='cronologia-prestiti.php' class='list-group-item list-group-item-action'>Cronologia Prestiti</a>
 
 
                 </div>
