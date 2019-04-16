@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Catalogo</title>
+    <title>Catalogo - Bibliotech</title>
 
     <!-- Include le librerie comuni -->
     <?php include_once "../php/imports.php";
@@ -21,10 +21,22 @@
 </head>
 
 <body class="wrapper">
+    <?php
+    // Controlla se stai scegliendo una copia in un popup
+    // Rimuove header, footer e altri link
+    if (isset($_GET['bibliotecario']))
+        $staiScegliendoCopia = true;
+    else
+        $staiScegliendoCopia = false;
+    ?>
+
     <!-- Imposta la variabile seiNelCatalogo -->
     <?php $seiNelCatalogo = true ?>
     <!-- Pagina dell'header importata -->
-    <?php include_once "../views/header.php"; ?>
+    <?php
+    // Se non sei nella pagina di scelta del libro
+    if (!$staiScegliendoCopia) include_once "../views/header.php";
+    ?>
 
     <!-- Connessione al database -->
     <?php
@@ -38,7 +50,9 @@
     <div>
         <!-- Rettangolo grigio per il titolo della sezione -->
         <div class="jumbotron" style="padding: 2rem 2rem">
-            <h1 class="display-4 text-center">Catalogo</h1>
+            <h1 class="display-4 text-center">
+                <?php echo $staiScegliendoCopia ? "Scegli libro" : "Catalogo" ?>
+            </h1>
         </div>
 
         <!-- Barra di ricerca -->
@@ -305,7 +319,9 @@
     </div>
 
     <!-- Pagina del footer importata -->
-    <?php include_once "../views/footer.php"; ?>
+    <?php
+    // Se non sei nella pagina di scelta del libro
+    if (!$staiScegliendoCopia) include_once "../views/footer.php"; ?>
 </body>
 
 </html>

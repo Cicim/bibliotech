@@ -177,8 +177,7 @@ function stampaBarra($pagina, $totPagine)
         echo '<a class="page-link" href="' . $urlComune . 'page=' . ($totPagine - 1) . '">Ultima</a>';
         // Chiudi i tag restanti
         echo '</li></ul></nav></div></div>';
-    }
-    else {
+    } else {
         echo "<br><br><br>";
     }
 }
@@ -225,10 +224,14 @@ function stampaLibro($libro, $conn)
     // Colonna contenente il pulsante per la prenotazione
     echo "      <div class='col text-right p-1'>";
 
-    // On Mobile
-    echo "          <a href='" . $linklista . "' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
-    // On Desktop
-    echo "          <a href='" . $linklista . "' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
+    // Se lo sta selezionando un bibliotecario per selezionare la copia
+    // Non mostrare il pulsante aggiungi alla lista
+    if (!isset($_GET['bibliotecario'])) {
+        // On Mobile
+        echo "          <a href='" . $linklista . "' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+        // On Desktop
+        echo "          <a href='" . $linklista . "' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi a Lista</a>";
+    }
     echo "      </div>";
     // Chiusura row
     echo "</div>";
