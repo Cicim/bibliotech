@@ -180,6 +180,9 @@ function stampaBarra($pagina, $totPagine)
         // Chiudi i tag restanti
         echo '</li></ul></nav></div></div>';
     }
+    else {
+        echo "<br><br><br>";
+    }
 }
 
 
