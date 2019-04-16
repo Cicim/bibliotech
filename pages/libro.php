@@ -161,21 +161,10 @@
         </table>
 
         <?php
-        /**
-         * @author Lorenzo Clazzer, 5CI
-         * Script utilizzato per la stampa di un pulsante
-         * per aggiungere il libro alla lista, solo se loggato
-         */
-
         // Controlla se è stato effettuato l'accesso, allora aggiungi il pulsante 'Aggiungi alla lista'
         include "../php/login-utils.php";
 
-        $log = logged();
-        if ($log == false)
-            // L'utente non è loggato, non stampa il pulsante
-            echo "";
-        // Altrimenti stampa il pulsante
-        else {
+        if (logged()) {
             echo "<div class='col text-center mb-4'>";
             echo "<form action='libro.php?ISBN=$isbn' method='post'>";
             echo "<button type='submit' class='btn btn-primary btn-lg' name='prova' >Aggiungi a Lista</button>";
@@ -183,7 +172,7 @@
             echo "</div>";
         }
 
-        if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['prova'])){
+        if(isset($_POST['prova'])){
             $sql = "INSERT INTO lista_interessi (codFiscaleUtente, ISBNLibro, DataInserimento)
             VALUES ('$codfisc', '$isbn', curdate());";
 
@@ -192,10 +181,10 @@
             
             $res = mysqli_query($conn, $sql);
 
-            echo"  <div class='alert alert-success alert-dismissible'>
-            <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-            <strong>Libro Aggiunto!</strong> <a href='lista_desideri.php'> Clicca qui </a> per andare alla Lista Desideri.
-          </div> ";
+            echo "<div class='alert alert-success alert-dismissible'>
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Libro Aggiunto!</strong> <a href='lista-desideri.php'> Clicca qui </a> per andare alla Lista Desideri.
+                </div> ";
         }
         ?>
 
