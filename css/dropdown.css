@@ -1,0 +1,10 @@
+.dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+
+  .wrapper {
+    text-align: right;
+    
+}
+
+
