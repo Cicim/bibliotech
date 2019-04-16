@@ -57,6 +57,7 @@
                                         FROM Libri, Copie, Prestiti, Utenti
                                         WHERE Utenti.CodFiscale = '$codfisc'
                                         AND Copie.idCopia = Prestiti.idCopia
+                                        AND Prestiti.CodFiscaleUtente = Utenti.CodFiscale
                                         AND Copie.ISBN = Libri.ISBN";
 
                                 // Connettiti al database
