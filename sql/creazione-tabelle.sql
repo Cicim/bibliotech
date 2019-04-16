@@ -311,7 +311,7 @@ CREATE TABLE Prestiti (
   DataRiconsegna DATETIME NULL,
   idCopia INT NOT NULL,
   codFiscaleUtente CHAR(16) NOT NULL,
-  bibConsenga CHAR(16) NOT NULL,
+  bibConsegna CHAR(16) NOT NULL,
   bibRiconsegna CHAR(16) NULL,
   PRIMARY KEY (idPrestito, bibRiconsegna),
   FOREIGN KEY (idCopia) REFERENCES Copie(idCopia),
