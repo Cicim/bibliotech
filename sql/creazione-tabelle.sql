@@ -111,7 +111,7 @@ CREATE TABLE Citta (
 -- Table Autori
 -- -----------------------------------------------------
 CREATE TABLE Autori (
-  idAutore INT NOT NULL,
+  idAutore INT NOT NULL AUTO_INCREMENT,
   NomeAutore VARCHAR(45) NOT NULL,
   CognomeAutore VARCHAR(45) NOT NULL,
   DataNascita DATE NOT NULL,

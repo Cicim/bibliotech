@@ -57,8 +57,8 @@
             </div>
             <div class="row mt-md-4">
                 <div class="col-md-4">
-                    <a class="btn btn-info ml-2 block" href="#">
-                        <i class="fa fa-list-ul"></i> Visualizza liste
+                    <a class="btn btn-info ml-2 block" href="aggiungi-libro.php">
+                        <i class="fa fa-plus"></i> Aggiungi libro
                     </a>
                 </div>
                 <div class="col-md-4">
