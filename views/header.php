@@ -21,6 +21,9 @@
             // Ottieni il livello di permessi dell'account
             include_once '../php/access-denied.php';
             $permessi = ottieniLivelloDiAccesso();
+            // Per il controllo di stato del cambiamento dei dati in area personale.
+            $controllo = 0;
+            $_SESSION["controllo"] = $controllo;
 
             // Controlla che l'utente sia loggato
             if ($permessi < 3) {
@@ -28,6 +31,7 @@
                 $nome = $_SESSION["nome"];
                 $cognome = $_SESSION["cognome"];
                 $codfisc = $_SESSION["user_id"];
+                
 
                 // Stampa il dropdown
                 echo "<div class='btn-group'>
