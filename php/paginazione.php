@@ -238,7 +238,7 @@ function stampaLibro($libro, $conn)
         if ($userid != "") {
             // Controlla se il libro è già stato1 aggiunto
             $qc = "SELECT * 
-                    FROM lista_interessi
+                    FROM Lista_Interessi
                     WHERE ISBNLibro = '$isbn'
                     AND codFiscaleUtente = '$userid'";
             // Esegui la query

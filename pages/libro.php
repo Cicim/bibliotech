@@ -136,7 +136,7 @@
         if (logged()) {
             // Controlla se il libro è stato già aggiunto
             $queryControllo = "SELECT * 
-                               FROM lista_interessi
+                               FROM Lista_Interessi
                                WHERE ISBNLibro = '$isbn'
                                AND codFiscaleUtente = '$codfisc'";
             
@@ -194,7 +194,7 @@
 
         <?php
         if (isset($_POST['aggiungi'])) {
-            $sql = "INSERT INTO lista_interessi (codFiscaleUtente, ISBNLibro, DataInserimento)
+            $sql = "INSERT INTO Lista_Interessi (codFiscaleUtente, ISBNLibro, DataInserimento)
             VALUES ('$codfisc', '$isbn', curdate());";
 
             // Esegui la query
@@ -211,7 +211,7 @@
         }
         // Se clicchi sul pulsante "Rimuovi dalla Lista"
         if (isset($_POST['rimuovi'])) {
-            $sql = "DELETE FROM lista_interessi
+            $sql = "DELETE FROM Lista_Interessi
                         WHERE codFiscaleUtente = '$codfisc'
                         AND ISBNLibro = '$isbn'";
 
