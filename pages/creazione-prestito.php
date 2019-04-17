@@ -90,7 +90,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
             global $stato_fisc, $fisc, $copiePrestate;
             // Assicurati che un utente sia stato selezionato
             if (!$stato_fisc)
-                return "Nessun utente selezionato";
+                return "Nessun utente selezionato<br>Impossibile proseguire";
 
             // Ottieni il codice fiscale dell'utente
             $codUtente = $fisc;
@@ -104,10 +104,10 @@ livelloRichiesto(BIBLIOTECARIO); ?>
 
             // Se l'idCopia non è definito
             if ($idCopia == '')
-                return "Non è stata scelta nessuna copia";
+                return "Non è stata scelta nessuna copia<br>Impossibile proseguire";
             // Se la dataRiconsegna non è definita
             if ($dataRiconsegna == '')
-                return "Data riconsegna non valida";
+                return "Data riconsegna non valida<br>Impossibile proseguire";
 
             // Ottieni la data odierna
             $dataConsegna = date('Y-m-d');
@@ -119,16 +119,17 @@ livelloRichiesto(BIBLIOTECARIO); ?>
             $copie = explode(',', $idCopia);
             // Elimina i duplicati
             $copie = array_unique($copie);
+            
+            // Crea un log di errore
+            $log = '<ol>';
 
             // Manda un errore se qualche valore non è un numero
             foreach ($copie as $idCopia) {
                 // Controlla che tutti gli id copia siano validi
                 if (preg_match("/^\d+$/", $idCopia) == false)
-                    return "Id copia non valido: \"$idCopia\". Evita di inserirli manualmente";
+                    return "Id copia non valido: \"$idCopia\". Evita di inserirli manualmente<br>Impossibile proseguire";
             }
 
-            // Crea un log di errore
-            $log = '<ol>';
             
             // Per ogni copia
             foreach ($copie as $idCopia) {
@@ -198,7 +199,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 . '</div>';
             else if ($stato != '') {
                 echo '<div class="alert alert-danger" role="alert">';
-                echo $stato . '<br>Impossibile continuare';
+                echo $stato;
                 echo '</div>';
             }
             ?>

@@ -61,7 +61,8 @@
                 $prestato = $riga['Prestato'] == 1;
 
                 // Stampa il link
-                echo '<span ' . ($prestato ? '' : 'style="cursor:pointer" onclick="seleziona(' . "'$idCopia'" . ')"') . '>';
+                echo '<span ' . ($prestato ? '' : 'style="cursor:pointer" oncontextmenu="seleziona(\'' . 
+                        $idCopia . '\', false);return false" onclick="seleziona(' . "'$idCopia'" . ', true)"') . '>';
 
                 // Calcola i testi che variano se è prestato o meno
                 $titolo = !$prestato ? "Copia non prestata" : "Copia prestata";
@@ -89,7 +90,7 @@
          * l'id della copia selezionata
          * @param number id L'id della copia
          */
-        function seleziona(id) {
+        function seleziona(id, chiudi) {
             // Ottieni l'opener della finestra
             var win = window.opener;
 
@@ -101,8 +102,10 @@
             // E concatenagli il nuovo id
             elemento.value = elemento.value === '' ? id : elemento.value + ',' + id;
 
-            // Chiudi la finestra
-            window.close();
+            // Se clicchi con il pulsante sinistro del mouse
+            if (chiudi)
+                // Chiudi la finestra
+                window.close();
         }
     </script>
 
