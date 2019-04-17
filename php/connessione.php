@@ -8,7 +8,7 @@
         // Parametri per la connessione al server
         $host = "localhost";
         $user = "root";
-        $db = "biblioteca";
+        $db = "Biblioteca";
 
         // Connessione al server DBMS
         $conn = mysqli_connect($host, $user, "") or die("Impossibile raggiungere il DBMS");
