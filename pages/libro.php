@@ -134,10 +134,11 @@
         <?php
         // Controlla se è stato effettuato l'accesso, allora aggiungi il pulsante 'Aggiungi alla lista'
         if (logged()) {
+            // Controlla se il libro è stato già aggiunto
             $queryControllo = "SELECT * 
-                        FROM lista_interessi
-                        WHERE ISBNLibro = '$isbn'
-                        AND codFiscaleUtente = '$codfisc'";
+                               FROM lista_interessi
+                               WHERE ISBNLibro = '$isbn'
+                               AND codFiscaleUtente = '$codfisc'";
             
             $qc_res = mysqli_query($conn, $queryControllo);
 
