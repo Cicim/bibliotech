@@ -126,12 +126,19 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 if (preg_match("/^\d+$/", $idCopia) == false)
                     return "Id copia non valido: \"$idCopia\". Evita di inserirli manualmente";
             }
+
+            // Crea un log di errore
+            $log = '<ol>';
             
             // Per ogni copia
             foreach ($copie as $idCopia) {
                 // Controlla se non è già stata prenotata
                 if (mysqli_fetch_row(mysqli_query($conn, "SELECT Prestato FROM Copie WHERE idCopia = $idCopia"))[0])
-                    return "Prestate $copiePrestate copie<br>Trovata copia già prestata ($idCopia)";
+                {
+                    // Stampa l'errore a log
+                    $log .= "<li>Trovata copia già prestata ($idCopia)</li>";
+                    continue;
+                }
 
                 // Bloccala
                 mysqli_query($conn, "UPDATE Copie SET Prestato = TRUE WHERE idCopia = $idCopia");
@@ -144,13 +151,31 @@ livelloRichiesto(BIBLIOTECARIO); ?>
 
                 // Se il prestito non riesce
                 // P.S. Non dovrebbe avvenire mai quest'errore
-                if (!$ris) return "Errore durante l'esecuzione della query ($idCopia)<br>" . mysqli_error($conn);
+                if (!$ris)
+                {
+                    // Stampa l'errore a log
+                    $log .= "<li>Errore durante l'esecuzione della query ($idCopia)<br>"
+                     . mysqli_error($conn) . '</li>';
+                    continue;
+                }
 
+                // Incrementa il numero di copie correttamente prestate
                 $copiePrestate++;
             }
 
-            // Se tutto va a buon fine stampa il messaggio di ok
-            return "ok";
+            // Se non ci sono errori
+            if ($log == '<ol>')
+                return "ok";
+            // Altrimenti
+            else {
+                // Chiudi il log
+                $log .= '</ol>';
+                // Aggiungi il numero di copie prestate
+                if ($copiePrestate == 1) $log .= "Prestata una copia";
+                else $log .= "Prestate $copiePrestate copie";
+                // Riportalo come errore
+                return $log;
+            }
         }
 
         $stato = "";
