@@ -59,11 +59,15 @@
                                     // Esegui la query
                                     $res = mysqli_query($conn, $sql);
 
-                                    // Per ogni record trovato
-                                    while ($row = mysqli_fetch_array($res)) {
-                                        // Stampa l'elemento della lista
-                                        $isbn = $row["ISBN"];
-                                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    // Controlla se ci sono dei prestiti
+                                    if (mysqli_num_rows($res) > 0) {
+                                        // Stampa i record trovati
+
+                                        // Per ogni record trovato
+                                        while ($row = mysqli_fetch_array($res)) {
+                                            // Stampa l'elemento della lista
+                                            $isbn = $row["ISBN"];
+                                            echo '<li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <form action="" method="post">
                                                     <div class="container">
                                                     <form action="" method="post">
@@ -72,8 +76,8 @@
                                                                     <span>Inserito il: ' . $row["DataInserimento"] . '</span>
                                                                 </div>
                                                                 <div class="col-2 col-md-1">
-                                                                    <button name="rimuovi" type="submit" value="'.$isbn.'" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
-                                                                    <button name="rimuovi" type="submit" value="'.$isbn.'" class="pt-0 pb-0 btn btn-danger btnRimuovi portrait fa fa-plus"> </button>
+                                                                    <button name="rimuovi" type="submit" value="' . $isbn . '" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
+                                                                    <button name="rimuovi" type="submit" value="' . $isbn . '" class="pt-1 pb-1 btn btn-danger btnRimuovi portrait fa fa-trash"> </button>
                                                                 </div>
                                                         <div class="row">
                                                             <div class="col-12">
@@ -83,7 +87,10 @@
                                                     </div>
                                                     </form>
                                                 </li>';
+                                        }
                                     }
+                                    // Altrimenti stampa un messaggio
+                                    else echo "Nessun libro nella lista";
 
                                     if (isset($_POST['rimuovi'])) {
                                         $valore_isbn = $_POST['rimuovi'];
