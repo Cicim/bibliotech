@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php include_once "../php/imports.php" ?>
     <?php include_once "../php/connessione.php" ?>
+    <?php include_once "../php/login-utils.php" ?>
     <link rel="stylesheet" type="text/css" href="../css/libro.css">
 </head>
 
@@ -74,7 +75,7 @@
     $collana = htmlspecialchars($row2[4]);
     ?>
 
-    <!-- header imporrtato -->
+    <!-- header importato -->
     <?php include_once "../views/header.php" ?>
 
     <!-- contenuto principale della pagina -->
@@ -90,45 +91,76 @@
                     ?> style="padding: 2rem 2rem">
             <h1 class="display-4 text-center">
                 <?php
-                if ($titolo) {
-                    // Se l'ISBN è valido e i dati non sono stati recuperati
-                    echo $titolo;
-                } else if (!$titolo && $isbn) {
-                    // Se l'ISBN non è valido e non è stato possibile recuperare i dati
-                    echo "Errore nel caricamento del libro";
-                }
-                // Se non è stato possibile recuperare l'ISBN
-                else
-                    echo "Errore nel caricamento del codice ISBN";
-                ?>
+                    if ($titolo) {
+                        // Se l'ISBN è valido e i dati non sono stati recuperati
+                        echo $titolo;
+                    } else if (!$titolo && $isbn) {
+                        // Se l'ISBN non è valido e non è stato possibile recuperare i dati
+                        echo "Errore nel caricamento del libro";
+                    }
+                    // Se non è stato possibile recuperare l'ISBN
+                    else
+                        echo "Errore nel caricamento del codice ISBN";
+                    ?>
             </h1>
             <h5 class="display-5 text-center">
-                <?php 
-                // Controlla se l'isbn è stato reperito
-                // per mostrare il messaggio di errore nel caso
-                // in cui non lo sia stato
-                if ($titolo) {
-                    // Controlla se la lista degli autori è vuota
-                    if (sizeof($autori) > 0) {
-                        // Impagina gli autori di modo che compaiano
-                        // in una lista referenziabile
-                        echo "di ";
-                        for ($i = 0; $i < sizeof($autori); $i++) {
-                            echo "<a style='text-style: italic' href='catalogo.php?titolo=&cerca=1&autore=";
-                            echo $autori[$i];
-                            echo "&editore=&collana=&tipologia=&genere='>" . $autori[$i] . "</a>";
+                <?php
+                    // Controlla se l'isbn è stato reperito
+                    // per mostrare il messaggio di errore nel caso
+                    // in cui non lo sia stato
+                    if ($titolo) {
+                        // Controlla se la lista degli autori è vuota
+                        if (sizeof($autori) > 0) {
+                            // Impagina gli autori di modo che compaiano
+                            // in una lista referenziabile
+                            echo "di ";
+                            for ($i = 0; $i < sizeof($autori); $i++) {
+                                echo "<a style='text-style: italic' href='catalogo.php?titolo=&cerca=1&autore=";
+                                echo $autori[$i];
+                                echo "&editore=&collana=&tipologia=&genere='>" . $autori[$i] . "</a>";
 
-                            if ($i < sizeof($autori) - 1) echo ", ";
-                        }
-                    } else echo "Autore non pervenuto";
-                } else if (!$titolo && $isbn) {
-                    echo "Non è stato possibile recuperare i dati per questo ISBN!<br>Controlla se il codice è esistente nel database e riprova!";
-                } else {
-                    echo "Non è stato possibile recuperare il codice ISBN dall'URL!<br>Verificare che l'accesso alla pagina sia stato effettuato in modo corretto!";
-                }
-                ?>
+                                if ($i < sizeof($autori) - 1) echo ", ";
+                            }
+                        } else echo "Autore non pervenuto";
+                    } else if (!$titolo && $isbn) {
+                        echo "Non è stato possibile recuperare i dati per questo ISBN!<br>Controlla se il codice è esistente nel database e riprova!";
+                    } else {
+                        echo "Non è stato possibile recuperare il codice ISBN dall'URL!<br>Verificare che l'accesso alla pagina sia stato effettuato in modo corretto!";
+                    }
+                    ?>
             </h5>
         </div>
+
+        <?php
+        // Controlla se è stato effettuato l'accesso, allora aggiungi il pulsante 'Aggiungi alla lista'
+        if (logged()) {
+            // Controlla se il libro è stato già aggiunto
+            $queryControllo = "SELECT * 
+                               FROM lista_interessi
+                               WHERE ISBNLibro = '$isbn'
+                               AND codFiscaleUtente = '$codfisc'";
+            
+            $qc_res = mysqli_query($conn, $queryControllo);
+
+            // Controlla le righe trovate
+            if (mysqli_num_rows($qc_res) >= 1) {
+                // Se il libro è presente
+                echo "<div class='col text-center mb-4'>";
+                echo "<form action='libro.php?ISBN=$isbn' method='post'>";
+                echo "<button type='submit' class='btn btn-primary btn-lg' name='rimuovi'>Rimuovi dalla Lista</button>";
+                echo "</form>";
+                
+            } else {
+                // Se il libro non è presente
+                echo "<div class='col text-center mb-4'>";
+                echo "<form action='libro.php?ISBN=$isbn' method='post'>";
+                echo "<button type='submit' class='btn btn-primary btn-lg' name='aggiungi'>Aggiungi a Lista</button>";
+                echo "</form>";
+                echo "</div>";
+            }
+
+        }
+        ?>
 
         <!-- Tabella dettagli del libro -->
         <table class="table table-striped mb-5" style="max-width:60%;margin:auto;">
@@ -161,41 +193,49 @@
         </table>
 
         <?php
-        // Controlla se è stato effettuato l'accesso, allora aggiungi il pulsante 'Aggiungi alla lista'
-        include_once "../php/login-utils.php";
-
-        if (logged()) {
-            echo "<div class='col text-center mb-4'>";
-            echo "<form action='libro.php?ISBN=$isbn' method='post'>";
-            echo "<button type='submit' class='btn btn-primary btn-lg' name='prova' >Aggiungi a Lista</button>";
-            echo "</form>";
-            echo "</div>";
-        }
-
-        if(isset($_POST['prova'])){
+        if (isset($_POST['aggiungi'])) {
             $sql = "INSERT INTO lista_interessi (codFiscaleUtente, ISBNLibro, DataInserimento)
             VALUES ('$codfisc', '$isbn', curdate());";
 
-
-            $conn = connettitiAlDb();
-            
+            // Esegui la query
             $res = mysqli_query($conn, $sql);
 
-            echo "<div class='alert alert-success alert-dismissible'>
+            // Stampa l'alert
+            echo "<div class='alert alert-success alert-dismissible m-5'>
                     <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                    <strong>Libro Aggiunto!</strong> <a href='lista-desideri.php'> Clicca qui </a> per andare alla Lista Desideri.
-                </div> ";
+                    <strong>Libro Aggiunto!</strong><a href='lista-desideri.php'> Clicca qui </a> per andare alla Lista Desideri
+                  </div> ";
+            
+            // Ricarica la pagina
+            echo "<meta http-equiv='refresh' content='0;URL=libro.php?ISBN=".$isbn."'>";
+        }
+        // Se clicchi sul pulsante "Rimuovi dalla Lista"
+        if (isset($_POST['rimuovi'])) {
+            $sql = "DELETE FROM lista_interessi
+                        WHERE codFiscaleUtente = '$codfisc'
+                        AND ISBNLibro = '$isbn'";
+
+            // Esegui la query
+            $res = mysqli_query($conn, $sql);
+
+            // Controlla se la query funziona
+            echo mysqli_affected_rows($conn);
+
+            // Stampa l'alert
+            echo "<div class='alert alert-success alert-dismissible m-5'>
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
+                    <strong>Libro Rimosso!</strong><a href='lista-desideri.php'> Clicca qui </a> per andare alla Lista Desideri
+                  </div> ";
+            
+            // Ricarica la pagina
+            echo "<meta http-equiv='refresh' content='0;URL=libro.php?ISBN=".$isbn."'>";
         }
         ?>
 
     </div>
 
-    <?php
-
-    ?>
-
     <!-- footer importato -->
     <?php include_once "../views/footer.php" ?>
 </body>
 
-</html> 
+</html>
