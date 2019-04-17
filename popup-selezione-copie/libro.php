@@ -97,7 +97,9 @@
                 alert("Devi aprire questa pagina da popup");
 
             // Ottieni l'elemento #idCopia del genitore
-            win.document.getElementById('idCopia').value = id;
+            var elemento = win.document.getElementById('idCopia');
+            // E concatenagli il nuovo id
+            elemento.value = elemento.value === '' ? id : elemento.value + ',' + id;
 
             // Chiudi la finestra
             window.close();

@@ -78,6 +78,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
         if (isset($_GET['codiceFiscale']))
             $stato_fisc = selezioneCodiceFiscale();
 
+        $copiePrestate = 0;
         /**
          * @author Claudio Cicimurri, 5CI
          * Funzione per uscire in qualsiasi momento con un errore
@@ -86,7 +87,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
          */
         function creazionePrestito()
         {
-            global $stato_fisc, $fisc;
+            global $stato_fisc, $fisc, $copiePrestate;
             // Assicurati che un utente sia stato selezionato
             if (!$stato_fisc)
                 return "Nessun utente selezionato";
@@ -114,23 +115,42 @@ livelloRichiesto(BIBLIOTECARIO); ?>
             // Connettiti al db
             $conn = connettitiAlDb();
 
-            // Controlla che il libro non sia già prenotato
-            if (mysqli_fetch_row(mysqli_query($conn, "SELECT Prestato FROM Copie WHERE idCopia = $idCopia"))[0])
-                return "Copia già prestata";
+            // Separa le copie per ,
+            $copie = explode(',', $idCopia);
+            // Elimina i duplicati
+            $copie = array_unique($copie);
 
-            // Blocca il libro
-            mysqli_query($conn, "UPDATE Copie SET Prestato = TRUE WHERE idCopia = $idCopia");
+            // Manda un errore se qualche valore non è un numero
+            foreach ($copie as $idCopia) {
+                // Controlla che tutti gli id copia siano validi
+                if (preg_match("/^\d+$/", $idCopia) == false)
+                    return "Id copia non valido: \"$idCopia\". Evita di inserirli manualmente";
+            }
+            
+            // Per ogni copia
+            foreach ($copie as $idCopia) {
+                // Controlla se non è già stata prenotata
+                if (mysqli_fetch_row(mysqli_query($conn, "SELECT Prestato FROM Copie WHERE idCopia = $idCopia"))[0])
+                    return "Prestate $copiePrestate copie<br>Trovata copia già prestata ($idCopia)";
 
-            // Esegui la query
-            $query = "INSERT INTO Prestiti (DataConsegna, DataRiconsegna, idCopia, codFiscaleUtente, bibConsegna)
-                        VALUES ('$dataConsegna', '$dataRiconsegna', $idCopia, '$codUtente', '$codBib')";
-            // Aggiungi il prestito
-            $ris = mysqli_query($conn, $query);
+                // Bloccala
+                mysqli_query($conn, "UPDATE Copie SET Prestato = TRUE WHERE idCopia = $idCopia");
 
-            if ($ris)
-                return "ok";
-            else
-                return "Errore durante l'esecuzione della query<br>" . mysqli_error($conn);
+                // Esegui la query
+                $query = "INSERT INTO Prestiti (DataConsegna, DataRiconsegna, idCopia, codFiscaleUtente, bibConsegna)
+                            VALUES ('$dataConsegna', '$dataRiconsegna', $idCopia, '$codUtente', '$codBib')";
+                // Aggiungi il prestito
+                $ris = mysqli_query($conn, $query);
+
+                // Se il prestito non riesce
+                // P.S. Non dovrebbe avvenire mai quest'errore
+                if (!$ris) return "Errore durante l'esecuzione della query ($idCopia)<br>" . mysqli_error($conn);
+
+                $copiePrestate++;
+            }
+
+            // Se tutto va a buon fine stampa il messaggio di ok
+            return "ok";
         }
 
         $stato = "";
@@ -143,14 +163,17 @@ livelloRichiesto(BIBLIOTECARIO); ?>
         <!-- Contenitore -->
         <div class="container">
             <?php
-            global $stato;
+            global $stato, $copiePrestate;
 
             // Se il prestito è stato effettuato con successo
             if ($stato == "ok")
-                echo '<div class="alert alert-success" role="alert">Libro prestato</div>';
+                // Stampa il numero di copie prestate
+                echo '<div class="alert alert-success" role="alert">' .
+                    ($copiePrestate == 1 ? "Copia del libro prestata" : "Prestate $copiePrestate copie")
+                . '</div>';
             else if ($stato != '') {
                 echo '<div class="alert alert-danger" role="alert">';
-                echo $stato;
+                echo $stato . '<br>Impossibile continuare';
                 echo '</div>';
             }
             ?>
@@ -186,7 +209,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                     <input type="text" class="form-control" placeholder="Id copia" name="idCopia" id="idCopia">
                     <div class="input-group-append">
                         <!-- Al click del pulsante, apri un popup -->
-                        <a class="btn btn-outline-info" href="#" onclick="window.open('../popup-selezione-copie/catalogo.php?bibliotecario', 'Seleziona id copia', 'width=600,height=400,status=yes,scrollbars=yes,resizable=yes')">Seleziona id copia</a>
+                        <a class="btn btn-outline-info" href="#" onclick="window.open('../popup-selezione-copie/catalogo.php?bibliotecario', 'Seleziona copia', 'width=600,height=400,status=yes,scrollbars=yes,resizable=yes')">Seleziona copia</a>
                     </div>
                 </div>
 
