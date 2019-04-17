@@ -19,7 +19,7 @@
 </head>
 
 <!-- Esci in caso di accesso negato -->
-<?php 
+<?php
     include_once "../php/access-denied.php";
     livelloRichiesto(UTENTE_REGISTRATO); ?>
 
@@ -44,52 +44,62 @@
                     <div class='card-body'>
                         <div class='row'>
                             <div class='col-md-12'>
-                                <ul class="list-group-horizontal">
-                                    <li class="list-group-item"><b>Nome Libro</b></li>
-                                    <li class="list-group-item"><b>Data Inserimento</b></li>
-                                    <li class="list-group-item"><b>Rimozione Libro</b></li>
-                                </ul>
+                                <ul class="list-group">
 
-                                <!-- Script per la stampa della wishlist -->
-                                <?php
-                                // Connettiti al database
-                                $conn = connettitiAlDb();
-                                // Script della query
-                                $sql = "SELECT Titolo, DataInserimento, ISBN
+
+                                    <!-- Script per la stampa della wishlist -->
+                                    <?php
+                                    // Connettiti al database
+                                    $conn = connettitiAlDb();
+                                    // Script della query
+                                    $sql = "SELECT Titolo, DataInserimento, ISBN
                                         FROM Libri, Utenti, Lista_Interessi
                                         WHERE Utenti.CodFiscale = '$codfisc'
                                         AND Libri.ISBN = Lista_Interessi.ISBNLibro";
-                                // Esegui la query
-                                $res = mysqli_query($conn, $sql);
+                                    // Esegui la query
+                                    $res = mysqli_query($conn, $sql);
 
-                                while ($row = mysqli_fetch_array($res)) {
-                                    echo "<ul class='list-group-horizontal'>";
-                                    echo    "<li class='list-group-item'>" . $row["Titolo"] . "</li> ";
-                                    echo    "<li class='list-group-item'>" . $row["DataInserimento"] . "</li> ";
-                                    $isbn = $row["ISBN"];
-                                    echo "<li class='list-group-item'>
-                                            <form action='' method='post'>
-                                                <button type='submit' class='btn btn-danger btn-md center-block' name='rimuovi' value='$isbn'>Rimuovi</button>
-                                            </form>
-                                        </li>";
+                                    // Per ogni record trovato
+                                    while ($row = mysqli_fetch_array($res)) {
+                                        // Stampa l'elemento della lista
+                                        $isbn = $row["ISBN"];
+                                        echo '<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <form action="" method="post">
+                                                    <div class="container">
+                                                    <form action="" method="post">
+                                                        <div class="row">
+                                                                <div class="col-10 col-md-11 font-weight-light font-italic">
+                                                                    <span>Inserito il: ' . $row["DataInserimento"] . '</span>
+                                                                </div>
+                                                                <div class="col-2 col-md-1">
+                                                                    <button name="rimuovi" type="submit" value="'.$isbn.'" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
+                                                                    <button name="rimuovi" type="submit" value="'.$isbn.'" class="pt-0 pb-0 btn btn-danger btnRimuovi portrait fa fa-plus"> </button>
+                                                                </div>
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                ' . $row["Titolo"] . '
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </form>
+                                                </li>';
+                                    }
 
-                                    echo "</ul>";
-                                }
+                                    if (isset($_POST['rimuovi'])) {
+                                        $valore_isbn = $_POST['rimuovi'];
 
-                                if (isset($_POST['rimuovi'])) {
-                                    $valore_isbn = $_POST['rimuovi'];
-
-                                    $sql = "DELETE FROM lista_interessi 
+                                        $sql = "DELETE FROM lista_interessi 
                                             WHERE ISBNLibro = '$valore_isbn'";
 
-                                    // Connettiti al database
-                                    $conn = connettitiAlDb();
+                                        // Connettiti al database
+                                        $conn = connettitiAlDb();
 
-                                    $res = mysqli_query($conn, $sql);
-                                    echo "<meta http-equiv='refresh' content='0;URL=lista-desideri.php'>";
-                                }
+                                        $res = mysqli_query($conn, $sql);
+                                        echo "<meta http-equiv='refresh' content='0;URL=lista-desideri.php'>";
+                                    }
 
-                                ?>
+                                    ?>
+                                </ul>
                             </div>
                         </div>
                     </div>

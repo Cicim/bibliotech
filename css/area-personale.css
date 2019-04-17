@@ -24,3 +24,22 @@
 	border-right-width: 1px;
 }
 .container ul { margin: -10px 0; }
+
+.btnRimuovi {
+	float: right;
+	font-size: 16px;
+}
+
+.portrait {
+	display: none;
+}
+
+@media (max-width: 500px) {
+    .landscape {
+        display: none;
+    }
+    .portrait {
+		display: inline-block;
+    }
+    
+}
