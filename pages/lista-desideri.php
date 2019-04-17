@@ -70,22 +70,17 @@
                                             echo '<li class="list-group-item d-flex justify-content-between align-items-center">
                                                 <form action="" method="post">
                                                     <div class="container">
-                                                    <form action="" method="post">
-                                                        <div class="row">
-                                                                <div class="col-10 col-md-11 font-weight-light font-italic">
-                                                                    <span>Inserito il: ' . $row["DataInserimento"] . '</span>
-                                                                </div>
-                                                                <div class="col-2 col-md-1">
-                                                                    <button name="rimuovi" type="submit" value="' . $isbn . '" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
-                                                                    <button name="rimuovi" type="submit" value="' . $isbn . '" class="pt-1 pb-1 btn btn-danger btnRimuovi portrait fa fa-trash"> </button>
-                                                                </div>
-                                                        <div class="row">
-                                                            <div class="col-12">
-                                                                ' . $row["Titolo"] . '
-                                                            </div>
+                                                    <div class="row">
+                                                        <div class="col-9">
+                                                            <span class="font-weight-light font-italic">Inserito il: ' . $row["DataInserimento"] . '</span>
+                                                            <span>' . $row["Titolo"] . '</span>                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    </form>
+                                                        <div class="col-2">
+                                                        <form action="" method="post">
+                                                            <button name="rimuovi" style="" type="submit" value="' . $isbn . '" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
+                                                            <button name="rimuovi" style="" type="submit" value="' . $isbn . '" class="pt-1 pb-1 btn btn-danger btnRimuovi portrait fa fa-trash"> </button>
+                                                        </form>
+                                                        </div>
                                                 </li>';
                                         }
                                     }
