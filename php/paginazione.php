@@ -192,6 +192,11 @@ function stampaBarra($pagina, $totPagine)
  */
 function stampaLibro($libro, $conn)
 {
+    // Aggiungi la query bibliotecario se sei un bibliotecario
+    $bibliotecario = "";
+    if (isset($_GET['bibliotecario']))
+        $bibliotecario = '&bibliotecario';
+
     // Controlla se il login è stato effettuato
     $log = logged();
     // Href del pulsante lista dei desideri
@@ -218,7 +223,7 @@ function stampaLibro($libro, $conn)
     // Inserisci uno span contenente l'autore
     echo "          <span>" . creaListaAutori($libro["ISBN"], $conn) . "</span>";
     // Inserisci uno span contenente l'editore
-    echo "          <br><span><i><a class='text-secondary' href='catalogo.php?titolo=&cerca=1&autore=&editore=" . $libro["nomeEditore"] . "&collana=&tipologia=&genere='> " . $libro["nomeEditore"] . "</a></i></span>";
+    echo "          <br><span><i><a class='text-secondary' href='catalogo.php?titolo=&cerca=1&autore=&editore=" . $libro["nomeEditore"] . "&collana=&tipologia=&genere=$bibliotecario'> " . $libro["nomeEditore"] . "</a></i></span>";
     echo "      </div>";
 
     // Colonna contenente il pulsante per la prenotazione
@@ -267,12 +272,17 @@ function creaListaAutori($isbnLibro, $conn)
         if (!$row) {
             return "Nessun autore";
         } else {
+            // Aggiungi la query bibliotecario se sei un bibliotecario
+            $bibliotecario = "";
+            if (isset($_GET['bibliotecario']))
+                $bibliotecario = '&bibliotecario';
+
             // Aggiungi una virgola se non si tratta del primo elemento
             if ($i != 0)
                 $la .= ", ";
 
             // Aggiungi un link alla pagina dell'autore
-            $la .= '<a class="text-info" href="catalogo.php?titolo=&cerca=1&autore=' . $row[0] . '&editore=&collana=&tipologia=&genere=">' . $row[0] . '</a>';
+            $la .= '<a class="text-info" href="catalogo.php?titolo=&cerca=1&autore=' . $row[0] . '&editore=&collana=&tipologia=&genere=' . $bibliotecario . '">' . $row[0] . '</a>';
 
             $i++;
         }

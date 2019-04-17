@@ -72,11 +72,15 @@
                 <div class="jumbotron text-center collapse py-1 mt-0" style="margin:auto" id="filterForm">
                     <h1 class="display-4 mt-2" style="font-size: 16pt !important">
                         <?php
+                        // Aggiungi la query bibliotecario se stai scegliendo una copia
+                        if ($staiScegliendoCopia) 
+                            $bibliotecario = "&bibliotecario";
+                        else $bibliotecario = "";
                         // Controlla se ci sono filtri
                         if (haFiltri())
                             // E stampa un pulsante che porta alla stessa pagina
                             // meno tutti i filtri settati
-                            echo "<a href='catalogo.php?titolo=" . $_GET["titolo"] . "&cerca=&autore=&editore=&collana=&tipologia=&genere=' class='text-danger'> Rimuovi filtri</a>";
+                            echo "<a href='catalogo.php?titolo=" . $_GET["titolo"] . "&cerca=&autore=&editore=&collana=&tipologia=&genere=$bibliotecario' class='text-danger'> Rimuovi filtri</a>";
                         else
                             // Altrimenti manda il solito messaggio
                             echo "Aggiungi filtri";
