@@ -186,7 +186,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                     <input type="text" class="form-control" placeholder="Id copia" name="idCopia" id="idCopia">
                     <div class="input-group-append">
                         <!-- Al click del pulsante, apri un popup -->
-                        <a class="btn btn-outline-info" href="#" onclick="window.open('../views/catalogo.php?bibliotecario', 'Seleziona id copia', 'width=600,height=400,status=yes,scrollbars=yes,resizable=yes')">Seleziona id copia</a>
+                        <a class="btn btn-outline-info" href="#" onclick="window.open('../popup-selezione-copie/catalogo.php?bibliotecario', 'Seleziona id copia', 'width=600,height=400,status=yes,scrollbars=yes,resizable=yes')">Seleziona id copia</a>
                     </div>
                 </div>
 
