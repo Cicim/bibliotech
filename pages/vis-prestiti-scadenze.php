@@ -21,40 +21,96 @@
     <!-- Includi l'header -->
     <?php include_once "../views/header.php" ?>
 
-    <?php
-    // Includo la funzione per la connessione al DB
-    require_once "../php/connessione.php";
-    $conn = connettitiAlDb();
-    
-    $query = "select idPrestito, ISBN, Titolo, CodFiscale from Utenti, Prestiti, Libri where utenti.CodFiscale = prestiti.codFiscaleUtente and prestiti.idCopia = copie.idCopia and copie.ISBN = libri.ISBN";
-    $risultato = mysqli_query($conn, $query);
-     if(!$risultato)
-     echo("errore ciao");
-    ?>
+    <!-- Rettangolo grigio per il titolo della sezione -->
+    <div class="jumbotron" style="padding: 2rem 2rem">
+        <h1 class="display-4 text-center">Prestiti</h1>
+    </div>
 
-    <table class="table mb-5" border="1" style="max-width:60%;margin:auto;">
-        <thead>
-            <tr>
-            <th scope="col">Codice Prestito</th>
-            <th scope="col">Codice Fiscale</th>
-            <th scope="col">Codice ISBN</th>
-            <th scope="col">Titolo libro</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td>  </td>
-            <td>  </td>
-            <td>  </td>
-            <td>  </td>
-            </tr>
-        </tbody>
+    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+    <div align = "center">
+        <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+    </div>
+
+    <br><br>
+
+    <table border = "2" align = "center" class = "table">
+        <?php
+
+            $host = "localhost";
+            $user = "root";
+            $password = "";
+
+            $conn = mysqli_connect($host, $user, $password);
+
+            if(!$conn){
+                echo "Impossibile connettersi al database";
+            }
+            else{
+
+                $sel = mysqli_select_db($conn, "Biblioteca");
+
+                if(!$sel){
+                    echo "Database non trovato";
+                }
+                else{
+
+                    $query = "SELECT Libri.Titolo, Copie.idCopia, Prestiti.idPrestito, Prestiti.DataConsegna, Prestiti.DataRiconsegna, Utenti.Nome, Utenti.Cognome 
+                    FROM Libri, Utenti, Prestiti, Copie
+                    WHERE Libri.ISBN = Copie.ISBN
+                    AND Utenti.CodFiscale = Prestiti.CodFiscaleUtente
+                    AND Copie.idCopia = Prestiti.idCopia";
+                    $risultato = mysqli_query($conn, $query);
+                    if(!$risultato){
+                        echo "Errore nella query";
+                    }
+                    else{
+
+                        echo
+                        "<tr><th>" .
+                            "Titolo" .
+                            "</th><th>" .
+                            "Numero copia" .
+                            "</th><th>" .
+                            "Numero prestito" .
+                            "</th><th>" .
+                            "Data di consegna" .
+                            "</th><th>" .
+                            "Data di riconsegna" .
+                            "</th><th>" .
+                            "Nome utente" .
+                            "</th><th>" .
+                            "Cognome utente" .
+                            "</th><th>" .
+                            "Rinnovo prestito" .
+                            "</th><th>" .
+                            "Restituzione libro" . 
+                            "</th></tr>";   
+                    while ($riga = mysqli_fetch_assoc($risultato)) {
+                        echo
+                        '<tr><td>' .
+                        $riga['Titolo'] . '</td><td>' . $riga['idCopia'] . '</td><td>' . $riga['idPrestito'] . '</td><td>' . $riga['DataConsegna'] . '</td><td>' . $riga['DataRiconsegna'] . '</td><td>' . $riga['Nome'] . '</td><td>' . $riga['Cognome'];
+        
+                        #Pulsante per rinnovare il prestito
+                        # (Aggiungere il link alla pagina ModificaLibro.php)
+                        echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnRinnova\" href=\"#\"><i class=\"fa fa-edit\"></i> Rinnova</a></td></td>";
+
+                        #Pulsante per restituire il libro
+                        echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnRestituzione\" href=\"#\"><i class=\"fa fa-check\"></i> Restituisci</a></td></tr>";
+                    }
+                         
+                    }
+                }
+            }
+        ?>
     </table>
 
+    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+    <div align = "center">
+        <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+    </div>
 
-      
-    </table>
+    <br>
+
+    <br><br>
+
 </body>
-
-
-<td><button type="button" class="btn btn-primary">Rinnovo</button></td>
