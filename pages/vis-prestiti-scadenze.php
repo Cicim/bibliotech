@@ -89,13 +89,28 @@
                         echo
                         '<tr><td>' .
                         $riga['Titolo'] . '</td><td>' . $riga['idCopia'] . '</td><td>' . $riga['idPrestito'] . '</td><td>' . $riga['DataConsegna'] . '</td><td>' . $riga['DataRiconsegna'] . '</td><td>' . $riga['Nome'] . '</td><td>' . $riga['Cognome'];
-        
+                    
+                    echo "<form method = \"GET\" action = \"rinnovo-prestito.php\">";
                         #Pulsante per rinnovare il prestito
-                        # (Aggiungere il link alla pagina ModificaLibro.php)
-                        echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnRinnova\" href=\"#\"><i class=\"fa fa-edit\"></i> Rinnova</a></td></td>";
+                        echo "<td align=\"center\">
+                            <input type = \"hidden\" id = " . $riga['idPrestito'] . "name =" . $riga['idPrestito'] . "value=" . $riga['idPrestito'] . ">
+                            <button type = \"submit\" class=\"btn btn-info ml-2\">
+                                <i class=\"fa fa-edit\"></i>Rinnova
+                            </button>
+                        </td></td>";
+                        $_GET['btnRinnova'] = $riga['idPrestito'];
+                        echo $_GET['btnRinnova'];
+                    echo "</form>";
 
+                    echo "<form method = \"GET\" action = \"restituzione-libro.php\">";
                         #Pulsante per restituire il libro
-                        echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnRestituzione\" href=\"#\"><i class=\"fa fa-check\"></i> Restituisci</a></td></tr>";
+                        echo "<td align=\"center\">
+                            <button type = \"submit\" class=\"btn btn-info ml-2\" id=\"btnRestituzione\">
+                                <i class=\"fa fa-check\"></i>Restituzione
+                            </button>
+                        </td></td>
+                </td></td>";
+                    echo "</form>";
                     }
                          
                     }
