@@ -56,11 +56,15 @@ livelloRichiesto(BIBLIOTECARIO); ?>
             $descrizione = $_POST["descrizione"];
             $annoPubblicazione = $_POST["annoPubblicazione"];
             $dataAggiunta = date('Y-m-d');
-            $idGenere = $_POST["idGenere"];
-            $idTipo = $_POST["idTipo"];
-            $idEditore = $_POST["idEditore"];
-            $idCollana = $_POST["idCollana"];
-            $idLingua = $_POST["idLingua"];
+            $idGenere = $_POST["genere"];
+            $idTipo = $_POST["tipologia"];
+            $idEditore = $_POST["editore"];
+            $idCollana = $_POST["collana"];
+            $idLingua = $_POST["lingua"];
+
+            // Se la descrizione è vuota, impostala a NULL
+            if ($descrizione == "") $descrizione = "NULL";
+            else $descrizione = "'$descrizione'";
 
             // Se l'ISBN è vuoto
             if ($ISBN == "") {
@@ -68,9 +72,8 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 $ris = mysqli_query($conn, "SELECT ISBN FROM Libri WHERE ISBN LIKE 'N%' ORDER BY ISBN DESC LIMIT 1");
                 // Estrailo
                 $codice = mysqli_fetch_row($ris)[0];
-
-                // Elimina la N e tutti gli 0
-                return $ISBN;
+                // Incrementalo e sostituiscilo all'ISBN
+                $ISBN = ++$codice;
             }
 
             // Separo i dati recuperati dal popup per l'inserimento degli autori
@@ -79,11 +82,15 @@ livelloRichiesto(BIBLIOTECARIO); ?>
             $AutRuo = array_unique($AutRuo);
 
             // Query per l'inserimento di un nuovo libro nella tabella Libri
-            $qry1 = "INSERT INTO Libri (ISBN, Titolo, Descrizione, AnnoPubblicazione, DataAggiunta, idGenere, idTipo, idEditore, idCollana, idLingua) VALUES
-                    '$ISBN', '$titolo', $descrizione', '$annoPubblicazione', '$dataAggiunta', '$idGenere', '$idTipo', '$idEditore', '$idCollana', '$idLingua'";
+            $query_inserimento = "INSERT INTO Libri (ISBN, Titolo, Descrizione, AnnoPubblicazione, DataAggiunta, idGenere, idTipo,
+                                              idEditore, idCollana, idLingua) VALUES
+                                ('$ISBN', '$titolo', $descrizione, $annoPubblicazione, '$dataAggiunta', $idGenere, $idTipo, $idEditore, $idCollana, $idLingua)";
             
             // Eseguo la prima query
-            $qry1_res = mysqli_query($conn, $qry1);
+            $ris_query_inserimento = mysqli_query($conn, $query_inserimento);
+
+            if ($ris_query_inserimento == false)
+                return "Errore durante l'esecuzione della query<br>" . mysqli_error($conn); 
 
             // Per ogni autore
             foreach($AutRuo as $riga) {
@@ -136,7 +143,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                     <!-- ISBN -->
                     <div class="col-md-4 mb-3">
                         <label for="ISBN">ISBN</label>
-                        <input type="text" class="form-control" name="ISBN" placeholder="Es. 97855588015" value="" required="true">
+                        <input type="text" class="form-control" name="ISBN" placeholder="Es. 97855588015" value="">
                         <div class="invalid-feedback">Inserisci un ISBN valido.</div>
                     </div>
                     <!-- Anno pubblicazione -->
