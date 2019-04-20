@@ -1,4 +1,6 @@
 <!-- Caporaletti 5BI -->
+<!-- Completato dal Gruppo 1 -->
+<!-- Modificato da Claudio Cicimurri, Lorenzo Clazzer, 5CI -->
 
 <!doctype html>
 <html>
@@ -87,15 +89,15 @@ livelloRichiesto(BIBLIOTECARIO); ?>
             foreach($AutRuo as $riga) {
                 $riga = explode(',', $riga);
                 // Hai id e ruolo scrittura
-                $idAutore = $riga[0];
-                $idRuolo = $riga[1];
+                $idAutore = (int) $riga[0];
+                $idRuolo = (int) $riga[1];
 
                 // Query per il collegamento del nuovo libro ad un autore
                 $qry2 = "INSERT INTO Autori_Libri (idAutore, ISBNLibro, idRuoloScrittura) VALUES
                         '$idAutore', '$ISBN', '$idRuolo'";
 
                 // Eseguo la seconda query
-                $qry2_res = mysqli_query($conn, $qry2);
+                mysqli_query($conn, $qry2);
             }
 
             return "ok";
