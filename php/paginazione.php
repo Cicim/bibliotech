@@ -245,15 +245,16 @@ function stampaLibro($libro, $conn)
             $qcres = mysqli_query($conn, $qc) or die(mysqli_error($conn));
             echo "<form method=GET action=''>";
 
+            echo "<input type=text value='$isbn' name='isbn' style='display:none'>";
             // Se la query riporta risultati
             if (mysqli_num_rows($qcres) > 0) 
             {
                 // Il libro è già stato aggiunto
                 // Stampa pulsanti per cancellare
                 // On Mobile
-                echo "<a name='rimuovi' value='$isbn' type=submit href='" . $linklista . "' class='fa fa-trash add-to-list short-text btn btn-danger btn-sm'></a>";
+                echo "<a name='rimuovi' value='$isbn' type=submit href='' class='fa fa-trash add-to-list short-text btn btn-danger btn-sm'></a>";
                 // On Desktop
-                echo "<a name='rimuovi' value='$isbn' type=submit href='" . $linklista . "' class='add-to-list full-text btn btn-danger btn-sm'>Rimuovi dalla Lista</a>";
+                echo "<a name='rimuovi' value='$isbn' type=submit href='' class='add-to-list full-text btn btn-danger btn-sm'>Rimuovi dalla Lista</a>";
             } else 
             {
                 // Il libro non è ancora stato aggiunto
