@@ -9,7 +9,7 @@ USE Biblioteca;
 -- Table Generi
 -- -----------------------------------------------------
 CREATE TABLE Generi (
-  idGenere INT NOT NULL,
+  idGenere INT NOT NULL AUTO_INCREMENT,
   Descrizione VARCHAR(45) NOT NULL,
   PRIMARY KEY (idGenere)
 );
@@ -19,7 +19,7 @@ CREATE TABLE Generi (
 -- Table Tipologie
 -- -----------------------------------------------------
 CREATE TABLE Tipologie (
-  idTipologia INT NOT NULL,
+  idTipologia INT NOT NULL AUTO_INCREMENT,
   Descrizione VARCHAR(45) NOT NULL,
   PRIMARY KEY (idTipologia)
 );
@@ -29,7 +29,7 @@ CREATE TABLE Tipologie (
 -- Table Editori
 -- -----------------------------------------------------
 CREATE TABLE Editori (
-  idEditore INT NOT NULL,
+  idEditore INT NOT NULL AUTO_INCREMENT,
   Nome VARCHAR(45) NOT NULL,
   Descrizione VARCHAR(200) NULL,
   PRIMARY KEY (idEditore),
@@ -42,7 +42,7 @@ CREATE TABLE Editori (
 -- Table Collane
 -- -----------------------------------------------------
 CREATE TABLE Collane (
-  idCollana INT NOT NULL,
+  idCollana INT NOT NULL AUTO_INCREMENT,
   Nome VARCHAR(80) NOT NULL,
   PRIMARY KEY (idCollana),
 
