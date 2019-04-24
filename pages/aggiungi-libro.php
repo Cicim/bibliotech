@@ -171,11 +171,12 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 $idRuolo = (int)$riga[1];
 
                 // Query per il collegamento del nuovo libro ad un autore
-                $qry2 = "INSERT INTO Autori_Libri (idAutore, ISBNLibro, idRuoloScrittura) VALUES
-                        '$idAutore', '$ISBN', '$idRuolo'";
+                $queryInserimentoAutore = "INSERT INTO Autori_Libri (idAutore, ISBNLibro, idRuoloScrittura) VALUES
+                                          ($idAutore, '$ISBN', $idRuolo)";
 
                 // Eseguo la seconda query
-                mysqli_query($conn, $qry2);
+                $ris = mysqli_query($conn, $queryInserimentoAutore);
+                if ($ris == false) return "Errore durante l'inserimento di un autore<br>" . mysqli_error($conn);
             }
 
             return "ok";
@@ -198,7 +199,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
 
 
         <div class="container">
-            <form class="form-signin mt-5" style="max-width: 700px" novalidation="" method="post" action="">
+            <form class="form-signin mt-5" style="max-width: 700px" autocomplete="off" method="post" action="">
                 <!-- Prima riga -->
                 <div class="row">
                     <!-- Titolo -->
