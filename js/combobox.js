@@ -40,11 +40,24 @@ function combobox(parent, send) {
         // Ottieni id e descrizione
         const id = link.attr("value");
         const desc = link.text();
-        console.log(id, desc);
-        // Cambia la descrizione dell'input
-        inp.val(desc);
+
+        // Se devi aggiungere un nuovo valore
+        if (id == -1) {
+            // Modifica il placeholder
+            inp.attr("placeholder", desc);
+            // Svuota la casella di testo
+            inp.val("");
+        }
+        // Se non devi aggiungere un nuovo valore
+        else {
+            // Cambia la descrizione dell'input
+            inp.val(desc);
+            // Svuota il placeholder
+            inp.attr("placeholder", "Cerca...");
+        }
         // Imposta il valore da inviare
         send.val(id);
+
     });
 
 
