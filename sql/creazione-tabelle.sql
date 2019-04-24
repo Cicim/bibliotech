@@ -54,7 +54,7 @@ CREATE TABLE Collane (
 -- Table Lingue
 -- -----------------------------------------------------
 CREATE TABLE Lingue (
-  idLingua INT NOT NULL,
+  idLingua INT NOT NULL AUTO_INCREMENT,
   Descrizione VARCHAR(20) NOT NULL,
   Abbreviazione VARCHAR(3) NOT NULL,
   PRIMARY KEY (idLingua)
