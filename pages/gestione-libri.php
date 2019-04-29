@@ -38,7 +38,7 @@
         </div>
         <br>
 
-        <!-- Lista utenti registrati -->
+        <!-- Lista libri in catalogo -->
         <table border="2" align="center" class="table">
             <?php
             // Connettiti al database
@@ -46,7 +46,7 @@
             $conn = connettitiAlDb();
 
             $query = "SELECT Libri.ISBN, Libri.Titolo, Libri.AnnoPubblicazione, Generi.Descrizione AS Genere, Tipologie.Descrizione AS Tipologia, Editori.Nome, Lingue.Abbreviazione
-                        FROM Libri, Generi, Tipologie, Editori, Lingue 
+                        FROM Libri, Generi, Tipologie, Editori, Lingue
                         WHERE Generi.idGenere=Libri.idGenere
                         AND Tipologie.idTipologia=Libri.idTipo
                         AND Editori.idEditore=Libri.idEditore
