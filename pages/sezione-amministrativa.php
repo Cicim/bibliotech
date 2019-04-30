@@ -67,6 +67,14 @@
                     </a>
                 </div>
                 <div class="col-md-4">
+                    <a class="btn btn-info ml-2 block" href="vis-liste-desideri.php">
+                        <i class="fa fa-bookmark"></i> Liste dei desideri
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-md-4">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
                     <a class="btn btn-danger ml-2 block" href="index.php">
                         <i class="fa fa-times-circle"></i> Esci
                     </a>

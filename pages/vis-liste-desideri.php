@@ -94,9 +94,6 @@
                     echo '<tr><td>' . $riga['Titolo'] . '</td><td>' . $riga['ISBN'] . '</td><td>' . $riga['DataInserimento'] . '</td></tr>';
                 }
             }
-            else{
-                echo "control";
-            }
 
             ?>
         </table>
