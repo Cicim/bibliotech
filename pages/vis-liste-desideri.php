@@ -35,24 +35,24 @@
 
         <div align=center>
 
-        <!-- Selezione utente di cui visualizzare la lista dei desideri -->
-        <form method = "POST" name="nomeUtente" id="nomeUtente" action = "vis-liste-desideri.php">
+            <!-- Selezione utente di cui visualizzare la lista dei desideri -->
+            <form method = "POST" name="nomeUtente" id="nomeUtente" action = "vis-liste-desideri.php">
 
-                <select name="nomeUtente">
-                    <?php
-                        include_once "../php/connessione.php";
-                        $conn = connettitiAlDb();
+                    <select name="nomeUtente">
+                        <?php
+                            include_once "../php/connessione.php";
+                            $conn = connettitiAlDb();
 
-                        $query = "SELECT CodFiscale, Nome, Cognome FROM Utenti";
+                            $query = "SELECT CodFiscale, Nome, Cognome FROM Utenti";
 
-                        $qres = mysqli_query($conn, $query);
+                            $qres = mysqli_query($conn, $query);
 
-                        while ($row = mysqli_fetch_assoc($qres)){
-                            echo "<option value='" . $row['CodFiscale'] . "'>" . $row['Nome'] . " " . $row['Cognome'] . "</option>";
-                        }
-                    ?>
-                </select>
-                <input type="submit" value="Seleziona">
+                            while ($row = mysqli_fetch_assoc($qres)){
+                                echo "<option value='" . $row['CodFiscale'] . "'>" . $row['Nome'] . " " . $row['Cognome'] . "</option>";
+                            }
+                        ?>
+                    </select>
+                    <input type="submit" value="Seleziona">
 
             </form>
 
@@ -63,7 +63,7 @@
         <br>
 
         <!-- Lista dei desideri dell'utente specificato -->
-        <table border="2" align="center" class="table">
+        <table class="table" align=center>
             <?php
             if(isset($_POST['nomeUtente'])){
                 // Connettiti al database
@@ -86,9 +86,12 @@
                         <th>
                             ISBN
                         </th>
+                        <th>
+                            Inserito il
+                        </th>
                     </tr>";
                 while ($riga = mysqli_fetch_assoc($risultato)) {
-                    echo '<tr><td>' . $riga['Titolo'] . '</td><td>' . $riga['ISBN'] . '</td></tr>';
+                    echo '<tr><td>' . $riga['Titolo'] . '</td><td>' . $riga['ISBN'] . '</td><td>' . $riga['DataInserimento'] . '</td></tr>';
                 }
             }
             else{
