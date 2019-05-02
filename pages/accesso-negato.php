@@ -1,16 +1,17 @@
-<!-- Pagina scritta dal gruppo di lavoro 2 -->
+<!-- Pagina scritta da Antonio D'Averio, del gruppo di lavoro 2 -->
+
 <!DOCTYPE html>
+
 <html>
 
 <head>
+    <!-- Definizione dei caratteri e del design responsivo -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <!-- Titolo della scheda del browser -->
     <title>Gestione utenti - Bibliotech</title>
-
     <!-- Inclusione librerie di Bootstrap -->
     <?php include_once "../php/imports.php"; ?>
-
 </head>
 
 <body>
@@ -22,6 +23,7 @@
         <h1 class="display-4 text-center">Accesso negato</h1>
     </div>
 
+    <!-- Messaggio di accesso negato -->
     <table align = "center">
         <tr>
             <td>
@@ -30,8 +32,8 @@
         </tr>
     </table>
 
+    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
     <div align="center">
-        <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
         <a class="btn btn-danger ml-2 block" id="btnAnnulla" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna indietro</a>
     </div>
 
