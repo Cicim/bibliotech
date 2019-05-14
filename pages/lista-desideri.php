@@ -68,20 +68,21 @@
                                             // Stampa l'elemento della lista
                                             $isbn = $row["ISBN"];
                                             echo '<li class="list-group-item d-flex justify-content-between align-items-center">
-                                                <form action="" method="post">
                                                     <div class="container">
-                                                    <div class="row">
-                                                        <div class="col-9">
-                                                            <span class="font-weight-light font-italic">Inserito il: ' . $row["DataInserimento"] . '</span>
-                                                            <span>' . $row["Titolo"] . '</span>                                                            </div>
+                                                        <div class="row">
+                                                            <div class="col-9">
+                                                                <span class="font-weight-light font-italic">Inserito il: ' . $row["DataInserimento"] . '</span>
+                                                                <span>' . $row["Titolo"] . '</span>
+                                                            </div>
                                                         </div>
                                                         <div class="col-2">
-                                                        <form action="" method="post">
-                                                            <button name="rimuovi" style="" type="submit" value="' . $isbn . '" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
-                                                            <button name="rimuovi" style="" type="submit" value="' . $isbn . '" class="pt-1 pb-1 btn btn-danger btnRimuovi portrait fa fa-trash"> </button>
-                                                        </form>
+                                                            <form action="" method="post">
+                                                                <button name="rimuovi" type="submit" value="' . $isbn . '" class="pt-0 pb-0 btn btn-danger btnRimuovi landscape"> Rimuovi </button>
+                                                                <button name="rimuovi" type="submit" value="' . $isbn . '" class="pt-1 pb-1 btn btn-danger btnRimuovi portrait fa fa-trash"> </button>
+                                                            </form>
                                                         </div>
-                                                </li>';
+                                                    </div>
+                                                   </li>';
                                         }
                                     }
                                     // Altrimenti stampa un messaggio
