@@ -1,6 +1,4 @@
-<!-- Pagina scritta dal gruppo 2 -->
-<!-- Passata di mano al gruppo 1 (D'Averio, incontro del 16/04/2019) -->
-<!-- Modifiche a cura di Claudio Cicimurri, 5CI -->
+<!-- Pagina riscritta da Claudio Cicimurri -->
 <!DOCTYPE html>
 <html>
 
@@ -8,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Creazione di un prestito - Bibliotech</title>
+    <title>Bibliotech - Rinnova il prestito</title>
 
     <!-- Inclusione librerie di Bootstrap -->
     <?php include_once "../php/imports.php"; ?>
@@ -61,7 +59,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                 </script>
 
 
-                <!-- Pulsante per creare il prestito -->
+                <!-- Pulsante per rinnovare il prestito -->
                 <button type="submit" class="btn btn-info">Rinnova prestito</button>
                 <a class="btn btn-warning ml-2 block" href="vis-prestiti-scadenze.php"><i class="fa fa-arrow-left"></i> Torna alla sezione prestiti</a>
                 <br>
@@ -79,7 +77,7 @@ livelloRichiesto(BIBLIOTECARIO); ?>
                     // Esegui la query per sostituire la data di riconsegna
                     $query = "UPDATE Prestiti
                       SET DataRiconsegna = \"" . $_POST['DataRinnovata'] .
-                        "\" WHERE idPrestito = \"$id\"";
+                        "\" WHERE idPrestito = $id";
 
                     $risultato = mysqli_query($conn, $query);
 

@@ -95,16 +95,15 @@ livelloRichiesto(BIBLIOTECARIO);
                     echo "</form>";
 
                     # Form per l'invio dei dati alla pagina di restituzione del libro
-                    echo "<form method = \"GET\" action = \"restituzione-libro.php\">";
                     # Pulsante per restituire il libro
-                    echo "<td align=\"center\">
-                                <input type = \"hidden\" id = " . $riga['idPrestito'] . "name =" . $riga['idPrestito'] . "value=" . $riga['idPrestito'] . ">
+                    echo "<td align=\"center\">";
+                    echo "<form method = \"GET\" action = \"restituzione-libro.php\">";
+                    echo "      <input type = \"hidden\" name=\"idPrestito\" value=" . $riga['idPrestito'] . ">
                                 <button type = \"submit\" class=\"btn btn-info ml-2\" id=\"btnRestituzione\">
                                     <i class=\"fa fa-check\"></i>Restituzione
                                 </button>
-                            </td></td>
-                            </td></td>";
-                    echo "</form>";
+                        </form>
+                        </td>";
                 }
             }
             ?>
