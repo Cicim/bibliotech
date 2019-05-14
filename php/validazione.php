@@ -52,7 +52,7 @@
         // Richiedi le utility per il login
         include_once "login-utils.php";
         // Esegui il login con i dati letti
-        effettualLogin($codFiscale, $nome, $cognome);
+        effettuaLogin($codFiscale, $nome, $cognome);
 
         if ($ris_valida)
             return "ok";

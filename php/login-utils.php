@@ -24,7 +24,7 @@ function logged()
  * @param string $cognome Il cognome dell'utente estratto dal database
  * @return bool Se il login è stato effettuato
  */
-function effettualLogin($codFiscale, $nome, $cognome)
+function effettuaLogin($codFiscale, $nome, $cognome)
 {
     // Assicurati che l'utente non sia già loggato
     if (isset($_SESSION['user_id']))

@@ -73,7 +73,7 @@
         // Controlla se la password è giusta
         if (md5($pw) == $md5) {
             // Effettua il login
-            $logged = effettualLogin($codFiscale, $nome, $cognome);
+            $logged = effettuaLogin($codFiscale, $nome, $cognome);
 
             // Se il login è stato effettuato
             if ($logged) return "ok";
