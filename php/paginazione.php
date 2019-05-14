@@ -205,9 +205,7 @@ function stampaLibro($libro, $conn)
     $linklista = "";
 
     // Se non sei loggato imposta a login.php
-    if (!$userid) {
-    } else {
-    }
+    if (!$userid) { } else { }
 
     // Crea il container che conterrà
     // tutte le informazione del libro importanti
@@ -231,55 +229,55 @@ function stampaLibro($libro, $conn)
 
     // Se lo sta selezionando un bibliotecario per selezionare la copia
     // Non mostrare il pulsante aggiungi alla lista
-    if (!isset($_GET['bibliotecario'])) {
+    // if (!isset($_GET['bibliotecario'])) {
         // ANCHOR Stampa pulsanti dei aggiunta o rimozione o niente
         // Se sei loggato stampa i pulsanti per la prenotatione
         // if (0) {
-        if ($userid != "") {
+        // if ($userid != "") {
             // Controlla se il libro è già stato1 aggiunto
-            $qc = "SELECT * 
-                    FROM Lista_Interessi
-                    WHERE ISBNLibro = '$isbn'
-                    AND codFiscaleUtente = '$userid'";
+            // $qc = "SELECT * 
+            //         FROM Lista_Interessi
+            //         WHERE ISBNLibro = '$isbn'
+            //         AND codFiscaleUtente = '$userid'";
             // Esegui la query
-            $qcres = mysqli_query($conn, $qc) or die(mysqli_error($conn));
-            echo "<form method=GET action=''>";
+            // $qcres = mysqli_query($conn, $qc) or die(mysqli_error($conn));
+            // echo "<form method=GET action=''>";
 
-            echo "<input type=text value='$isbn' name='isbn' style='display:none'>";
+            // echo "<input type=text value='$isbn' name='isbn' style='display:none'>";
             // Se la query riporta risultati
-            if (mysqli_num_rows($qcres) > 0) 
-            {
-                // Il libro è già stato aggiunto
-                // Stampa pulsanti per cancellare
-                // On Mobile
-                echo "<a name='rimuovi' value='$isbn' type=submit href='' class='fa fa-trash add-to-list short-text btn btn-danger btn-sm'></a>";
-                // On Desktop
-                echo "<a name='rimuovi' value='$isbn' type=submit href='' class='add-to-list full-text btn btn-danger btn-sm'>Rimuovi dalla Lista</a>";
-            } else 
-            {
-                // Il libro non è ancora stato aggiunto
-                // Stampa i pulsanti per aggiungere
-                // On Mobile
-                echo "<a name='aggiungi' value='$isbn' type='submit' href='" . $linklista . "' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
-                // On Desktop
-                echo "<a name='aggiungi' value='$isbn' type='submit' href='" . $linklista . "' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi alla Lista</a>";
-            }
-        } else {
-            // La lista porta a login
-            $linklista = "../pages/login.php";
-            // Stampa i pulsanti per portare al login
-            // On Mobile
-            echo "<a href='" . $linklista . "' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
-            // On Desktop
-            echo "<a href='" . $linklista . "' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi alla Lista</a>";
-        }
-    }
-    echo "          </form>";
-    echo "      </div>";
-    // Chiusura row
-    echo "</div>";
-    // Chiusura button    
-    echo "</button>";
+            // if (mysqli_num_rows($qcres) > 0) 
+            // {
+            //     // Il libro è già stato aggiunto
+            //     // Stampa pulsanti per cancellare
+            //     // On Mobile
+            //     echo "<a name='rimuovi' value='$isbn' type=submit href='' class='fa fa-trash add-to-list short-text btn btn-danger btn-sm'></a>";
+            //     // On Desktop
+            //     echo "<a name='rimuovi' value='$isbn' type=submit href='' class='add-to-list full-text btn btn-danger btn-sm'>Rimuovi dalla Lista</a>";
+            // } else 
+            // {
+            //     // Il libro non è ancora stato aggiunto
+            //     // Stampa i pulsanti per aggiungere
+            //     // On Mobile
+            //     echo "<a name='aggiungi' value='$isbn' type='submit' href='" . $linklista . "' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+            //     // On Desktop
+            //     echo "<a name='aggiungi' value='$isbn' type='submit' href='" . $linklista . "' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi alla Lista</a>";
+            // }
+            //     } else {
+            //         // La lista porta a login
+            //         $linklista = "../pages/login.php";
+            //         // Stampa i pulsanti per portare al login
+            //         // On Mobile
+            //         echo "<a href='" . $linklista . "' style='' class='fa fa-plus add-to-list short-text btn btn-info btn-sm'></a>";
+            //         // On Desktop
+            //         echo "<a href='" . $linklista . "' style='' class='add-to-list full-text btn btn-info btn-sm'>Aggiungi alla Lista</a>";
+    //     }
+    // }
+    // // echo "          </form>";
+    // echo "      </div>";
+    // // Chiusura row
+    // echo "</div>";
+    // // Chiusura button    
+    // echo "</button>";
 }
 
 /**
