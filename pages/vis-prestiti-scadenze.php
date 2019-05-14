@@ -26,14 +26,27 @@ livelloRichiesto(BIBLIOTECARIO);
     <?php include_once "../views/header.php"
     ?>
 
+    <?php
+    // Se il GET è impostato, allora imposta una variabile
+    if (isset($_GET["non"])) $non = true;
+    else $non = false;
+    ?>
+
     <div>
         <!-- Titolo della pagina -->
         <div class="jumbotron" style="padding: 2rem 2rem">
             <h1 class="display-4 text-center">Prestiti</h1>
         </div>
         <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
-        <div align="center">
-            <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+        <div class="text-center">
+            <a class="btn btn-danger ml-2 block" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+            <?php
+            // Mostra il pulsante corretto
+            if ($non)
+                echo "<a class=\"btn btn-info ml-2 block\" href=\"?\"><i class=\"fa fa-close\"></i> Non mostrare i prestiti già riconsegnati</a>";
+            else
+                echo "<a class=\"btn btn-info ml-2 block\" href=\"?non\"><i class=\"fa fa-check\"></i> Mostra anche prestiti già riconsegnati</a>";
+            ?>
         </div>
         <br><br>
         <!-- Lista prestiti e scadenze -->
@@ -48,6 +61,11 @@ livelloRichiesto(BIBLIOTECARIO);
                     WHERE Libri.ISBN = Copie.ISBN
                     AND Utenti.CodFiscale = Prestiti.CodFiscaleUtente
                     AND Copie.idCopia = Prestiti.idCopia";
+
+            // Se non si devono mostrare i prestiti già riconsegnati
+            if(!$non)
+                $query .= "\nAND Prestiti.bibRiconsegna IS NULL";
+
             # Esecuzione della query
             $risultato = mysqli_query($conn, $query);
             # Controllo di eventuali errori
