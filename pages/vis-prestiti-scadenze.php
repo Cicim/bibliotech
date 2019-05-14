@@ -15,29 +15,30 @@
 </head>
 
 <!-- Controllo dei permessi dell'utente -->
-<?php 
-    include_once "../php/access-denied.php";
-    livelloRichiesto(BIBLIOTECARIO);
+<?php
+include_once "../php/access-denied.php";
+livelloRichiesto(BIBLIOTECARIO);
 ?>
 
 
-<body>
+<body class="wrapper">
     <!-- Inclusione dell'header -->
-    <?php include_once "../views/header.php" 
+    <?php include_once "../views/header.php"
     ?>
 
-    <!-- Titolo della pagina -->
-    <div class="jumbotron" style="padding: 2rem 2rem">
-        <h1 class="display-4 text-center">Prestiti</h1>
-    </div>
-    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
-    <div align = "center">
-        <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
-    </div>
-    <br><br>
-    <!-- Lista prestiti e scadenze -->
-    <table align = "center" class = "table">
-        <?php
+    <div>
+        <!-- Titolo della pagina -->
+        <div class="jumbotron" style="padding: 2rem 2rem">
+            <h1 class="display-4 text-center">Prestiti</h1>
+        </div>
+        <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+        <div align="center">
+            <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+        </div>
+        <br><br>
+        <!-- Lista prestiti e scadenze -->
+        <table align="center" class="table">
+            <?php
             # Definizione delle variabili di connessione al DBMS
             $host = "localhost";
             $user = "root";
@@ -45,18 +46,18 @@
             # Effettua la connessione al DBMS
             $conn = mysqli_connect($host, $user, $password);
             # Controllo di eventuali errori
-            if(!$conn){
+            if (!$conn) {
                 echo "Impossibile connettersi al database";
             }
             # Effettua la selezione del database
-            else{
+            else {
                 $sel = mysqli_select_db($conn, "Biblioteca");
                 # Controllo di eventuali errori
-                if(!$sel){
+                if (!$sel) {
                     echo "Database non trovato";
                 }
                 # Esegue la query sul database
-                else{
+                else {
                     # Definizione della query
                     # La query seleziona titolo, numero di copia, numero di prestito, data di presa in consegna, data di riconsegna prevista e generalità dell'utente dalle tabelle 'Libri', 'Utenti', 'Prestiti' e 'Copie'
                     $query = "SELECT Libri.Titolo, Copie.idCopia, Prestiti.idPrestito, Prestiti.DataConsegna, Prestiti.DataRiconsegna, Utenti.Nome, Utenti.Cognome 
@@ -67,37 +68,36 @@
                     # Esecuzione della query
                     $risultato = mysqli_query($conn, $query);
                     # Controllo di eventuali errori
-                    if(!$risultato){
+                    if (!$risultato) {
                         echo "Errore nella query";
-                    }
-                    else{
+                    } else {
                         # Titoli delle colonne della tabella
                         echo
-                        "<tr><th>" .
-                            "Titolo" .
-                            "</th><th>" .
-                            "Numero copia" .
-                            "</th><th>" .
-                            "Numero prestito" .
-                            "</th><th>" .
-                            "Data di consegna" .
-                            "</th><th>" .
-                            "Data di riconsegna" .
-                            "</th><th>" .
-                            "Nome utente" .
-                            "</th><th>" .
-                            "Cognome utente" .
-                            "</th><th>" .
-                            "Rinnovo prestito" .
-                            "</th><th>" .
-                            "Restituzione libro" . 
-                            "</th></tr>";
+                            "<tr><th>" .
+                                "Titolo" .
+                                "</th><th>" .
+                                "Numero copia" .
+                                "</th><th>" .
+                                "Numero prestito" .
+                                "</th><th>" .
+                                "Data di consegna" .
+                                "</th><th>" .
+                                "Data di riconsegna" .
+                                "</th><th>" .
+                                "Nome utente" .
+                                "</th><th>" .
+                                "Cognome utente" .
+                                "</th><th>" .
+                                "Rinnovo prestito" .
+                                "</th><th>" .
+                                "Restituzione libro" .
+                                "</th></tr>";
                         # Riempimento della tabella con i risultati della query
                         # Ad ogni ripetizione corrisponde un record della tabella   
                         while ($riga = mysqli_fetch_assoc($risultato)) {
                             echo
-                            '<tr><td>' .
-                            $riga['Titolo'] . '</td><td>' . $riga['idCopia'] . '</td><td>' . $riga['idPrestito'] . '</td><td>' . $riga['DataConsegna'] . '</td><td>' . $riga['DataRiconsegna'] . '</td><td>' . $riga['Nome'] . '</td><td>' . $riga['Cognome'];
+                                '<tr><td>' .
+                                    $riga['Titolo'] . '</td><td>' . $riga['idCopia'] . '</td><td>' . $riga['idPrestito'] . '</td><td>' . $riga['DataConsegna'] . '</td><td>' . $riga['DataRiconsegna'] . '</td><td>' . $riga['Nome'] . '</td><td>' . $riga['Cognome'];
                             # Form per l'invio dei dati alla pagina di rinnovo prestito
                             echo "<form method = \"GET\" action = \"rinnovo-prestito.php\">";
                             # Pulsante per rinnovare il prestito
@@ -122,17 +122,17 @@
                             </td></td>
                             </td></td>";
                             echo "</form>";
-                        } 
+                        }
                     }
                 }
             }
-        ?>
-    </table>
-    <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
-    <div align = "center">
-        <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+            ?>
+        </table>
+        <!-- Bottone per tornare alla pagina principale della sezione amministrativa -->
+        <div align="center">
+            <a class="btn btn-danger ml-2 block" id="btnSezioneAmministrativa" href="sezione-amministrativa.php"><i class="fa fa-arrow-left"></i> Torna a sezione amministrativa</a>
+        </div>
     </div>
-    <br><br><br>
     <!-- Inclusione del footer -->
     <?php include_once "../views/footer.php"; ?>
 
