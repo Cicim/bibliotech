@@ -4,7 +4,7 @@ require_once "libs/class.phpmailer.php";
 require_once "libs/class.smtp.php";
 
 // Dichiara l'URL del sito come costante
-const URL_SITO = "localhost/bib2"; 
+const URL_SITO = "193.200.193.11"; 
 // Dichiara la mail di contatti come costante
 const CONTATTO = "err@bib2.no";
 
