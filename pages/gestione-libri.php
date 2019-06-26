@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gestione utenti - Bibliotech</title>
+    <title>Gestione libri - Bibliotech</title>
 
     <!-- Inclusione librerie di Bootstrap -->
     <?php include_once "../php/imports.php"; ?>
