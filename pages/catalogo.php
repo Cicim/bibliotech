@@ -316,6 +316,7 @@
 
             // Passa alla funzione di paginazione la query
             // corretta per la ricerca effettuata
+	   
             paginazione($ricerca);
             ?>
 
@@ -326,6 +327,7 @@
     <?php
     // Se non sei nella pagina di scelta del libro
     if (!$staiScegliendoCopia) include_once "../views/footer.php"; ?>
+    <script type="text/javascript" src="../js/cookie.min.js"></script>
 </body>
 
 </html>

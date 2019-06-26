@@ -1,16 +1,17 @@
 <header>
     <link rel="stylesheet" type="text/css" href="../css/header.css">
+    
     <nav class="navbar navbar-expand-lg navbar-dark light bg-dark">
-        <a class="navbar-brand" href="../index.php">Bibliotech</a>
+        <a class="navbar-brand" href="../index.php">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item <?php echo $seiNellIndex ? 'active' : '' ?>">
+                <!--<li class="nav-item <?php echo $seiNellIndex ? 'active' : '' ?>">
                     <a class="nav-link" href="index.php">Home</a>
-                </li>
+                </li>-->
                 <li class="nav-item <?php echo $seiNelCatalogo ? 'active' : '' ?>">
                     <a class="nav-link" href="catalogo.php">Catalogo</a>
                 </li>

@@ -277,7 +277,7 @@ function stampaLibro($libro, $conn)
     // // Chiusura row
     // echo "</div>";
     // // Chiusura button    
-    // echo "</button>";
+     echo "</button>";
 }
 
 /**

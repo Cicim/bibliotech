@@ -42,11 +42,9 @@ livelloRichiesto(BIBLIOTECARIO);
         <?php
         include_once "../php/connessione.php";
         $conn = connettitiAlDb();
-
         # La query seleziona tutti i campi dalla tabella 'Utenti'
         $query = "SELECT * FROM Utenti";
         $risultato = mysqli_query($conn, $query);
-
         # Controllo di eventuali errori
         if (!$risultato) {
             echo "Errore nella query";
@@ -84,7 +82,6 @@ livelloRichiesto(BIBLIOTECARIO);
             // <th>
             //     Modifica utente 
             // </th>
-
             # Riempimento della tabella con i risultati della query
             # Ad ogni ripetizione corrisponde un record della tabella
             while ($riga = mysqli_fetch_assoc($risultato)) {
@@ -107,22 +104,18 @@ livelloRichiesto(BIBLIOTECARIO);
                 } else {
                     echo "Account non confermato </td></td>";
                 }
-
                 // Ottieni permessi 
                 $bibliotecario = $riga["Permessi"] <= BIBLIOTECARIO;
-
                 $bibTesto = $bibliotecario ? "Sì" : "No";
                 $bibBtn = $bibliotecario ? "danger" : "info";
                 $bibIcon = $bibliotecario ? "minus" : "plus";
                 $id = $riga["CodFiscale"];
-
                 # Pulsante per aggiungere un nuovo bibliotecario
                 echo "<td align=\"center\">
                     $bibTesto
                     <a class=\"btn btn-$bibBtn ml-2\" href=\"../php/rendi-bibliotecario.php?id=$id\" target=\"_blank\"><i class=\"fa fa-$bibIcon\"></i></a>
                 </td>";
                 # (Aggiungere il link alla pagina NuovoBibliotecario.php)
-
                 # Pulsante per modificare un utente -->
                 // echo "<td align=\"center\"><a class=\"btn btn-info ml-2\" id=\"btnModificaUtente\" href=\"#\"><i class=\"fa fa-edit\"></i> Modifica utente</a></td>";
                 # (Aggiungere il link alla pagina ModificaUtente.php)            
@@ -140,3 +133,144 @@ livelloRichiesto(BIBLIOTECARIO);
     <?php include_once "../views/footer.php"; ?>
 
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

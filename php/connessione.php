@@ -10,9 +10,10 @@ function connettitiAlDb()
     $host = "localhost";
     $user = "root";
     $db = "Biblioteca";
+    $pass = "all4one4all";
 
     // Connessione al server DBMS
-    $conn = mysqli_connect($host, $user, "") or die("Impossibile raggiungere il DBMS");
+    $conn = mysqli_connect($host, $user, $pass) or die("Impossibile raggiungere il DBMS");
 
     // Selezione del database
     mysqli_select_db($conn, $db) or die("Impossibile connettersi al database");
